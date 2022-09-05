@@ -13,6 +13,7 @@ import Chip from "../../../components/chip";
 import Radio from "../../../components/radio";
 
 import eyeIcon from "../../../assets/Eye.svg";
+import editIcon from "../../../assets/edit.svg";
 
 const Row = (props) => {
   const { row } = props;
@@ -32,12 +33,14 @@ const Row = (props) => {
           <Radio checked={row.status} />
         </TableCell>
         <TableCell>
-          <img src={eyeIcon} alt="see map" />
+          <img src={eyeIcon} alt="see floor's map" />
         </TableCell>
         <TableCell>{row.schedule}</TableCell>
         <TableCell>{row.occurence}</TableCell>
         <TableCell>{row.type}</TableCell>
-        <TableCell>EDIT</TableCell>
+        <TableCell>
+          <img src={editIcon} alt="see map" />
+        </TableCell>
       </TableRow>
       {/* <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

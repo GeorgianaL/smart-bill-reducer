@@ -67,6 +67,11 @@ const theme = createTheme({
         color: "#000000",
       },
     },
+    MuiInputBase: {
+      "input:-internal-autofill-selected": {
+        backgroundColor: "transparent",
+      },
+    },
     "MuiTypography-subtitle2": {
       fontWeight: 700,
     },

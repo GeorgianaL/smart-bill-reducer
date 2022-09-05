@@ -12,7 +12,7 @@ import Card from "../../../components/card";
 import Row from "./TableRow";
 
 import { tableHeadConfig } from "./config";
-import schedules from "../../../mock/schedules";
+import { schedulesOverviewData } from "../../../mock/schedules";
 
 const SchedulesOverviewCard = () => (
   <Card title={<Typography variant="body1">Scheduls Overview</Typography>}>
@@ -30,7 +30,7 @@ const SchedulesOverviewCard = () => (
           </TableRow>
         </TableHead>
         <TableBody>
-          {schedules.map((row) => (
+          {schedulesOverviewData.map((row) => (
             <Row key={row.area} row={row} />
           ))}
         </TableBody>
