@@ -16,7 +16,7 @@ const Filters = ({ title, data }) => {
         <FormGroup>
           {data.length > 2 && <Label control={<Checkbox />} label="All" />}
           {data.map((item) => (
-            <Label control={<Checkbox />} label={item} />
+            <Label key={item} control={<Checkbox />} label={item} />
           ))}
         </FormGroup>
       </Grid>

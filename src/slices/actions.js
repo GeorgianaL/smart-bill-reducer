@@ -4,6 +4,7 @@ import axios from "axios";
 import { buildings, floors } from "../mock/buildings";
 import { zones, sensors, relays } from "../mock/entities";
 import { ZONE, SENSOR, RELAY } from "../utils/config";
+import { schedules } from "../mock/schedules";
 
 export const getBuildings = createAsyncThunk(
   //action type string
@@ -48,6 +49,26 @@ export const getEntities = createAsyncThunk(
           ...relay,
           controlType: RELAY,
         })),
+      };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const getSchedules = createAsyncThunk(
+  "schedules/getSchedules",
+  async () => {
+    try {
+      // const entites = await Promise.all(
+      //   [
+      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
+      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
+      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
+      //   ].map((promise) => promise.catch((error) => error))
+      // );
+      return {
+        schedules,
       };
     } catch (error) {
       console.error(error);

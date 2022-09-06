@@ -13,8 +13,25 @@ const standardSchedule = [
   { label: "Sunday", value: "sunday" },
 ];
 
-const StandardHours = ({ title, subtitle, data }) => {
-  console.log(data);
+const StandardHours = ({ title, subtitle, data, onChange }) => {
+  const updateStandardSchedule = (weekday, value) => {
+    onChange({
+      scheduleType: "standard",
+      scheduleDay: weekday,
+      field: "power",
+      value,
+    });
+  };
+
+  const updateStandardTimeSlot = (weekday, field, value) => {
+    onChange({
+      scheduleType: "standard",
+      scheduleDay: weekday,
+      field,
+      value,
+    });
+  };
+
   return (
     <Grid container direction="row" spacing={4}>
       <Grid item xs={12}>
@@ -22,59 +39,47 @@ const StandardHours = ({ title, subtitle, data }) => {
         <Typography variant="subtitle2">{subtitle}</Typography>
       </Grid>
       <Grid item xs={12}>
-        <Grid container direction="row" spacing={2}>
-          <Grid item xs={2}>
-            <Grid container direction="row" spacing={2}>
-              {standardSchedule.map((weekday) => (
-                <Grid
-                  item
-                  xs={12}
-                  sx={{ height: 66, display: "flex", alignItems: "center" }}
-                >
-                  <Typography variant="body1">{weekday.label}</Typography>
-                </Grid>
-              ))}
+        {standardSchedule.map((weekday) => (
+          <Grid
+            container
+            direction="row"
+            alignItems="center"
+            sx={{ height: 58 }}
+            key={weekday.label}
+          >
+            <Grid item xs={2}>
+              <Typography variant="body1">{weekday.label}</Typography>
             </Grid>
-          </Grid>
-          <Grid item xs={2}>
-            <Grid container direction="column" spacing={2}>
-              {standardSchedule.map((weekday) => (
+            <Grid item xs={2}>
+              <Grid container direction="row" spacing={2} alignItems="center">
                 <Grid item>
-                  <Grid
-                    container
-                    direction="row"
-                    alignItems="center"
-                    spacing={2}
-                    sx={{ height: 66 }}
-                  >
-                    <Grid item>
-                      <RadioButton checked={data[weekday.value].power} />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="subtitle2">
-                        {data[weekday.value].power ? "Power on" : "Power off"}
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                  <RadioButton
+                    checked={data[weekday.value].power}
+                    onChange={(e) =>
+                      updateStandardSchedule(weekday.value, e.target.checked)
+                    }
+                  />
                 </Grid>
-              ))}
-            </Grid>
-          </Grid>
-          <Grid item xs={8}>
-            <Grid container direction="column" spacing={2}>
-              {standardSchedule.map((weekday) => (
                 <Grid item>
-                  {data[weekday.value].power && (
-                    <TimeSlot
-                      from={data[weekday.value].from}
-                      to={data[weekday.value].to}
-                    />
-                  )}
+                  <Typography variant="subtitle2">
+                    {data[weekday.value].power ? "Power on" : "Power off"}
+                  </Typography>
                 </Grid>
-              ))}
+              </Grid>
+            </Grid>
+            <Grid item xs={8}>
+              {data[weekday.value].power && (
+                <TimeSlot
+                  from={data[weekday.value].from}
+                  to={data[weekday.value].to}
+                  onChange={(field, value) =>
+                    updateStandardTimeSlot(weekday.value, field, value)
+                  }
+                />
+              )}
             </Grid>
           </Grid>
-        </Grid>
+        ))}
       </Grid>
     </Grid>
   );

@@ -1,10 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { buildings, entities } from "../slices";
+import { buildings, entities, schedules } from "../slices";
 
 const store = configureStore({
   reducer: {
     buildings,
     entities,
+    schedules,
   },
 });
 

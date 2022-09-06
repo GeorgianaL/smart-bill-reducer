@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
 import Page from "../../components/page";
 import Card from "../../components/card";
@@ -8,7 +9,8 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import StandardHours from "./StandardHours";
 import SpecialHours from "./SpecialHours";
 
-import { schedules } from "../../mock/schedules";
+import { getSchedules } from "../../slices";
+import { updateSchedule } from "../../slices/schedulesSlice";
 
 const filters = [
   "Zone 1",
@@ -34,8 +36,19 @@ const tabs = [
 ];
 
 const Schedules = () => {
+  const dispatch = useDispatch();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
+  const { schedules, loading, error } = useSelector((state) => state.schedules);
+
+  useEffect(() => {
+    dispatch(getSchedules());
+  }, []);
+
+  const updateStandardSchedule = (args) => dispatch(updateSchedule(args));
+
+  if (loading || error)
+    return <Typography variant="h6">Loading ...</Typography>;
   return (
     <Page title="Schedules">
       <Card>
@@ -44,7 +57,11 @@ const Schedules = () => {
             Floor 4
           </Grid>
           <Grid item xs={3}>
-            <Filters title={`Zones (${filters.length})`} data={filters} />
+            <Filters
+              title={`Zones (${filters.length})`}
+              data={filters}
+              onChange={updateSchedule}
+            />
           </Grid>
           <Grid item xs={9}>
             <Grid container spacing={2}>
@@ -61,6 +78,7 @@ const Schedules = () => {
                     title={tabs[activeTabIndex].title}
                     subtitle={tabs[activeTabIndex].details}
                     data={schedules.standard}
+                    onChange={updateStandardSchedule}
                   />
                 )}
                 {activeTabIndex === 1 && (
@@ -68,6 +86,7 @@ const Schedules = () => {
                     title={tabs[activeTabIndex].title}
                     subtitle={tabs[activeTabIndex].details}
                     data={schedules.special}
+                    onChange={updateStandardSchedule}
                   />
                 )}
               </Grid>
