@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid } from "@mui/material";
-import Page from "../../components/page";
+import Page from "../page";
 import NotificationsCard from "../suggestions/NotificationsCard";
 import BarChartCard from "./BarChartCard";
 import SchedulesOverviewCard from "./SchedulesOverview/SchedulesCard";
@@ -10,10 +10,10 @@ const Dashboard = () => {
   return (
     <Page title="Dashboard">
       <Grid container direction="row" spacing={2}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <NotificationsCard />
         </Grid>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <BarChartCard />
         </Grid>
         <Grid item xs={12}>

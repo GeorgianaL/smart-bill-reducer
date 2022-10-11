@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBuildings, getFloors } from "./actions";
+import { getBuildings, addBuilding, getFloors } from "../actions";
 
 const initialState = {
+  activeBuilding: [],
   buildings: [],
   floors: [],
   loading: false,
@@ -11,14 +12,129 @@ const initialState = {
 export const buildingsSlice = createSlice({
   name: "buildings",
   initialState,
-  reducers: {},
+  reducers: {
+    changeActiveBuilding: (state, action) => {
+      let newActiveBuildings = action.payload;
+      if (newActiveBuildings.length !== 0) {
+        return {
+          ...state,
+          activeBuilding: newActiveBuildings,
+        };
+      }
+    },
+    editFloorName: (state, action) => {
+      const {
+        payload: { id, value },
+      } = action;
+
+      return {
+        ...state,
+        floors: state.floors.map((floor) => {
+          if (floor.id === id) {
+            return {
+              ...floor,
+              name: value,
+            };
+          }
+          return floor;
+        }),
+      };
+    },
+    addNewFloor: (state, action) => {
+      return {
+        ...state,
+        buildings: state.buildings.map((building) => {
+          if (building.id === action.payload) {
+            return {
+              ...building,
+              floorIds: [...building.floorIds, null],
+            };
+          }
+          return building;
+        }),
+        floors: [
+          ...state.floors,
+          {
+            id: null,
+            buildingId: action.payload,
+            name: "",
+          },
+        ],
+      };
+    },
+    editBuildingName: (state, action) => {
+      const {
+        payload: { id, value },
+      } = action;
+
+      return {
+        ...state,
+        buildings: state.buildings.map((building) => {
+          if (building.id === id) {
+            return {
+              ...building,
+              name: value,
+            };
+          }
+          return building;
+        }),
+      };
+    },
+    addNewBuilding: (state) => {
+      return {
+        ...state,
+        buildings: [
+          ...state.buildings,
+          {
+            id: null,
+            name: "",
+            floorIds: [],
+          },
+        ],
+      };
+    },
+    discardEmptyFloor: (state, action) => {
+      return {
+        ...state,
+        buildings: state.buildings.map((building) => {
+          if (building.id === action.payload) {
+            return {
+              ...building,
+              floorIds: building.floorIds.filter((floorId) => floorId !== null),
+            };
+          }
+          return building;
+        }),
+        floors: state.floors.filter((floor) => floor.id !== null),
+      };
+    },
+    discardEmptyBuilding: (state) => {
+      return {
+        ...state,
+        buildings: state.buildings.filter((building) => building.id !== null),
+      };
+    },
+  },
   extraReducers: {
     [getBuildings.pending]: (state) => {
       state.loading = true;
     },
+    [addBuilding.pending]: (state) => {
+      state.loading = true;
+    },
     [getBuildings.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        loading: false,
+        buildings: payload,
+        activeBuilding: payload,
+      };
+    },
+    [addBuilding.fulfilled]: (state) => {
       state.loading = false;
-      state.buildings = payload;
+    },
+    [addBuilding.rejected]: (state) => {
+      state.loading = false;
     },
     [getBuildings.rejected]: (state) => {
       state.loading = false;
@@ -36,6 +152,16 @@ export const buildingsSlice = createSlice({
   },
 });
 
-const { reducer } = buildingsSlice;
+const { actions, reducer } = buildingsSlice;
+
+export const {
+  changeActiveBuilding,
+  editFloorName,
+  addNewFloor,
+  editBuildingName,
+  addNewBuilding,
+  discardEmptyFloor,
+  discardEmptyBuilding,
+} = actions;
 
 export default reducer;

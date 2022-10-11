@@ -1,3 +1,5 @@
+import { Login, NotAuthorizedPage } from "../features/login";
+import { StartingPoint, BuildingSetup } from "../features/onboarding";
 import Dashboard from "../features/dashboard";
 import Buildings from "../features/buildings";
 import Map from "../features/map";
@@ -13,11 +15,11 @@ import suggestionsIcon from "../assets/lightbulb.svg";
 import profileIcon from "../assets/profile.svg";
 import settingsIcon from "../assets/settings.svg";
 
-const links = [
+export const menuLinks = [
   {
     label: "Dashboard",
     icon: dashboardIcon,
-    path: "/dashboard",
+    path: "/",
     component: <Dashboard />,
   },
   {
@@ -58,6 +60,22 @@ const links = [
     icon: settingsIcon,
     path: "/settings",
     component: <Profile />,
+  },
+];
+
+const links = [
+  ...menuLinks,
+  {
+    label: "StartingPoint",
+    icon: dashboardIcon,
+    path: "/start",
+    component: <StartingPoint />,
+  },
+  {
+    label: "Onboarding",
+    icon: null,
+    path: "/onboarding",
+    component: <BuildingSetup />,
   },
 ];
 

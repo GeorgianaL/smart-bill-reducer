@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
 import withNavigationBar from "../../hoc/withNavigationBar";
-import Page from "../../components/page";
+import Page from "../page";
 import Card from "../../components/card";
 import MapTool from "../../components/map";
 import EntitiesList from "./EntitiesList";
-import { getEntities } from "../../slices/actions";
+import { getEntities } from "../../actions";
 import { addEntity } from "../../slices/entitiesSlice";
 
 const Map = () => {

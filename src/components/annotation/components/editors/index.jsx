@@ -16,7 +16,7 @@ const Container = styled.div`
     top: `${props.geometry.y + props.geometry.height + 2}%`,
     width: 300,
     borderRadius: 6,
-    zIndex: 5,
+    zIndex: 7,
     boxShadow: "rgba(99, 99, 99, 0.2) 0px 2px 8px 0px",
   })}
 `;

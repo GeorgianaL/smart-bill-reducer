@@ -11,6 +11,14 @@ const Container = styled(Grid)(({ theme }) => ({
   "&.highlighted": {
     borderLeft: `8px solid ${theme.palette.primary.main}`,
   },
+  ".delete": {
+    visibility: "hidden",
+  },
+  "&:hover": {
+    ".delete": {
+      visibility: "visible",
+    },
+  },
 }));
 
 const Card = ({
@@ -21,33 +29,39 @@ const Card = ({
   highlighted,
   childrenProps,
   ...props
-}) => (
-  <Container {...props} classes={{ root: highlighted && "highlighted" }}>
-    <Grid container direction="column">
-      <Grid item xs={12}>
-        <Grid
-          container
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Grid item xs={removable ? 11 : 12}>
-            {title}
-          </Grid>
-          {removable && (
-            <Grid item xs={1}>
-              <IconButton aria-label="delete-floor" onClick={onRemove}>
-                <img src={deleteIcon} alt="delete" />
-              </IconButton>
+}) => {
+  return (
+    <Container {...props} classes={{ root: highlighted && "highlighted" }}>
+      <Grid container direction="column">
+        <Grid item xs={12}>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={removable ? 11 : 12}>
+              {title}
             </Grid>
-          )}
+            {removable && (
+              <Grid item xs={1}>
+                <IconButton
+                  aria-label="delete-floor"
+                  onClick={onRemove}
+                  className="delete"
+                >
+                  <img src={deleteIcon} alt="delete" />
+                </IconButton>
+              </Grid>
+            )}
+          </Grid>
+        </Grid>
+        <Grid xs={12} item sx={childrenProps}>
+          {children}
         </Grid>
       </Grid>
-      <Grid xs={12} item sx={childrenProps}>
-        {children}
-      </Grid>
-    </Grid>
-  </Container>
-);
+    </Container>
+  );
+};
 
 export default Card;

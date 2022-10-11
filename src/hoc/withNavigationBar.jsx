@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Grid, Box } from "@mui/material";
-import Drawer, { drawerWidth, closedDrawerWidth } from "../components/drawer";
+import { Box } from "@mui/material";
+import Drawer from "../components/drawer";
 
 const withNavigationBar = (WrappedComponent) => (props) => {
   const navigate = useNavigate();
@@ -15,27 +15,24 @@ const withNavigationBar = (WrappedComponent) => (props) => {
   };
 
   return (
-    <Grid container>
-      <Grid item>
-        <Drawer
-          open={open}
-          onOpenDrawer={() => handleDrawer(true)}
-          onCloseDrawer={() => handleDrawer(false)}
-          activeLink={activeLink}
-          onChangePage={navigateToPage}
-        />
-      </Grid>
+    <Box sx={{ display: "flex" }}>
+      <Drawer
+        open={open}
+        onOpenDrawer={() => handleDrawer(true)}
+        onCloseDrawer={() => handleDrawer(false)}
+        activeLink={activeLink}
+        onChangePage={navigateToPage}
+      />
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           p: 3,
-          width: `calc(100% - ${open ? drawerWidth : closedDrawerWidth}px)`,
         }}
       >
         <WrappedComponent {...props} />
       </Box>
-    </Grid>
+    </Box>
   );
 };
 

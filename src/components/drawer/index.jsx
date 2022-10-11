@@ -12,7 +12,7 @@ import { useTheme } from "@mui/material/styles";
 import { StyledDrawer, drawerWidth, closedDrawerWidth } from "./styles";
 import Logo from "../logo";
 
-import links from "../../utils/pages";
+import { menuLinks } from "../../utils/pages";
 
 const Icon = styled.img(({ active }) => ({
   fill: active ? "green" : "black",
@@ -36,20 +36,20 @@ const Drawer = ({
       open={open}
       onMouseEnter={onOpenDrawer}
       onMouseLeave={onCloseDrawer}
-      onClick={open ? onCloseDrawer : onOpenDrawer}
+      // onClick={open ? onCloseDrawer : onOpenDrawer}
     >
       <List>
         <ListItem alignItems="center">
           <Logo hideText={!open} />
         </ListItem>
         <Divider light variant="middle" />
-        {links.map((link, index) => (
+        {menuLinks.map((link, index) => (
           <ListItem
             key={link.label}
             sx={{
               display: "block",
               paddingBottom: "1rem",
-              paddingTop: index === links.length - 2 ? "5rem" : "1rem",
+              paddingTop: index === menuLinks.length - 2 ? "5rem" : "1rem",
             }}
           >
             <ListItemButton

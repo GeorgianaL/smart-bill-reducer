@@ -27,4 +27,16 @@ export const suggestions = [
   },
 ];
 
+export const annualSuggestions = [
+  {
+    text: "Change schedule of Zone 4 to 07:30AM - 6PM, on Weekdays",
+  },
+  {
+    text: "Change schedule of Zone 2 to 10:30AM - 7PM, on Fridays",
+  },
+  {
+    text: "Change schedule of Zone 1 to 08:30AM - 5PM, on Mondays",
+  },
+];
+
 export default notifications;

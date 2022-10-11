@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getEntities } from "./actions";
+import { getEntities } from "../actions";
 
 const entitiesSlice = createSlice({
   name: "entities",

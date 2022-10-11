@@ -21,15 +21,15 @@ const closedMixin = (theme) => ({
   overflowX: "hidden",
   // width: `calc(${theme.spacing(7)} + 1px)`,
   width: closedDrawerWidth,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
+  // [theme.breakpoints.up("sm")]: {
+  //   width: `calc(${theme.spacing(8)} + 1px)`,
+  // },
 });
 
 export const StyledDrawer = styled(DrawerBase, {
   shouldForwardProp: (prop) => prop !== "open",
 })(({ theme, open }) => ({
-  width: open ? drawerWidth : closedDrawerWidth,
+  width: drawerWidth,
   flexShrink: 0,
   whiteSpace: "nowrap",
   boxSizing: "border-box",

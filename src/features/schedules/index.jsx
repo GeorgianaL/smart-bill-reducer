@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
-import Page from "../../components/page";
+import Page from "../page";
 import Card from "../../components/card";
 import Filters from "../../components/filters";
 import Tabs from "../../components/tabs";
@@ -9,7 +9,7 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import StandardHours from "./StandardHours";
 import SpecialHours from "./SpecialHours";
 
-import { getSchedules } from "../../slices";
+import { getSchedules } from "../../actions";
 import { updateSchedule } from "../../slices/schedulesSlice";
 
 const filters = [

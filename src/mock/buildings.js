@@ -7,7 +7,7 @@ const buildings = [
   {
     id: 1235,
     name: "E5",
-    floorIds: [2341, 2342, 2343],
+    floorIds: [2341, 2342],
   },
 ];
 

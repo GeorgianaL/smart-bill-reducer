@@ -8,7 +8,9 @@ import {
   TableRow,
   Collapse,
   Box,
+  IconButton,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Chip from "../../../components/chip";
 import Radio from "../../../components/radio";
 
@@ -18,6 +20,11 @@ import editIcon from "../../../assets/edit.svg";
 const Row = (props) => {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
+  const navigate = useNavigate();
+  const navigateToSchedules = () => {
+    // TODO: POST login
+    navigate("/schedules");
+  };
 
   return (
     <React.Fragment>
@@ -39,7 +46,9 @@ const Row = (props) => {
         <TableCell>{row.occurence}</TableCell>
         <TableCell>{row.type}</TableCell>
         <TableCell>
-          <img src={editIcon} alt="see map" />
+          <IconButton aria-label="edit-schedule" onClick={navigateToSchedules}>
+            <img src={editIcon} alt="edit" />
+          </IconButton>
         </TableCell>
       </TableRow>
       {/* <TableRow>

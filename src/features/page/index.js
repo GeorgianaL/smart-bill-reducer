@@ -1,7 +1,8 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
+import BuildingSelector from "./BuildingSelector";
 
-const Page = ({ title, children }) => {
+const Page = ({ title, children, withBuildingSelector }) => {
   return (
     <Grid container direction="column" spacing={2}>
       <Grid item>
@@ -14,14 +15,20 @@ const Page = ({ title, children }) => {
           <Grid item>
             <Typography variant="body1">{title}</Typography>
           </Grid>
-          <Grid item>
-            <Typography variant="subtitle2">UBC 1 Building</Typography>
-          </Grid>
+          {withBuildingSelector && (
+            <Grid item>
+              <BuildingSelector />
+            </Grid>
+          )}
         </Grid>
       </Grid>
       <Grid item>{children}</Grid>
     </Grid>
   );
+};
+
+Page.defaultProps = {
+  withBuildingSelector: true,
 };
 
 export default Page;
