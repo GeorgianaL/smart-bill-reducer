@@ -14,3 +14,4 @@ export {
   switchPower,
 } from "./entities";
 export { getSchedules } from "./schedules";
+export { getHealthcheck } from "./healthcheck";

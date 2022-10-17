@@ -6,20 +6,13 @@
   "buildings": [
     {
       "id": 1234,
-      "name": "UBC",
-      "floorIds": [
-        2341,
-        2342,
-        2343,
-        1268
-      ]
+      "name": "UBC1",
+      "floorIds": [2341, 2342, 2343, 1268]
     },
     {
       "id": 1235,
       "name": "E5",
-      "floorIds": [
-        1267
-      ]
+      "floorIds": [1267]
     }
   ],
   "floors": [
@@ -166,10 +159,7 @@
       "relays": [
         {
           "id": 21,
-          "zoneIds": [
-            1,
-            2
-          ],
+          "zoneIds": [1, 2],
           "x": 25.421686746987955,
           "y": 27.846131681313928,
           "width": 0,
@@ -179,5 +169,36 @@
         }
       ]
     }
-  ]
+  ],
+  "healthcheck": {
+    "active": 51,
+    "unresponsive": 5,
+    "details": [
+      {
+        "lastActive": "12 hours ago",
+        "floor": "Floor 5",
+        "zone": "Zone 1"
+      },
+      {
+        "lastActive": "6 hours ago",
+        "floor": "Floor 5",
+        "zone": "Zone 2"
+      },
+      {
+        "lastActive": "7 hours ago",
+        "floor": "Floor 1",
+        "zone": "Zone 1"
+      },
+      {
+        "lastActive": "2 hours ago",
+        "floor": "Floor 1",
+        "zone": "Zone 2"
+      },
+      {
+        "lastActive": "30 minutes ago",
+        "floor": "Floor 1",
+        "zone": "Zone 2"
+      }
+    ]
+  }
 }

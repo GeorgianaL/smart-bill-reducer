@@ -9,3 +9,5 @@ export { buildings, entities, schedules };
 // export { getBuildings, getFloors, getEntities, getSchedules };
 
 export { default as user } from "./loginSlice";
+
+export { default as healthcheck } from "./healthcheckSlice";
