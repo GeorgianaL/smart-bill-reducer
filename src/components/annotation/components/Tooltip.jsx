@@ -10,7 +10,7 @@ function Tooltip(props) {
   return (
     <Grid
       style={{
-        top: `${geometry.y + geometry.height / 2}%`,
+        top: `${geometry.y + geometry.height / 2 + 10}%`,
         left: `${geometry.x + geometry.width / 2}%`,
         borderRadius: 6,
         position: "absolute",

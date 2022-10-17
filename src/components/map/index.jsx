@@ -4,11 +4,21 @@ import Container from "./components/Container";
 import Tools from "./components/Tools";
 import { Editor, Highlighter, Tooltip } from "../annotation/components";
 import TOOLS from "./constants";
-import { SENSOR, RELAY } from "../../utils/config";
+import { ZONE, SENSOR, RELAY } from "../../utils/config";
+import { getNewEntity, transformNewEntity } from "./utils";
 
 import img from "./floor4.svg";
 
-const Map = ({ zones, sensors, relays, addEntity }) => {
+const Map = ({
+  zones,
+  sensors,
+  relays,
+  addEntity,
+  addNewZone,
+  addNewSensor,
+  addNewRelay,
+  highlightEntity,
+}) => {
   const [activeControl, setActiveControl] = useState(null);
   const [annotation, setAnnotation] = useState({});
 
@@ -24,33 +34,18 @@ const Map = ({ zones, sensors, relays, addEntity }) => {
     setAnnotation(currentAnnotation);
   };
 
-  const onSubmit = (currentAnnotation) => {
-    const {
-      data: { id, name, zoneId, zoneIds },
-      geometry: { x, y, width, height },
-    } = currentAnnotation;
+  const onSubmit = () => {
+    let newEntity = transformNewEntity(annotation, activeControl);
     setAnnotation({});
 
-    let newEntity = {
-      id: id || Math.random(),
-      name,
-      x,
-      y,
-      width,
-      height,
-      controlType: activeControl,
-    };
     if (activeControl === SENSOR) {
-      newEntity = {
-        ...newEntity,
-        zoneId,
-      };
+      addNewSensor(newEntity);
     }
     if (activeControl === RELAY) {
-      newEntity = {
-        ...newEntity,
-        zoneIds,
-      };
+      addNewRelay(newEntity);
+    }
+    if (activeControl === ZONE) {
+      addNewZone(newEntity);
     }
 
     addEntity({
@@ -69,6 +64,8 @@ const Map = ({ zones, sensors, relays, addEntity }) => {
           id: entity.id,
           name: entity.name,
           controlType: entity.controlType,
+          active: entity.active,
+          powerOn: entity.powerOn,
         },
         geometry: {
           x: entity.x,
@@ -98,21 +95,30 @@ const Map = ({ zones, sensors, relays, addEntity }) => {
         disableAnnotation={disabled}
         disableEditor={disabled}
         disableSelector={disabled}
-        renderEditor={(props) => {
+        allowTouch
+        renderEditor={({ annotation }) => {
+          const customAnnotation = getNewEntity(annotation, zones);
+
           return (
             <Editor
-              {...props}
+              annotation={customAnnotation}
+              onChange={onChange}
+              onSubmit={onSubmit}
               type={TOOLS[activeControl].id}
               title={TOOLS[activeControl].name}
               zones={zones}
             />
           );
         }}
-        renderHighlight={({ annotation }) => (
-          <Highlighter annotation={annotation} />
-        )}
+        renderHighlight={({ annotation }) => {
+          return (
+            <Highlighter
+              annotation={annotation}
+              onClick={() => highlightEntity(annotation.data.id)}
+            />
+          );
+        }}
         renderContent={Tooltip}
-        allowTouch={false}
       />
     </Container>
   );

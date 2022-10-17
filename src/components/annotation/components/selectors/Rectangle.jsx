@@ -29,7 +29,7 @@ const Rectangle = (props) => {
           top: `${geometry.y}%`,
           height: `${geometry.height}%`,
           width: `${geometry.width}%`,
-          border: `dashed 2px ${theme.palette.primary.main}`,
+          border: `dashed 3px ${theme.palette.primary.main}`,
         }}
       />
     </Container>

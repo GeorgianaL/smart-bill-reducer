@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 import { default as ButtonBase } from "@mui/material/Button";
 
 const StyledButton = styled(ButtonBase)(() => ({
-  color: "black",
+  // color: "black",
   fontWeight: "bold",
   padding: 0,
 }));

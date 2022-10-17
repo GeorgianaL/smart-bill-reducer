@@ -31,7 +31,12 @@ const Card = ({
   ...props
 }) => {
   return (
-    <Container {...props} classes={{ root: highlighted && "highlighted" }}>
+    <Container
+      {...props}
+      classes={{
+        root: highlighted && "highlighted",
+      }}
+    >
       <Grid container direction="column">
         <Grid item xs={12}>
           <Grid

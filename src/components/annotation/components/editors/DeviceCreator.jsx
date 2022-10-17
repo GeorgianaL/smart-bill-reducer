@@ -20,6 +20,7 @@ const DeviceCreator = ({ annotation, onChange }) => {
             })
           }
           value={annotation.data && annotation.data.id}
+          variant="standard"
         />
       </Grid>
       <Grid item>
@@ -37,6 +38,7 @@ const DeviceCreator = ({ annotation, onChange }) => {
             })
           }
           value={annotation.data && annotation.data.name}
+          variant="standard"
         />
       </Grid>
     </Grid>

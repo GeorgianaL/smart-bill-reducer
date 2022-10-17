@@ -3,6 +3,7 @@ import { getBuildings, addBuilding, getFloors } from "../actions";
 
 const initialState = {
   activeBuilding: [],
+  activeFloor: null,
   buildings: [],
   floors: [],
   loading: false,
@@ -19,6 +20,10 @@ export const buildingsSlice = createSlice({
         return {
           ...state,
           activeBuilding: newActiveBuildings,
+          activeFloor:
+            newActiveBuildings[0].floorIds.length > 0
+              ? newActiveBuildings[0].floorIds[0]
+              : null,
         };
       }
     },
@@ -114,6 +119,12 @@ export const buildingsSlice = createSlice({
         buildings: state.buildings.filter((building) => building.id !== null),
       };
     },
+    changeActiveFloor: (state, action) => {
+      return {
+        ...state,
+        activeFloor: action.payload,
+      };
+    },
   },
   extraReducers: {
     [getBuildings.pending]: (state) => {
@@ -143,8 +154,12 @@ export const buildingsSlice = createSlice({
       state.loading = true;
     },
     [getFloors.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.floors = payload;
+      return {
+        ...state,
+        loading: false,
+        floors: payload,
+        activeFloor: payload[0].id,
+      };
     },
     [getFloors.rejected]: (state) => {
       state.loading = false;
@@ -162,6 +177,7 @@ export const {
   addNewBuilding,
   discardEmptyFloor,
   discardEmptyBuilding,
+  changeActiveFloor,
 } = actions;
 
 export default reducer;

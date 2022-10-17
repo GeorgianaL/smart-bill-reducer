@@ -25,6 +25,10 @@ const Editor = ({ title, type, zones, onChange, onSubmit, ...props }) => {
   const { annotation } = props;
   if (!annotation.geometry) return null;
 
+  const {
+    selection: { zoneId },
+  } = annotation;
+
   return (
     <Container geometry={annotation.geometry}>
       <Grid container direction="column" spacing={2}>
@@ -35,60 +39,66 @@ const Editor = ({ title, type, zones, onChange, onSubmit, ...props }) => {
           <DeviceCreator onChange={onChange} {...props} />
         </Grid>
         {type === SENSOR && (
-          <Grid item>
-            <Typography variant="body1">Area</Typography>
-            <Select
-              values={zones}
-              onChange={(zoneId) => {
-                onChange({
-                  ...annotation,
-                  data: {
-                    ...annotation.data,
-                    zoneId: type === SENSOR ? zoneId : null,
-                  },
-                });
-              }}
-            />
-          </Grid>
+          <>
+            <Grid item>
+              <Typography variant="body1">Area</Typography>
+            </Grid>
+            <Grid item>
+              <Select
+                variant="filled"
+                values={zones}
+                value={annotation.selection.zoneId}
+                onChange={(zoneId) => {
+                  console.log("zone id este", zoneId);
+                  onChange({
+                    ...annotation,
+                    selection: {
+                      ...annotation.selection,
+                      zoneId,
+                    },
+                  });
+                }}
+              />
+            </Grid>
+          </>
         )}
         {type === RELAY && (
-          <Grid item>
-            <Typography variant="body1">Select linked zones</Typography>
-            <Select
-              multiple
-              values={zones}
-              value={
-                annotation.data && annotation.data.zoneIds
-                  ? annotation.data.zoneIds
-                  : []
-              }
-              onChange={(zoneIds) => {
-                onChange({
-                  ...annotation,
-                  data: {
-                    ...annotation.data,
-                    zoneIds:
-                      annotation.data && annotation.data.zoneIds ? zoneIds : [],
-                  },
-                });
-              }}
-            />
-          </Grid>
+          <>
+            <Grid item>
+              <Typography variant="body1">Select linked zones</Typography>
+            </Grid>
+            <Grid item>
+              <Select
+                multiple
+                values={zones}
+                variant="filled"
+                value={
+                  Array.isArray(zoneId)
+                    ? zoneId
+                    : [zones.find((zone) => zone.id === zoneId)]
+                }
+                onChange={(zoneId) => {
+                  onChange({
+                    ...annotation,
+                    selection: {
+                      ...annotation.selection,
+                      zoneId,
+                    },
+                  });
+                }}
+              />
+            </Grid>
+          </>
         )}
         <Grid item>
           <Grid container direction="row" spacing={2}>
-            <Grid item>
+            {/* <Grid item>
               <Button onClick={onSubmit} variant="outlined" size="small">
                 Discard
               </Button>
-            </Grid>
+            </Grid> */}
             <Grid item>
-              <Button
-                onClick={onSubmit}
-                variant="contained"
-                size="small"
-                color="primary"
-              >
+              <Button onClick={onSubmit} variant="contained" color="primary">
                 Save
               </Button>
             </Grid>

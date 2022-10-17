@@ -1,16 +1,7 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import sensorIcon from "../../assets/sensor-green.svg";
-
-const Container = styled(Grid)(({ theme }) => ({
-  borderLeft: `2px dashed ${theme.palette.primary.main}`,
-  "&.MuiGrid-item": {
-    paddingLeft: 16,
-    paddingTop: 0,
-    marginTop: 32,
-  },
-}));
+import Card from "../../components/card";
+import clockIcon from "../../assets/clock.svg";
 
 const EntitiesList = ({ zones, sensors }) => {
   let allZones = [...zones];
@@ -26,37 +17,43 @@ const EntitiesList = ({ zones, sensors }) => {
   });
 
   return (
-    <Grid container direction="column" spacing={4}>
+    <Grid container direction="column" spacing={2}>
       {allZones.map((zone) => (
-        <Container item key={zone.id}>
-          <Typography variant="h6">{zone.name}</Typography>
-          {zone.sensors &&
-            zone.sensors.map((sensor) => (
-              <Grid
-                container
-                key={sensor.id}
-                direction="column"
-                sx={{ marginTop: 2 }}
-              >
-                <Grid item>
-                  <Typography variant="body1">{sensor.name}</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant="body2">{`ID: ${sensor.id}`}</Typography>
-                </Grid>
-                {sensor.lastActive && (
-                  <Grid container direction="row" spacing={2}>
-                    <Grid item>
-                      <img src={sensorIcon} alt="sensor" />
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="body2">{`Last activity: ${sensor.lastActive}`}</Typography>
-                    </Grid>
+        <Grid item key={zone.id}>
+          <Card>
+            <Typography variant="h6" color="primary">
+              {zone.name}
+            </Typography>
+            {zone.sensors &&
+              zone.sensors.map((sensor) => (
+                <Grid
+                  container
+                  key={sensor.id}
+                  direction="column"
+                  sx={{ marginTop: 2 }}
+                >
+                  <Grid item>
+                    <Typography variant="body1">{sensor.name}</Typography>
                   </Grid>
-                )}
-              </Grid>
-            ))}
-        </Container>
+                  <Grid item>
+                    <Typography variant="body2">{`ID: ${sensor.id}`}</Typography>
+                  </Grid>
+                  {sensor.lastActive && (
+                    <Grid
+                      item
+                      sx={{ display: "flex", alignItems: "flex-start" }}
+                    >
+                      <img src={clockIcon} alt="sensor" />
+                      <Typography
+                        variant="body2"
+                        sx={{ marginLeft: 1 }}
+                      >{`Last activity: ${sensor.lastActive}`}</Typography>
+                    </Grid>
+                  )}
+                </Grid>
+              ))}
+          </Card>
+        </Grid>
       ))}
     </Grid>
   );

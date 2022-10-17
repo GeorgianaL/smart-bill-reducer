@@ -6,5 +6,11 @@ export {
   deleteBuilding,
 } from "./buildings";
 export { getFloors, saveFloorName, deleteFloor } from "./floors";
-export { getEntities } from "./entities";
+export {
+  getEntities,
+  addZone,
+  addSensor,
+  addRelay,
+  switchPower,
+} from "./entities";
 export { getSchedules } from "./schedules";

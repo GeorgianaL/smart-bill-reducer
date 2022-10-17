@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
+import Select from "../../components/select";
 import { getBuildings } from "../../actions";
 import { changeActiveBuilding } from "../../slices/buildingsSlice";
 
@@ -26,27 +24,19 @@ const BuildingSelector = () => {
     }
   }, []);
 
-  const onChange = (e) => dispatch(changeActiveBuilding(e.target.value));
+  const onChange = (e) => dispatch(changeActiveBuilding(e));
 
   return (
     <>
       {!loading && (
-        <FormControl variant="standard" fullWidth>
-          <Select
-            labelId="simple-select-standard-label"
-            id="simple-select-standard"
-            value={activeBuilding}
-            onChange={onChange}
-            label="Age"
-            multiple
-          >
-            {buildings.map((option) => (
-              <MenuItem key={option.id} value={option}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <Select
+          value={activeBuilding}
+          values={buildings}
+          onChange={onChange}
+          label="Building"
+          multiple
+          variant="standard"
+        />
       )}
     </>
   );

@@ -1,15 +1,19 @@
 import { Sensor, Rectangle, Relay } from "../selectors";
 
-const Highlighter = ({ annotation }) => {
-  const controlType = annotation.data.controlType;
+const Highlighter = (props) => {
+  const {
+    annotation: {
+      data: { controlType, name },
+    },
+  } = props;
 
   switch (controlType) {
     case "ZONE":
-      return <Rectangle key={annotation.data.name} annotation={annotation} />;
+      return <Rectangle key={name} {...props} />;
     case "SENSOR":
-      return <Sensor key={annotation.data.name} annotation={annotation} />;
+      return <Sensor key={name} {...props} />;
     case "RELAY":
-      return <Relay key={annotation.data.name} annotation={annotation} />;
+      return <Relay key={name} {...props} />;
     default:
       return null;
   }

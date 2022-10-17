@@ -31,4 +31,6 @@ Page.defaultProps = {
   withBuildingSelector: true,
 };
 
+export { default as FloorSelector } from "./FloorSelector";
+
 export default Page;
