@@ -42,8 +42,8 @@ const SensorHealthcheck = () => {
       <Grid
         container
         direction="row"
-        spacing={1}
-        justifyContent="space-between"
+        spacing={data.details ? 1 : 4}
+        justifyContent={data.details ? "space-between" : "center"}
       >
         <Grid item>
           <Grid container direction="column" spacing={2}>
