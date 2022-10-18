@@ -22,9 +22,9 @@ const Suggestions = () => (
           <Grid item>
             <NotificationsCard notifications={notifications} />
           </Grid>
-          <Grid item>
+          {/* <Grid item>
             <HeatControllerCard />
-          </Grid>
+          </Grid> */}
         </Grid>
       </Grid>
       <Grid item xs={12} sm={6}>
