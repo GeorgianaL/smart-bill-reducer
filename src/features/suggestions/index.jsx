@@ -3,7 +3,7 @@ import { Grid } from "@mui/material";
 import Page from "../page";
 import SuggestionCard from "./SuggestionCard";
 import NotificationsCard from "./NotificationsCard";
-import HeatControllerCard from "./HeatControllerCard";
+// import HeatControllerCard from "./HeatControllerCard";
 import AnnualSuggestionsCard from "./AnnualSuggestionsCard";
 import withNavigationBar from "../../hoc/withNavigationBar";
 
@@ -13,7 +13,7 @@ const Suggestions = () => (
   <Page title="Suggestions">
     <Grid container direction="row" spacing={2}>
       {suggestions.map((suggestion) => (
-        <Grid item xs={3}>
+        <Grid item xs={3} key={suggestion.id}>
           <SuggestionCard {...suggestion} />
         </Grid>
       ))}

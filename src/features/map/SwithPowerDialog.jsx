@@ -42,12 +42,35 @@ const SwithPowerDialog = ({ open, handleClose, loading, relayData, zones }) => {
       dialog = (
         <>
           <DialogTitle sx={{ m: 0, p: 4, textAlign: "center" }}>
-            {`You successfully switched ${
-              power ? "off" : "on"
-            } the power on ${zones.join(", ")}`}
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: "absolute",
+                right: 8,
+                top: 8,
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
           </DialogTitle>
           <DialogContent>
-            <Checkmark />
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <Checkmark size={120} />
+              </Grid>
+              <Grid item>
+                <Typography color="primary" variant="h5" align="center">
+                  Switched off!
+                </Typography>
+              </Grid>
+              <Grid item sx={{ m: 4 }}>
+                <Typography>{`You successfully switched ${
+                  power ? "off" : "on"
+                } the power on ${zones.join(", ")}.`}</Typography>
+              </Grid>
+            </Grid>
           </DialogContent>
         </>
       );
@@ -127,7 +150,7 @@ const SwithPowerDialog = ({ open, handleClose, loading, relayData, zones }) => {
   }
 
   return (
-    <Dialog onClose={handleClose} open={open}>
+    <Dialog onClose={handleClose} open={open} maxWidth="xs">
       {dialog}
     </Dialog>
   );

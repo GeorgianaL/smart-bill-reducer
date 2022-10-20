@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Typography } from "@mui/material";
-import Page from "../page";
+import Page, { FloorSelector } from "../page";
 import Card from "../../components/card";
 import Filters from "../../components/filters";
 import Tabs from "../../components/tabs";
@@ -9,20 +9,13 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import StandardHours from "./StandardHours";
 import SpecialHours from "./SpecialHours";
 
-import { getSchedules } from "../../actions";
-import { updateSchedule } from "../../slices/schedulesSlice";
-
-const filters = [
-  "Zone 1",
-  "Zone 2",
-  "Zone 3",
-  "Zone 4",
-  "Zone 5",
-  "Meeting room 1",
-  "Meeting room 2",
-  "Meeting room 3",
-  "Meeting room 4",
-];
+import {
+  getFloors,
+  getEntities,
+  getSchedules,
+  saveStandardSchedule,
+} from "../../actions";
+import { updateFilters, updateSchedule } from "../../slices/schedulesSlice";
 
 const tabs = [
   {
@@ -39,13 +32,24 @@ const Schedules = () => {
   const dispatch = useDispatch();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const { schedules, loading, error } = useSelector((state) => state.schedules);
+  const { schedules, filters, loading, error } = useSelector(
+    (state) => state.schedules
+  );
+  const { zones } = useSelector((state) => state.entities);
 
   useEffect(() => {
-    dispatch(getSchedules());
+    dispatch(getFloors())
+      .then(() => dispatch(getEntities()))
+      .then(() => dispatch(getSchedules()));
   }, []);
 
-  const updateStandardSchedule = (args) => dispatch(updateSchedule(args));
+  const updateStandardSchedule = (args) =>
+    dispatch(saveStandardSchedule(args)).then(() =>
+      dispatch(updateSchedule(args))
+    );
+
+  const onChangeFilters = (args) =>
+    dispatch(updateFilters(args)).then(() => dispatch(getSchedules()));
 
   if (loading || error)
     return <Typography variant="h6">Loading ...</Typography>;
@@ -54,13 +58,14 @@ const Schedules = () => {
       <Card>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            Floor 4
+            <FloorSelector variant="standard" />
           </Grid>
           <Grid item xs={3}>
             <Filters
               title={`Zones (${filters.length})`}
-              data={filters}
-              onChange={updateSchedule}
+              allOptions={zones}
+              selected={filters}
+              onChange={onChangeFilters}
             />
           </Grid>
           <Grid item xs={9}>

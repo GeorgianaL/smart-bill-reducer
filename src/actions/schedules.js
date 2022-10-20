@@ -1,23 +1,35 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { default as axios } from "../api";
-import { schedules } from "../mock/schedules";
+// import { schedules } from "../mock/schedules";
 
 export const getSchedules = createAsyncThunk(
   "schedules/getSchedules",
   async () => {
     try {
-      // const entites = await Promise.all(
-      //   [
-      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
-      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
-      //     axios.get("https://jsonplaceholder.typicode.com/posts"),
-      //   ].map((promise) => promise.catch((error) => error))
-      // );
-      return {
-        schedules,
-      };
+      // will need to add selected zoneIds (filters)
+      // to add /standard
+      const res = await axios.get(`/schedules`);
+      return res.data;
     } catch (error) {
-      console.error(error);
+      return error.response.data;
+    }
+  }
+);
+
+export const saveStandardSchedule = createAsyncThunk(
+  "schedules/saveSchedule",
+  async (payload) => {
+    try {
+      const { field, scheduleDay, value } = payload;
+
+      // will need to add  zoneIds
+      await axios.patch(`/schedules/standard`, {
+        [scheduleDay]: {
+          [field]: value,
+        },
+      });
+    } catch (error) {
+      return error.response.data;
     }
   }
 );

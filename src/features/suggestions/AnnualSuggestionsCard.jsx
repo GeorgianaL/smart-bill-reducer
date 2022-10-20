@@ -17,7 +17,7 @@ const AnnualSuggestionsCard = () => {
         sx={{ marginTop: 2, marginBottom: 2 }}
       >
         {annualSuggestions.map((suggestion) => (
-          <Grid item>
+          <Grid item key={suggestion.id}>
             <Grid container direction="row" spacing={2} alignItems="center">
               <Grid item>
                 <Checkbox color="secondary" />

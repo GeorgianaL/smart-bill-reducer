@@ -1,14 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getSchedules } from "../actions";
+import { getSchedules, getEntities } from "../actions";
 
 const schedulesSlice = createSlice({
   name: "schedules",
   initialState: {
-    schedules: [],
     loading: true,
     error: null,
+    schedules: {},
+    filters: [],
   },
   reducers: {
+    updateFilters: (state, action) => {
+      return {
+        ...state,
+        filters: action.payload,
+      };
+    },
     updateSchedule: (state, action) => {
       console.log(action);
       const {
@@ -25,11 +32,19 @@ const schedulesSlice = createSlice({
     [getSchedules.pending]: (state) => {
       state.loading = true;
     },
+    [getEntities.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        filters: payload.zones,
+      };
+    },
     [getSchedules.fulfilled]: (state, { payload }) => {
       return {
         ...state,
         loading: false,
-        ...payload,
+        schedules: {
+          ...payload,
+        },
       };
     },
     [getSchedules.rejected]: (state) => {
@@ -40,6 +55,6 @@ const schedulesSlice = createSlice({
 
 const { actions, reducer } = schedulesSlice;
 
-export const { updateSchedule } = actions;
+export const { updateFilters, updateSchedule } = actions;
 
 export default reducer;

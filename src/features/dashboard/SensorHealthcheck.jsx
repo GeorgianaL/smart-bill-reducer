@@ -5,7 +5,6 @@ import Card from "../../components/card";
 import HistoryBarChart from "../../components/piechart";
 import ListItem from "../../components/list-item";
 import { getHealthcheck } from "../../actions";
-import { maxHeight } from "@mui/system";
 
 const getChartData = (activeAmount, unresponsiveAmount) => [
   {
@@ -63,8 +62,8 @@ const SensorHealthcheck = () => {
         {data.details && (
           <Grid item sx={{ maxHeight: 170, overflowY: "auto" }}>
             <Grid container direction="column" spacing={1}>
-              {data.details.map((sensor) => (
-                <Grid item>
+              {data.details.map((sensor, index) => (
+                <Grid item key={`${sensor.floor}-${index}`}>
                   <ListItem
                     color="#FF8E8E"
                     label={`Last activity: ${sensor.lastActive}`}

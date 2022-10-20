@@ -33,7 +33,7 @@ const StandardHours = ({ title, subtitle, data, onChange }) => {
   };
 
   return (
-    <Grid container direction="row" spacing={4}>
+    <Grid container spacing={4}>
       <Grid item xs={12}>
         <Typography variant="h6">{title}</Typography>
         <Typography variant="subtitle2">{subtitle}</Typography>
@@ -42,16 +42,15 @@ const StandardHours = ({ title, subtitle, data, onChange }) => {
         {standardSchedule.map((weekday) => (
           <Grid
             container
-            direction="row"
             alignItems="center"
             sx={{ height: 58 }}
             key={weekday.label}
           >
-            <Grid item xs={2}>
+            <Grid item xs="auto" lg={2}>
               <Typography variant="body1">{weekday.label}</Typography>
             </Grid>
-            <Grid item xs={2}>
-              <Grid container direction="row" spacing={2} alignItems="center">
+            <Grid item xs="auto" lg={2}>
+              <Grid container spacing={2} alignItems="center">
                 <Grid item>
                   <RadioButton
                     checked={data[weekday.value].power}
@@ -67,7 +66,7 @@ const StandardHours = ({ title, subtitle, data, onChange }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs="auto" lg={8}>
               {data[weekday.value].power && (
                 <TimeSlot
                   from={data[weekday.value].from}

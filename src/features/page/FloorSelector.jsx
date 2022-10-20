@@ -5,7 +5,7 @@ import { getFloors } from "../../actions";
 import { changeActiveFloor } from "../../slices/buildingsSlice";
 import Select from "../../components/select";
 
-const FloorSelector = () => {
+const FloorSelector = ({ variant }) => {
   const dispatch = useDispatch();
 
   const { loading, floors, activeBuilding, activeFloor } = useSelector(
@@ -13,7 +13,7 @@ const FloorSelector = () => {
   );
 
   useEffect(() => {
-    if (floors.length === 0) {
+    if (floors.length === 0 && !loading) {
       dispatch(getFloors());
     }
   }, []);
@@ -50,10 +50,14 @@ const FloorSelector = () => {
         onChange={onChange}
         label="Floor"
         values={floorOptions}
-        variant="filled"
+        variant={variant}
       />
     </FormControl>
   );
+};
+
+FloorSelector.defaultProps = {
+  variant: "filled",
 };
 
 export default FloorSelector;

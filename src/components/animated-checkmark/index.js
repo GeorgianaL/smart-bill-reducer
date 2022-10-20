@@ -1,7 +1,6 @@
 import React from "react";
-import { Typography } from "@mui/material";
 
-export const Checkmark = ({ size, message }) => (
+export const Checkmark = ({ size }) => (
   <div style={{ width: size, height: size, margin: "auto" }}>
     <style>
       {`
@@ -10,11 +9,14 @@ export const Checkmark = ({ size, message }) => (
           margin: 10px auto;
           max-width: 80%;
           max-height: 250px;
+          background-color: #E7FCF0;
+          padding: 16px;
+          border-radius: 50%;
         }
           .circle {
           stroke: #97E11B;
           fill: none;
-          stroke-width: 1.8;
+          stroke-width: 2.8;
           stroke-linecap: round;
           animation: progress 1s ease-out forwards;
           // transform-origin: center;
@@ -27,7 +29,7 @@ export const Checkmark = ({ size, message }) => (
           .tick {
           fill: none;
           stroke: #97E11B;
-          stroke-width: 1.8px;
+          stroke-width: 2.8px;
           stroke-linecap: round;
           /* Stroke-dasharray property */
           stroke-dasharray: 50px;
@@ -67,7 +69,6 @@ export const Checkmark = ({ size, message }) => (
         transform="translate(4, -5)"
       />
     </svg>
-    {message && <Typography sx={{ textAlign: "center" }}>{message}</Typography>}
   </div>
 );
 

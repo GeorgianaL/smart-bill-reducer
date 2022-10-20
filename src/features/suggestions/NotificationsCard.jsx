@@ -20,7 +20,7 @@ const NotificationsCard = () => {
       </Grid>
       <Grid container direction="column" spacing={2}>
         {notifications.map((notif) => (
-          <Grid item>
+          <Grid item key={notif.id}>
             <Grid container direction="row" spacing={2}>
               <Grid item xs={10}>
                 <Typography variant="body1">{notif.text}</Typography>

@@ -14,8 +14,10 @@ const Container = styled(FormControl)(() => ({
   "&.FormControlStandard": {
     ".MuiInputBase-root": {
       height: 40,
-      paddingLeft: 10,
       paddingRight: 24,
+    },
+    ".MuiSelect-select": {
+      paddingLeft: 0,
     },
   },
   "&.FormControlOutlined": {
@@ -66,7 +68,7 @@ const SelectTypesClassnames = {
   underlined: "FormControlUnderlined",
 };
 
-const Select = ({ onChange, value, values, multiple, variant }) => {
+const Select = ({ onChange, value, values, multiple, variant, ...props }) => {
   const handleChange = (event) => onChange(event.target.value);
 
   return (
@@ -75,6 +77,7 @@ const Select = ({ onChange, value, values, multiple, variant }) => {
       classes={{
         root: SelectTypesClassnames[variant],
       }}
+      {...props}
     >
       <SelectBase
         id="select"

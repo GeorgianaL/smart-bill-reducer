@@ -13,5 +13,5 @@ export {
   addRelay,
   switchPower,
 } from "./entities";
-export { getSchedules } from "./schedules";
+export { getSchedules, saveStandardSchedule } from "./schedules";
 export { getHealthcheck } from "./healthcheck";
