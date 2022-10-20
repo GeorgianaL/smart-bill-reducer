@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../utils/theme";
 import logoSrc from "../../assets/Logo.svg";

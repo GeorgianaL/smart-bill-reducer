@@ -1,15 +1,5 @@
 import React from "react";
-import {
-  Typography,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-  Collapse,
-  Box,
-  IconButton,
-} from "@mui/material";
+import { TableCell, TableRow, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Chip from "../../../components/chip";
 import Radio from "../../../components/radio";
@@ -19,7 +9,7 @@ import editIcon from "../../../assets/edit.svg";
 
 const Row = (props) => {
   const { row } = props;
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const navigate = useNavigate();
   const navigateToSchedules = () => {
     // TODO: POST login

@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Tooltip } from "@mui/material";
 import TOOLS from "../../constants";
-import theme from "../../../../utils/theme";
 import imageIcon from "../../../../assets/image-edit.svg";
 
 const StyledTools = styled.div`
@@ -56,7 +55,7 @@ const Tools = ({ activeControl, onSelectControl }) => (
       // onClick={}
       // active={}
       >
-        <img src={imageIcon} alt="Change image" />
+        <img src={imageIcon} alt="Change" />
       </StyledTool>
     </Tooltip>
   </StyledTools>
