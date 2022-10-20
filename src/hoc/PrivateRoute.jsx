@@ -1,7 +1,7 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
+// import React from "react";
+// import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ isLoggedIn, children }) => {
+const PrivateRoute = ({ children }) => {
   // if (!isLoggedIn) {
   //   return <Navigate to="/unauthorized" replace />;
   // }
