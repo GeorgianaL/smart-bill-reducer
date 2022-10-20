@@ -15,3 +15,4 @@ export {
 } from "./entities";
 export { getSchedules, saveStandardSchedule } from "./schedules";
 export { getHealthcheck } from "./healthcheck";
+export { addPicture } from "./pictures";

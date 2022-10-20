@@ -26,35 +26,70 @@ const BuildingSetup = () => {
   const navigate = useNavigate();
   const [cardHighlighted, setCardHighlighted] = useState(-1);
   const [buildingName, updateBuildingName] = useState("");
-  const [floors, updateFloors] = useState([""]);
+  const [floors, updateFloors] = useState([]);
 
   const addNewFloor = () => {
-    const newFloorsList = [...floors, ""];
+    const newFloorsList = [
+      ...floors,
+      {
+        name: "",
+        map: null,
+        mapUrl: "",
+      },
+    ];
     setCardHighlighted(newFloorsList.length);
     updateFloors(newFloorsList);
   };
 
-  const updateFloorName = (newValue, index) => {
-    updateFloors(floors.map((name, i) => (i === index ? newValue : name)));
+  const updateFloorByIndex = (field, value, index) => {
+    updateFloors(
+      floors.map((floor, i) => {
+        if (i === index) {
+          return {
+            ...floor,
+            [field]: value,
+          };
+        }
+        return floor;
+      })
+    );
   };
 
   const { loading } = useSelector((state) => state.buildings);
 
   const dispatch = useDispatch();
 
-  const onUploadImage = (e) => {
-    // debugger;
-    dispatch(addPicture(e.target.files[0]));
+  const onSave = () => {
+    if (floors.length === 0) {
+      const payload = {
+        name: buildingName,
+        floors: [],
+      };
+      dispatch(addBuilding(payload)).then(() => navigate("/buildings"));
+    } else {
+      const payload = {
+        name: buildingName,
+        floors,
+      };
+      floors.forEach((floor, i) => {
+        if (floor.map) {
+          dispatch(addPicture(floor.map))
+            .then((response) => {
+              const mapUrl = response.payload.url;
+              payload.floors.mapUrl = mapUrl;
+            })
+            .then(() => {
+              if (i === floors.length - 1) {
+                dispatch(addBuilding(payload)).then(() =>
+                  navigate("/buildings")
+                );
+              }
+            });
+        }
+      });
+    }
   };
 
-  const onSave = () => {
-    const payload = {
-      name: buildingName,
-      floors,
-    };
-    dispatch(addBuilding(payload)).then(() => navigate("/buildings"));
-  };
-  console.log(process.env);
   return (
     <Layout>
       {loading ? (
@@ -100,7 +135,7 @@ const BuildingSetup = () => {
               </Grid>
             </Card>
           </Grid>
-          {floors.map((floorName, index) => (
+          {floors.map((floor, index) => (
             <Grid item key={index}>
               <Card highlighted={cardHighlighted === index}>
                 <Grid container spacing={2} direction="column">
@@ -117,8 +152,10 @@ const BuildingSetup = () => {
                     <Input
                       placeholder="Floor name"
                       variant="outlined"
-                      value={floorName}
-                      onChange={(e) => updateFloorName(e.target.value, index)}
+                      value={floor.name}
+                      onChange={(e) =>
+                        updateFloorByIndex("name", e.target.value, index)
+                      }
                       onFocus={() => setCardHighlighted(index)}
                     />
                   </Grid>
@@ -129,14 +166,37 @@ const BuildingSetup = () => {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Button
-                      variant="contained"
-                      component="label"
-                      onChange={onUploadImage}
+                    <Grid
+                      container
+                      direction="row"
+                      spacing={2}
+                      alignItems="center"
                     >
-                      Upload
-                      <input hidden accept="image/*" multiple type="file" />
-                    </Button>
+                      <Grid item>
+                        <Button
+                          variant="contained"
+                          component="label"
+                          onChange={(e) =>
+                            updateFloorByIndex("map", e.target.files[0], index)
+                          }
+                        >
+                          {floor.map ? "Change image" : "Upload"}
+                          <input
+                            hidden
+                            accept="image/png"
+                            multiple
+                            type="file"
+                          />
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        {floor.map && (
+                          <Typography variant="subtitle1">
+                            {floor.map.name}
+                          </Typography>
+                        )}
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Card>

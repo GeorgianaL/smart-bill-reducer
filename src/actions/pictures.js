@@ -13,9 +13,10 @@ export const addPicture = createAsyncThunk(
   }
 );
 
+// Response:
 // {
 //     filename: "temp.png",
 //     size: 434912,
 //     type: "image/png",
-//     url: "https://cdn.filestackcontent.com/CSqOSgtkTESEC5SuHpyj",
+//     url: "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4",
 // }
