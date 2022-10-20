@@ -15,6 +15,7 @@ import theme from "../../utils/theme";
 import Logo from "../../components/logo";
 import { AddEntityButton } from "../../components/button";
 import { addBuilding } from "../../actions";
+import { addPicture } from "../../actions/pictures";
 
 const Layout = styled.div`
   padding: 30px 100px;
@@ -41,6 +42,11 @@ const BuildingSetup = () => {
 
   const dispatch = useDispatch();
 
+  const onUploadImage = (e) => {
+    // debugger;
+    dispatch(addPicture(e.target.files[0]));
+  };
+
   const onSave = () => {
     const payload = {
       name: buildingName,
@@ -48,7 +54,7 @@ const BuildingSetup = () => {
     };
     dispatch(addBuilding(payload)).then(() => navigate("/buildings"));
   };
-
+  console.log(process.env);
   return (
     <Layout>
       {loading ? (
@@ -123,7 +129,11 @@ const BuildingSetup = () => {
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Button variant="contained" component="label">
+                    <Button
+                      variant="contained"
+                      component="label"
+                      onChange={onUploadImage}
+                    >
                       Upload
                       <input hidden accept="image/*" multiple type="file" />
                     </Button>

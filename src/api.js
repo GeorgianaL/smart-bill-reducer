@@ -23,3 +23,5 @@ axios.interceptors.request.use(
 );
 
 export default instance;
+
+export const storageURL = `https://www.filestackapi.com/api/store/S3?key=${process.env.REACT_APP_FILESTACK_API_KEY}`;

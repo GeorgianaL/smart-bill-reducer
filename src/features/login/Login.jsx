@@ -6,7 +6,7 @@ import Logo from "../../components/logo";
 import Input from "../../components/input";
 import { login } from "../../actions";
 import { Layout, StyledImage, CentralInfo } from "./styles";
-// import buildingIlustration from "../../assets/SignUpIlustration.svg";
+import buildingIlustration from "../../assets/SignUpIlustration.png";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -36,7 +36,7 @@ const Login = () => {
               justifyContent="center"
             >
               <Grid item lg={6} md={12} sm={12}>
-                {/* <StyledImage src={buildingIlustration} alt="building" /> */}
+                <StyledImage src={buildingIlustration} alt="building" />
               </Grid>
               <Grid
                 item

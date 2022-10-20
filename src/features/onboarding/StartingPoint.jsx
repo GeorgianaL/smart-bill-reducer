@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { Grid, Typography, Button } from "@mui/material";
 import Logo from "../../components/logo";
-// import buildingIlustration from "../../assets/BuildingIlustration.svg";
+import buildingIlustration from "../../assets/BuildingIlustration.png";
 const Layout = styled.div`
   padding: 30px 50px;
 `;
@@ -44,7 +44,7 @@ const StartingPoint = () => (
             justifyContent="center"
           >
             <Grid item lg={6} md={12} sm={12}>
-              {/* <StyledImage src={buildingIlustration} alt="building" /> */}
+              <StyledImage src={buildingIlustration} alt="building" />
             </Grid>
             <Grid item lg={6} md={12} sm={12}>
               <Typography variant="h3">Start by defining your space</Typography>
