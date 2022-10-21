@@ -8,6 +8,8 @@ export const StyledImage = styled.img`
   position: relative;
   float: right;
   padding-right: 100px;
+  width: 600px;
+  height: 400px;
 
   @media (max-width: 1200px) {
     float: left;

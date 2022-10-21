@@ -1,7 +1,8 @@
 import axios from "axios";
 import { getCookie } from "./utils/cookies";
 
-const baseURL = "http://localhost:3000/";
+// const baseURL = "http://localhost:3000/";
+const baseURL = "https://sbr-db.herokuapp.com";
 
 const instance = axios.create({
   baseURL,

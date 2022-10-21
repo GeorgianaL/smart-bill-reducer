@@ -1,10 +1,10 @@
-// import React from "react";
-// import { Navigate } from "react-router-dom";
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
-  // if (!isLoggedIn) {
-  //   return <Navigate to="/unauthorized" replace />;
-  // }
+const PrivateRoute = ({ isLoggedIn, children }) => {
+  if (!isLoggedIn) {
+    return <Navigate to="/unauthorized" replace />;
+  }
   return children;
 };
 

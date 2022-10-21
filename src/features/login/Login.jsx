@@ -17,7 +17,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const authenticate = () => {
-    dispatch(login({ email, password })).then(() => navigate("/dashboard"));
+    dispatch(login({ email, pwd: password })).then(() =>
+      navigate("/dashboard")
+    );
   };
 
   return (

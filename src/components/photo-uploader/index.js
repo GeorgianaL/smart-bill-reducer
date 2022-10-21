@@ -22,16 +22,10 @@ const PhotoUploader = ({ url, name }) => {
     >
       {url !== "" && (
         <Grid item sx={{ marginRight: 2 }}>
-          <Grid container direction="row" alignItems="center" spacing={1}>
-            <Grid item>
-              <a href={url} title={name}>
-                <img alt={name} src={pictureIcon} />
-              </a>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">Uploaded map</Typography>
-            </Grid>
-          </Grid>
+          <a href={url} title={name}>
+            <img alt={name} src={pictureIcon} style={{ marginTop: 4 }} />
+            Uploaded map
+          </a>
         </Grid>
       )}
       <Grid item>
