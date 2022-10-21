@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Backdrop,
+  CircularProgress,
+  Button as ButtonBase,
+} from "@mui/material";
 import {
   getBuildings,
   saveBuilding,
   deleteBuilding,
   getFloors,
   deleteFloor,
-  saveFloorName,
+  saveFloor,
+  addPicture,
 } from "../../actions";
 import {
-  editFloorName,
+  editFloor,
   addNewFloor,
   editBuildingName,
   addNewBuilding,
@@ -21,6 +28,7 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import Card from "../../components/card";
 import Input from "../../components/input";
 import Button, { AddEntityButton } from "../../components/button";
+import PhotoUploader from "../../components/photo-uploader";
 import addIcon from "../../assets/add.svg";
 
 const Buildings = () => {
@@ -52,6 +60,14 @@ const Buildings = () => {
   const addBuilding = () => {
     setBuildingEditingMode(null);
     dispatch(addNewBuilding());
+  };
+
+  const onUploadPicture = (file) => {
+    dispatch(addPicture(file)).then((response) => {
+      const mapUrl = response.payload.url;
+      // to change: id should not be null at this moment
+      dispatch(editFloor({ id: null, field: "mapUrl", value: mapUrl }));
+    });
   };
 
   return (
@@ -120,42 +136,119 @@ const Buildings = () => {
 
                     if (floor) {
                       return (
-                        <Grid item key={String(floor.id)}>
-                          <Input
-                            id={String(floor.id)}
-                            value={floor.name}
-                            removable
-                            hideborder
-                            autoFocus={floor.id === null}
-                            onFocus={() => setCardHighlighted(index)}
-                            onRemove={() => onRemoveFloor(floor.id)}
-                            onChange={(e) =>
-                              dispatch(
-                                editFloorName({
-                                  id: floor.id,
-                                  value: e.target.value,
-                                })
-                              )
-                            }
-                            onBlur={(e) => {
-                              if (floor.name === "") {
-                                dispatch(discardEmptyFloor(building.id));
-                              } else {
-                                dispatch(
-                                  saveFloorName({
-                                    id: floor.id,
-                                    name: e.target.value,
-                                  })
-                                );
+                        <>
+                          {floor.id === null && (
+                            <>
+                              <Grid item>
+                                <Typography variant="h6">Add floor</Typography>
+                              </Grid>
+                              <Grid item>
+                                <Typography variant="subtitle1">
+                                  Add the floor name you want to be able to
+                                  manage. Pick specific names.
+                                </Typography>
+                              </Grid>
+                            </>
+                          )}
+                          <Grid item>
+                            <Grid
+                              container
+                              direction="row"
+                              alignItems="center"
+                              spacing={6}
+                            >
+                              <Grid item key={String(floor.id)}>
+                                <Input
+                                  id={String(floor.id)}
+                                  value={floor.name}
+                                  removable
+                                  hideborder
+                                  autoFocus={floor.id === null}
+                                  onFocus={() => setCardHighlighted(index)}
+                                  onRemove={() => onRemoveFloor(floor.id)}
+                                  onChange={(e) =>
+                                    dispatch(
+                                      editFloor({
+                                        id: floor.id,
+                                        field: "name",
+                                        value: e.target.value,
+                                      })
+                                    )
+                                  }
+                                  onBlur={(e) => {
+                                    if (floor.name === "") {
+                                      dispatch(discardEmptyFloor(building.id));
+                                    } else {
+                                      dispatch(
+                                        saveFloor({
+                                          id: floor.id,
+                                          buildingId: building.id,
+                                          name: e.target.value,
+                                        })
+                                      );
+                                    }
+                                  }}
+                                />
+                              </Grid>
+                              {
+                                <Grid item>
+                                  <PhotoUploader
+                                    url={floor.mapUrl}
+                                    name={floor.name}
+                                  />
+                                </Grid>
                               }
-                            }}
-                          />
-                        </Grid>
+                            </Grid>
+                          </Grid>
+                          {floor.id === null && floor.name !== "" && (
+                            <>
+                              <Grid item>
+                                <Typography variant="subtitle1">
+                                  Add the floor map. You will use this map to
+                                  create zones, add sensors, relays etc
+                                </Typography>
+                              </Grid>
+                              <Grid item>
+                                <Grid
+                                  container
+                                  direction="row"
+                                  spacing={2}
+                                  alignItems="center"
+                                >
+                                  <Grid item>
+                                    <ButtonBase
+                                      variant="contained"
+                                      component="label"
+                                      onChange={(e) =>
+                                        onUploadPicture(e.target.files[0])
+                                      }
+                                    >
+                                      {floor.map ? "Change image" : "Upload"}
+                                      <input
+                                        hidden
+                                        accept="image/png"
+                                        multiple
+                                        type="file"
+                                      />
+                                    </ButtonBase>
+                                  </Grid>
+                                  <Grid item>
+                                    {floor.map && (
+                                      <Typography variant="subtitle1">
+                                        {floor.map.name}
+                                      </Typography>
+                                    )}
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                            </>
+                          )}
+                        </>
                       );
                     }
                     return null;
                   })}
-                  <Grid item>
+                  <Grid item sx={{ marginTop: 2 }}>
                     <Button
                       startIcon={<img src={addIcon} alt="add" />}
                       onClick={() => onAddNewFloor(building.id)}

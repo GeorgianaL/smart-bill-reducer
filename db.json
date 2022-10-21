@@ -17,20 +17,46 @@
   ],
   "floors": [
     {
+      "buildingId": 1234,
       "id": 2341,
-      "name": "Floor 1"
+      "name": "Floor 3",
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
     },
     {
+      "buildingId": 1234,
       "id": 2342,
-      "name": "Floor 4"
+      "name": "Floor 4",
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
     },
     {
+      "buildingId": 1234,
       "id": 2343,
-      "name": "Floor 5"
+      "name": "Floor 5",
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
     },
     {
+      "buildingId": 1235,
       "id": 1267,
-      "name": "Ground Floor"
+      "name": "Ground Floor",
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
+    },
+    {
+      "buildingId": 1235,
+      "name": "Et 1",
+      "id": 2344,
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
+    },
+    {
+      "buildingId": 1235,
+      "name": "Et 1",
+      "id": 2345,
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
+    },
+    {
+      "buildingId": 1235,
+      "name": "e1",
+      "id": 2346,
+      "mapUrl": "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4"
     }
   ],
   "history": [

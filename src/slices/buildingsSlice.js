@@ -27,9 +27,9 @@ export const buildingsSlice = createSlice({
         };
       }
     },
-    editFloorName: (state, action) => {
+    editFloor: (state, action) => {
       const {
-        payload: { id, value },
+        payload: { id, field, value },
       } = action;
 
       return {
@@ -38,7 +38,7 @@ export const buildingsSlice = createSlice({
           if (floor.id === id) {
             return {
               ...floor,
-              name: value,
+              [field]: value,
             };
           }
           return floor;
@@ -180,7 +180,7 @@ const { actions, reducer } = buildingsSlice;
 
 export const {
   changeActiveBuilding,
-  editFloorName,
+  editFloor,
   addNewFloor,
   editBuildingName,
   addNewBuilding,

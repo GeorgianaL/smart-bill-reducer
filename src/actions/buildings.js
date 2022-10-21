@@ -20,7 +20,8 @@ export const addBuilding = createAsyncThunk(
 export const saveBuilding = createAsyncThunk(
   "buildings/editBuilding",
   async (payload) => {
-    const res = await axios.put("/buildings", payload);
+    const { id, name } = payload;
+    const res = await axios.patch(`/buildings/${id}`, { name });
     return res.data;
   }
 );

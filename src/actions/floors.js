@@ -6,11 +6,18 @@ export const getFloors = createAsyncThunk("floors/getFloors", async () => {
   return res.data;
 });
 
-export const saveFloorName = createAsyncThunk(
+export const saveFloor = createAsyncThunk(
   "floors/editBuilding",
   async (payload) => {
-    const res = await axios.put("/floors", payload);
-    return res.data;
+    const { id, buildingId, name, ...props } = payload;
+
+    if (id !== null) {
+      const res = await axios.patch(`/floors/${id}`, { props });
+      return res.data;
+    } else {
+      const res = await axios.post(`/floors`, { buildingId, name });
+      return res.data;
+    }
   }
 );
 

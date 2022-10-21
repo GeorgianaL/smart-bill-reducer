@@ -5,7 +5,7 @@ export {
   saveBuilding,
   deleteBuilding,
 } from "./buildings";
-export { getFloors, saveFloorName, deleteFloor } from "./floors";
+export { getFloors, saveFloor, deleteFloor } from "./floors";
 export {
   getEntities,
   addZone,
