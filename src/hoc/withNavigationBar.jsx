@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import Drawer from "../components/drawer";
+
+const Container = styled(Box)(({ theme }) => ({
+  [theme.breakpoints.up("sm")]: {
+    display: "flex",
+  },
+  [theme.breakpoints.down("sm")]: {
+    display: "block",
+  },
+}));
 
 const withNavigationBar = (WrappedComponent) => (props) => {
   const navigate = useNavigate();
@@ -15,7 +25,7 @@ const withNavigationBar = (WrappedComponent) => (props) => {
   };
 
   return (
-    <Box sx={{ display: "flex" }}>
+    <Container>
       <Drawer
         open={open}
         onOpenDrawer={() => handleDrawer(true)}
@@ -32,7 +42,7 @@ const withNavigationBar = (WrappedComponent) => (props) => {
       >
         <WrappedComponent {...props} />
       </Box>
-    </Box>
+    </Container>
   );
 };
 

@@ -1,10 +1,5 @@
 export { login } from "./user";
-export {
-  getBuildings,
-  addBuilding,
-  saveBuilding,
-  deleteBuilding,
-} from "./buildings";
+export { getBuildings, saveBuilding, deleteBuilding } from "./buildings";
 export { getFloors, saveFloor, deleteFloor } from "./floors";
 export {
   getEntities,

@@ -9,20 +9,18 @@ export const getBuildings = createAsyncThunk(
   }
 );
 
-export const addBuilding = createAsyncThunk(
-  "buildings/addBuilding",
-  async (payload) => {
-    const res = await axios.post("/buildings", payload);
-    return res.data;
-  }
-);
-
 export const saveBuilding = createAsyncThunk(
   "buildings/editBuilding",
   async (payload) => {
     const { id, name } = payload;
-    const res = await axios.patch(`/buildings/${id}`, { name });
-    return res.data;
+
+    if (id !== null) {
+      const res = await axios.patch(`/buildings/${id}`, { name });
+      return res.data;
+    } else {
+      const res = await axios.post(`/buildings`, { name });
+      return res.data;
+    }
   }
 );
 

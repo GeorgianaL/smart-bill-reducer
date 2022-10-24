@@ -8,20 +8,11 @@ const instance = axios.create({
   baseURL,
 });
 
-axios.interceptors.request.use(
-  (config) => {
-    const { origin } = new URL(config.url);
-    const allowedOrigins = [baseURL];
-    const token = getCookie("token");
-    if (allowedOrigins.includes(origin)) {
-      config.headers.authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+const token = getCookie("token");
+instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+instance.defaults.headers.post["Content-Type"] =
+  "application/json;charset=utf-8";
+instance.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 export default instance;
 

@@ -45,14 +45,24 @@ const Login = () => {
                 lg={6}
                 md={12}
                 sm={12}
-                sx={{ minWidth: 450, paddingRight: 22 }}
+                sx={{
+                  "@media (max-width:480px)": {
+                    paddingRight: 1,
+                  },
+                  "@media (min-width:480px)": {
+                    maxWidth: 480,
+                  },
+                  "@media (max-width:1200px)": {
+                    maxWidth: "100%",
+                  },
+                }}
               >
                 <Typography
                   variant="h3"
                   sx={{
                     marginBottom: 8,
-                    "@media (max-width:1200px)": {
-                      marginBottom: 1,
+                    "@media (max-width:480px)": {
+                      marginBottom: 2,
                     },
                   }}
                 >

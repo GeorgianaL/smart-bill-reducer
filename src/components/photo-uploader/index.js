@@ -1,5 +1,10 @@
 import React from "react";
-import { Grid, Typography, IconButton } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  IconButton,
+  Button as ButtonBase,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import pictureIcon from "../../assets/picture.svg";
@@ -11,8 +16,22 @@ const Container = styled(Grid)(({ theme }) => ({
   borderRadius: 10,
   padding: "8px 16px",
 }));
+// const url = "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4";
+const url = "";
 
-const PhotoUploader = ({ url, name }) => {
+const PhotoUploader = ({ name, onUpload }) => {
+  if (url === "") {
+    return (
+      <ButtonBase
+        variant="outlined"
+        component="label"
+        onChange={(e) => onUpload(e.target.files[0])}
+      >
+        Upload
+        <input hidden accept="image/png" multiple type="file" />
+      </ButtonBase>
+    );
+  }
   return (
     <Container
       container
@@ -21,15 +40,25 @@ const PhotoUploader = ({ url, name }) => {
       justifyContent="space-between"
     >
       {url !== "" && (
-        <Grid item sx={{ marginRight: 2 }}>
-          <a href={url} title={name}>
-            <img alt={name} src={pictureIcon} style={{ marginTop: 4 }} />
-            Uploaded map
+        <Grid
+          item
+          sx={{ marginRight: 6, display: "flex", alignItems: "center" }}
+        >
+          <a href={url} title={name} target="_blank" rel="noreferrer">
+            <img alt={name} src={pictureIcon} />
           </a>
+          <Typography
+            component="a"
+            variant="subtitle1"
+            href={url}
+            target="_blank"
+          >
+            Uploaded map
+          </Typography>
         </Grid>
       )}
       <Grid item>
-        <Grid container direction="row" spacing={2}>
+        <Grid container direction="row">
           <Grid item>
             <IconButton
               color="primary"

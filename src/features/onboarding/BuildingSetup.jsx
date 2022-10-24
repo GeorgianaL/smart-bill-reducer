@@ -14,7 +14,7 @@ import Input from "../../components/input";
 import theme from "../../utils/theme";
 import Logo from "../../components/logo";
 import { AddEntityButton } from "../../components/button";
-import { addBuilding } from "../../actions";
+import { saveBuilding } from "../../actions";
 import { addPicture } from "../../actions/pictures";
 
 const Layout = styled.div`
@@ -65,7 +65,7 @@ const BuildingSetup = () => {
         name: buildingName,
         floors: [],
       };
-      dispatch(addBuilding(payload)).then(() => navigate("/buildings"));
+      dispatch(saveBuilding(payload)).then(() => navigate("/buildings"));
     } else {
       const payload = {
         name: buildingName,
@@ -80,7 +80,7 @@ const BuildingSetup = () => {
             })
             .then(() => {
               if (i === floors.length - 1) {
-                dispatch(addBuilding(payload)).then(() =>
+                dispatch(saveBuilding(payload)).then(() =>
                   navigate("/buildings")
                 );
               }

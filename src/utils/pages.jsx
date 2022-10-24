@@ -19,7 +19,7 @@ export const menuLinks = [
   {
     label: "Dashboard",
     icon: dashboardIcon,
-    path: "/",
+    path: "/dashboard",
     component: <Dashboard />,
   },
   {

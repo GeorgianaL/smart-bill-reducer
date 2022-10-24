@@ -15,13 +15,13 @@ const BuildingSelector = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (buildings.length === 0) {
-      dispatch(getBuildings()).then((response) => {
-        if (response.payload.length === 0) {
-          navigate("/onboarding");
-        }
-      });
-    }
+    // if (buildings.length === 0) {
+    dispatch(getBuildings()).then((response) => {
+      // if (response.payload.length === 0) {
+      navigate("/onboarding");
+      // }
+    });
+    // }
   }, []);
 
   const onChange = (e) => dispatch(changeActiveBuilding(e));

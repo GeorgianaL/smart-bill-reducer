@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "../actions";
+import { hasCookie } from "../utils/cookies";
+
+const isLoggedIn = hasCookie("token");
 
 const initialState = {
   loading: false,
   error: null,
-  isLoggedIn: false,
+  isLoggedIn,
   data: {},
 };
 

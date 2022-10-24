@@ -2,18 +2,21 @@ import styled from "styled-components";
 
 export const Layout = styled.div`
   padding: 30px 50px;
+
+  @media (max-width: 480px) {
+    padding: 20px 24px;
+  }
 `;
 
 export const StyledImage = styled.img`
   position: relative;
-  float: right;
   padding-right: 100px;
-  width: 600px;
   height: 400px;
 
-  @media (max-width: 1200px) {
+  @media (max-width: 480px) {
     float: left;
-    width: 380px;
+    width: auto;
+    height: 160px;
   }
 `;
 

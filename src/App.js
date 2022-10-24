@@ -7,12 +7,14 @@ import PrivateRoute from "./hoc/PrivateRoute";
 import { theme, links } from "./utils";
 import "./App.css";
 import { Login, NotAuthorizedPage } from "./features/login";
+import Dashboard from "./features/dashboard";
 
 const App = ({ isLoggedIn }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
+        <Route index path="/" element={<Dashboard />} />
         {links.map((link) => (
           <Route
             key={link.label}

@@ -12,7 +12,7 @@ export const saveFloor = createAsyncThunk(
     const { id, buildingId, name, ...props } = payload;
 
     if (id !== null) {
-      const res = await axios.patch(`/floors/${id}`, { props });
+      const res = await axios.patch(`/floors/${id}`, { name, ...props });
       return res.data;
     } else {
       const res = await axios.post(`/floors`, { buildingId, name });
@@ -23,8 +23,9 @@ export const saveFloor = createAsyncThunk(
 
 export const deleteFloor = createAsyncThunk(
   "floors/deleteFloor",
-  async (floorId) => {
+  async (floorId, callback) => {
     const res = await axios.delete(`/floors/${floorId}`);
+    callback();
     return res.data;
   }
 );

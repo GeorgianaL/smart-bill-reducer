@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Grid,
-  Typography,
-  Backdrop,
-  CircularProgress,
-  Button as ButtonBase,
-} from "@mui/material";
+import { Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
 import {
   getBuildings,
   saveBuilding,
@@ -46,7 +40,7 @@ const Buildings = () => {
   }, []);
 
   const onRemoveFloor = (floorId) =>
-    dispatch(deleteFloor(floorId)).then(dispatch(getFloors()));
+    dispatch(deleteFloor(floorId)).unwrap().then(dispatch(getFloors()));
 
   const onAddNewFloor = (buildingId) => dispatch(addNewFloor(buildingId));
 
@@ -57,16 +51,28 @@ const Buildings = () => {
 
   const onEditBuildingName = (buildingId) => setBuildingEditingMode(buildingId);
 
-  const addBuilding = () => {
+  const addNewBuildingItem = () => {
     setBuildingEditingMode(null);
     dispatch(addNewBuilding());
   };
 
-  const onUploadPicture = (file) => {
+  const addBuilding = (payload) =>
+    dispatch(saveBuilding(payload)).unwrap().then(dispatch(getBuildings()));
+
+  const addFloor = (payload) => {
+    dispatch(saveFloor(payload))
+      .unwrap()
+      .then(dispatch(getBuildings()))
+      .then(dispatch(getFloors()));
+  };
+
+  const onUploadPicture = (file, floorId) => {
     dispatch(addPicture(file)).then((response) => {
       const mapUrl = response.payload.url;
-      // to change: id should not be null at this moment
-      dispatch(editFloor({ id: null, field: "mapUrl", value: mapUrl }));
+      dispatch(editFloor({ id: floorId, field: "mapUrl", value: mapUrl }));
+      dispatch(saveFloor({ id: floorId, mapUrl }))
+        .unwrap()
+        .then(dispatch(getFloors()));
     });
   };
 
@@ -103,16 +109,14 @@ const Buildings = () => {
                           )
                         }
                         onBlur={(e) => {
-                          onEditBuildingName(-1);
+                          // onEditBuildingName(-1);
                           if (e.target.value === "") {
                             dispatch(discardEmptyBuilding());
                           } else {
-                            dispatch(
-                              saveBuilding({
-                                id: building.id,
-                                name: e.target.value,
-                              })
-                            );
+                            addBuilding({
+                              id: building.id,
+                              name: e.target.value,
+                            });
                           }
                         }}
                       />
@@ -132,7 +136,9 @@ const Buildings = () => {
               >
                 <Grid container direction="column" spacing={1}>
                   {building.floorIds.map((floorId) => {
-                    const floor = floors.find((f) => f.id === floorId);
+                    const floor = floors.find(
+                      (f) => String(f.id) === String(floorId)
+                    );
 
                     if (floor) {
                       return (
@@ -154,7 +160,7 @@ const Buildings = () => {
                             <Grid
                               container
                               direction="row"
-                              alignItems="center"
+                              alignItems="flex-end"
                               spacing={6}
                             >
                               <Grid item key={String(floor.id)}>
@@ -179,70 +185,28 @@ const Buildings = () => {
                                     if (floor.name === "") {
                                       dispatch(discardEmptyFloor(building.id));
                                     } else {
-                                      dispatch(
-                                        saveFloor({
-                                          id: floor.id,
-                                          buildingId: building.id,
-                                          name: e.target.value,
-                                        })
-                                      );
+                                      addFloor({
+                                        id: floor.id,
+                                        buildingId: building.id,
+                                        name: e.target.value,
+                                      });
                                     }
                                   }}
                                 />
                               </Grid>
-                              {
+                              {floor.id !== null && (
                                 <Grid item>
                                   <PhotoUploader
                                     url={floor.mapUrl}
                                     name={floor.name}
+                                    onUpload={(file) =>
+                                      onUploadPicture(file, floor.id)
+                                    }
                                   />
                                 </Grid>
-                              }
+                              )}
                             </Grid>
                           </Grid>
-                          {floor.id === null && floor.name !== "" && (
-                            <>
-                              <Grid item>
-                                <Typography variant="subtitle1">
-                                  Add the floor map. You will use this map to
-                                  create zones, add sensors, relays etc
-                                </Typography>
-                              </Grid>
-                              <Grid item>
-                                <Grid
-                                  container
-                                  direction="row"
-                                  spacing={2}
-                                  alignItems="center"
-                                >
-                                  <Grid item>
-                                    <ButtonBase
-                                      variant="contained"
-                                      component="label"
-                                      onChange={(e) =>
-                                        onUploadPicture(e.target.files[0])
-                                      }
-                                    >
-                                      {floor.map ? "Change image" : "Upload"}
-                                      <input
-                                        hidden
-                                        accept="image/png"
-                                        multiple
-                                        type="file"
-                                      />
-                                    </ButtonBase>
-                                  </Grid>
-                                  <Grid item>
-                                    {floor.map && (
-                                      <Typography variant="subtitle1">
-                                        {floor.map.name}
-                                      </Typography>
-                                    )}
-                                  </Grid>
-                                </Grid>
-                              </Grid>
-                            </>
-                          )}
                         </>
                       );
                     }
@@ -262,7 +226,9 @@ const Buildings = () => {
           );
         })}
       <Grid item>
-        <AddEntityButton onClick={addBuilding}>Add Building</AddEntityButton>
+        <AddEntityButton onClick={addNewBuildingItem}>
+          Add Building
+        </AddEntityButton>
       </Grid>
     </Grid>
   );

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { default as axios, storageURL } from "../api";
+import axios from "axios";
+import { storageURL } from "../api";
 
 export const addPicture = createAsyncThunk(
   "pictures/addPicture",
