@@ -47,6 +47,11 @@ const CssTextField = styled(TextField)(({ theme, fullWidth }) => ({
   ".MuiFormLabel-root": {
     top: -7,
   },
+  input: {
+    "&:-webkit-autofill": {
+      WebkitBoxShadow: `0 0 0 1000px ${theme.palette.grey[500]} inset`,
+    },
+  },
 }));
 
 const Input = ({ value, hideborder, removable, onRemove, ...props }) => {
