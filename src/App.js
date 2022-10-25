@@ -1,5 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { Routes, Route } from "react-router-dom";
@@ -9,12 +10,21 @@ import "./App.css";
 import { Login, NotAuthorizedPage } from "./features/login";
 import Dashboard from "./features/dashboard";
 
-const App = ({ isLoggedIn }) => {
+const App = () => {
+  const { isLoggedIn } = useSelector((state) => state.user);
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Routes>
-        <Route index path="/" element={<Dashboard />} />
+        <Route
+          index
+          path="/"
+          element={
+            <PrivateRoute isLoggedIn={isLoggedIn} redirectTo="/login">
+              <Dashboard />
+            </PrivateRoute>
+          }
+        />
         {links.map((link) => (
           <Route
             key={link.label}
@@ -33,8 +43,4 @@ const App = ({ isLoggedIn }) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  isLoggedIn: state.user.isLoggedIn,
-});
-
-export default connect(mapStateToProps)(App);
+export default App;
