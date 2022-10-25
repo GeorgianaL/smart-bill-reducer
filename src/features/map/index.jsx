@@ -24,7 +24,7 @@ const Map = () => {
     } else {
       dispatch(getFloors()).then(() => dispatch(getEntities(activeFloor)));
     }
-  }, []);
+  }, [activeFloor]);
 
   const { zones, sensors, relays, activeEntity, loading } = useSelector(
     (state) => state.entities
@@ -34,7 +34,10 @@ const Map = () => {
 
   const addNewEntity = (payload) => dispatch(addEntity(payload));
 
-  const addNewZone = (payload) => dispatch(addZone(payload));
+  const addNewZone = async (payload) => {
+    await dispatch(addZone(payload));
+    dispatch(getEntities(activeFloor));
+  };
 
   const addNewSensor = (payload) => dispatch(addSensor(payload));
 

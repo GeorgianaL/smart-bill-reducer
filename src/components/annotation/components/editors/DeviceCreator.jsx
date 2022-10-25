@@ -5,7 +5,7 @@ import Input from "../../../input";
 const DeviceCreator = ({ annotation, onChange }) => {
   return (
     <Grid container direction="column" spacing={2}>
-      <Grid item>
+      {/* <Grid item>
         <Input
           required
           id="entity-id"
@@ -22,7 +22,7 @@ const DeviceCreator = ({ annotation, onChange }) => {
           value={annotation.data && annotation.data.id}
           variant="standard"
         />
-      </Grid>
+      </Grid> */}
       <Grid item>
         <Input
           required

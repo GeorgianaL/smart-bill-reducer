@@ -11,7 +11,7 @@ export const getEntities = createAsyncThunk(
       buildings: { activeFloor },
     } = state;
 
-    const res = await axios.get(`/maps/${activeFloor}`);
+    const res = await axios.get(`/entities/floors/${activeFloor}`);
     const {
       data: { zones, sensors, relays },
     } = res;
@@ -37,7 +37,10 @@ export const addZone = createAsyncThunk(
       buildings: { activeFloor },
     } = state;
 
-    const res = await axios.put(`/maps/${activeFloor}/zone`, payload);
+    const res = await axios.post(
+      `/entities/floors/${activeFloor}/zones`,
+      payload
+    );
     return res.data;
   }
 );
@@ -49,9 +52,9 @@ export const addSensor = createAsyncThunk(
     const {
       buildings: { activeFloor },
     } = state;
-
-    const res = await axios.put(`/maps/${activeFloor}/sensor`, payload);
-    return res.data;
+    debugger;
+    // const res = await axios.put(`/entities/floors/${activeFloor}/sensor`, payload);
+    // return res.data;
   }
 );
 
@@ -63,7 +66,10 @@ export const addRelay = createAsyncThunk(
       buildings: { activeFloor },
     } = state;
 
-    const res = await axios.put(`/maps/${activeFloor}/relay`, payload);
+    const res = await axios.put(
+      `/entities/floors/${activeFloor}/relays`,
+      payload
+    );
     return res.data;
   }
 );
@@ -77,7 +83,7 @@ export const switchPower = createAsyncThunk(
     } = state;
 
     try {
-      const res = await axios.patch(`/maps/${activeEntity}`, {
+      const res = await axios.patch(`/entities/${activeEntity}`, {
         powerOn: payload,
       });
       return res.data;

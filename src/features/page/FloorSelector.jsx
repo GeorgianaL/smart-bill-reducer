@@ -26,7 +26,9 @@ const FloorSelector = ({ variant }) => {
 
   activeBuilding.forEach((building) => {
     return building.floorIds.forEach((floorId) => {
-      const floor = floors.find((floor) => floor.id === floorId);
+      const floor = floors.find(
+        (floor) => String(floor.id) === String(floorId)
+      );
       if (floor) {
         floorOptions = [
           ...floorOptions,
