@@ -1,9 +1,9 @@
 import * as React from "react";
 import { IconButton } from "@mui/material";
 import Logo from "../logo";
-import menuIcon from "../../assets/menu.png";
+import menuIcon from "../../assets/menu.svg";
 
-import { StyledToolbar, Nav } from "./styles";
+import { StyledToolbar, Nav, MenuList } from "./styles";
 
 const MobileMenu = ({ menu }) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
@@ -26,7 +26,7 @@ const MobileMenu = ({ menu }) => {
           <img src={menuIcon} alt="menu" />
         </IconButton>
       </Nav>
-      {mobileOpen && menu}
+      {mobileOpen && <MenuList>{menu}</MenuList>}
     </StyledToolbar>
   );
 };

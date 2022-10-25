@@ -20,9 +20,20 @@ export const loginSlice = createSlice({
       state.loading = true;
     },
     [login.fulfilled]: (state, { payload }) => {
-      state.loading = false;
-      state.isLoggedIn = true;
-      state.data = payload;
+      if (payload && payload.data) {
+        return {
+          ...state,
+          loading: false,
+          isLoggedIn: true,
+          data: payload.data,
+        };
+      }
+      return {
+        ...state,
+        loading: false,
+        isLoggedIn: false,
+        error: true,
+      };
     },
     [login.rejected]: (state) => {
       state.loading = false;

@@ -20,6 +20,10 @@ import { addPicture } from "../../actions/pictures";
 const Layout = styled.div`
   padding: 30px 100px;
   background-color: ${theme.palette.grey[500]};
+
+  @media (max-width: 480px) {
+    padding: 20px 24px;
+  }
 `;
 
 const BuildingSetup = () => {

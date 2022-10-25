@@ -53,6 +53,8 @@ export const StyledDrawer = styled(DrawerBase, {
   }),
 }));
 
+const mobileNavbarHeight = 70;
+
 export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     display: "none",
@@ -65,6 +67,7 @@ export const StyledToolbar = styled(Toolbar)(({ theme }) => ({
     img: {
       width: 30,
     },
+    height: mobileNavbarHeight,
   },
 }));
 
@@ -77,4 +80,16 @@ export const Nav = styled("div")(() => ({
   button: {
     marginRight: 0,
   },
+}));
+
+export const MenuList = styled("ul")(() => ({
+  display: "block",
+  left: 0,
+  top: mobileNavbarHeight,
+  width: "100vw",
+  height: `calc(100vh - ${mobileNavbarHeight}px)`,
+  position: "absolute",
+  zIndex: 10,
+  backgroundColor: "white",
+  margin: 0,
 }));

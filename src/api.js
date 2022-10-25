@@ -10,9 +10,6 @@ const instance = axios.create({
 
 const token = getCookie("token");
 instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-instance.defaults.headers.post["Content-Type"] =
-  "application/json;charset=utf-8";
-instance.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 export default instance;
 

@@ -6,6 +6,10 @@ import Logo from "../../components/logo";
 import buildingIlustration from "../../assets/BuildingIlustration.png";
 const Layout = styled.div`
   padding: 30px 50px;
+
+  @media (max-width: 480px) {
+    padding: 20px 24px;
+  }
 `;
 
 const StyledImage = styled.img`
