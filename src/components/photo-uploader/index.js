@@ -16,11 +16,9 @@ const Container = styled(Grid)(({ theme }) => ({
   borderRadius: 10,
   padding: "8px 16px",
 }));
-// const url = "https://cdn.filestackcontent.com/puJmQoySluzFHXk9Kfb4";
-const url = "";
 
-const PhotoUploader = ({ name, onUpload }) => {
-  if (url === "") {
+const PhotoUploader = ({ url, name, onUpload, onRemove }) => {
+  if (url === "" || url === null) {
     return (
       <ButtonBase
         variant="outlined"
@@ -64,8 +62,9 @@ const PhotoUploader = ({ name, onUpload }) => {
               color="primary"
               aria-label="upload picture"
               component="label"
+              onChange={(e) => onUpload(e.target.files[0])}
             >
-              <input hidden accept="image/*" type="file" />
+              <input hidden accept="image/png" type="file" />
               <img src={editIcon} alt="Update" />
             </IconButton>
           </Grid>
@@ -74,6 +73,7 @@ const PhotoUploader = ({ name, onUpload }) => {
               color="primary"
               aria-label="upload picture"
               component="label"
+              onChange={onRemove}
             >
               <img src={deleteIcon} alt="Delete" />
             </IconButton>

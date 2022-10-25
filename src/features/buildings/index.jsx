@@ -39,15 +39,13 @@ const Buildings = () => {
     dispatch(getFloors());
   }, []);
 
-  const onRemoveFloor = (floorId) =>
-    dispatch(deleteFloor(floorId)).unwrap().then(dispatch(getFloors()));
-
   const onAddNewFloor = (buildingId) => dispatch(addNewFloor(buildingId));
 
-  const onRemoveBuilding = (buildingId) =>
-    dispatch(deleteBuilding(buildingId))
-      .then(dispatch(getBuildings()))
-      .then(dispatch(getFloors()));
+  const onRemoveBuilding = async (buildingId) => {
+    await dispatch(deleteBuilding(buildingId));
+    dispatch(getBuildings());
+    dispatch(getFloors());
+  };
 
   const onEditBuildingName = (buildingId) => setBuildingEditingMode(buildingId);
 
@@ -56,24 +54,44 @@ const Buildings = () => {
     dispatch(addNewBuilding());
   };
 
-  const addBuilding = (payload) =>
-    dispatch(saveBuilding(payload)).unwrap().then(dispatch(getBuildings()));
-
-  const addFloor = (payload) => {
-    dispatch(saveFloor(payload))
-      .unwrap()
-      .then(dispatch(getBuildings()))
-      .then(dispatch(getFloors()));
+  const addBuilding = async (payload) => {
+    await dispatch(saveBuilding(payload));
+    dispatch(getBuildings());
   };
 
-  const onUploadPicture = (file, floorId) => {
-    dispatch(addPicture(file)).then((response) => {
-      const mapUrl = response.payload.url;
-      dispatch(editFloor({ id: floorId, field: "mapUrl", value: mapUrl }));
-      dispatch(saveFloor({ id: floorId, mapUrl }))
-        .unwrap()
-        .then(dispatch(getFloors()));
-    });
+  const addFloor = async (payload) => {
+    await dispatch(saveFloor(payload));
+    dispatch(getBuildings());
+    dispatch(getFloors());
+  };
+
+  const onRemoveFloor = async (floorId) => {
+    await dispatch(deleteFloor(floorId));
+    dispatch(getFloors());
+  };
+
+  const onUploadPicture = async (file, floorId) => {
+    const map = await dispatch(addPicture(file));
+
+    if (map && map.payload && map.payload.url) {
+      await dispatch(
+        saveFloor({
+          id: floorId,
+          mapUrl: map.payload.url,
+        })
+      );
+      dispatch(getFloors());
+    }
+  };
+
+  const onRemovePicture = async (floorId) => {
+    await dispatch(
+      saveFloor({
+        id: floorId,
+        mapUrl: "",
+      })
+    );
+    dispatch(getFloors());
   };
 
   return (
@@ -109,7 +127,7 @@ const Buildings = () => {
                           )
                         }
                         onBlur={(e) => {
-                          // onEditBuildingName(-1);
+                          onEditBuildingName(-1);
                           if (e.target.value === "") {
                             dispatch(discardEmptyBuilding());
                           } else {
@@ -202,6 +220,7 @@ const Buildings = () => {
                                     onUpload={(file) =>
                                       onUploadPicture(file, floor.id)
                                     }
+                                    onRemove={() => onRemovePicture(floor.id)}
                                   />
                                 </Grid>
                               )}
