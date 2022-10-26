@@ -50,7 +50,7 @@ const Tools = ({ activeControl, onSelectControl, onChangeImage }) => (
         </StyledTool>
       </Tooltip>
     ))}
-    <Tooltip title="Change image" arrow>
+    <Tooltip title="Change floor map" arrow>
       <StyledTool>
         <IconButton
           color="primary"

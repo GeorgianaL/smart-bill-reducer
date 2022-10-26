@@ -53,9 +53,15 @@ const Map = () => {
     dispatch(getEntities(activeFloor));
   };
 
-  const addNewSensor = (payload) => dispatch(addSensor(payload));
+  const addNewSensor = async (payload) => {
+    await dispatch(addSensor(payload));
+    dispatch(getEntities(activeFloor));
+  };
 
-  const addNewRelay = (payload) => dispatch(addRelay(payload));
+  const addNewRelay = async (payload) => {
+    await dispatch(addRelay(payload));
+    dispatch(getEntities(activeFloor));
+  };
 
   const highlightEntity = (entityId) => dispatch(setActiveEntity(entityId));
 
@@ -73,7 +79,7 @@ const Map = () => {
     }
   };
 
-  if (loading || loadingFloorData)
+  if (loadingFloorData)
     return (
       <Backdrop open>
         <CircularProgress color="inherit" />
@@ -91,19 +97,19 @@ const Map = () => {
   };
 
   return (
-    <Page title="Maps">
-      <Grid container direction="row" spacing={2}>
-        {activeEntity && (
-          <SwithPowerDialog
-            open={activeEntity !== null}
-            handleClose={() => highlightEntity(null)}
-            loading={loadingPowerChange}
-            relayData={relays.find((relay) => relay.id === activeEntity)}
-            zones={getLinkedZoneNames()}
-          />
-        )}
-        <Grid item sm={12} lg={9}>
-          <Card>
+    <Page title="Floor Maps">
+      {activeEntity && (
+        <SwithPowerDialog
+          open={activeEntity !== null}
+          handleClose={() => highlightEntity(null)}
+          loading={loadingPowerChange}
+          relayData={relays.find((relay) => relay.id === activeEntity)}
+          zones={getLinkedZoneNames()}
+        />
+      )}
+      <Card>
+        <Grid container direction="row" spacing={3}>
+          <Grid item sm={12} lg={9}>
             <FloorSelector />
             <MapTool
               {...entities}
@@ -115,12 +121,12 @@ const Map = () => {
               onChangeImage={onChangeImage}
               highlightEntity={highlightEntity}
             />
-          </Card>
+          </Grid>
+          <Grid item sm={12} lg={3}>
+            <EntitiesList {...entities} />
+          </Grid>
         </Grid>
-        <Grid item sm={12} lg={3}>
-          <EntitiesList {...entities} />
-        </Grid>
-      </Grid>
+      </Card>
     </Page>
   );
 };

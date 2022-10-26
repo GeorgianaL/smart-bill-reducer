@@ -15,15 +15,27 @@ export const getEntities = createAsyncThunk(
     const {
       data: { zones, sensors, relays },
     } = res;
+
     return {
-      zones: zones.map((zone) => ({ ...zone, controlType: ZONE })),
+      zones: zones.map((zone) => ({
+        ...zone,
+        controlType: ZONE,
+        x: Number(zone.x),
+        y: Number(zone.y),
+        width: Number(zone.width),
+        height: Number(zone.height),
+      })),
       sensors: sensors.map((sensor) => ({
         ...sensor,
         controlType: SENSOR,
+        x: Number(sensor.x),
+        y: Number(sensor.y),
       })),
       relays: relays.map((relay) => ({
         ...relay,
         controlType: RELAY,
+        x: Number(relay.x),
+        y: Number(relay.y),
       })),
     };
   }
@@ -52,9 +64,13 @@ export const addSensor = createAsyncThunk(
     const {
       buildings: { activeFloor },
     } = state;
-    debugger;
-    // const res = await axios.put(`/entities/floors/${activeFloor}/sensor`, payload);
-    // return res.data;
+    const { zoneId } = payload;
+
+    const res = await axios.post(
+      `/entities/floors/${activeFloor}/zones/${zoneId}/sensors`,
+      payload
+    );
+    return res.data;
   }
 );
 
@@ -66,10 +82,10 @@ export const addRelay = createAsyncThunk(
       buildings: { activeFloor },
     } = state;
 
-    const res = await axios.put(
-      `/entities/floors/${activeFloor}/relays`,
-      payload
-    );
+    const res = await axios.post(`/entities/floors/${activeFloor}/relays`, {
+      ...payload,
+      zoneIds: payload.zoneId.map((zone) => zone.id),
+    });
     return res.data;
   }
 );
