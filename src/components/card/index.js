@@ -32,12 +32,13 @@ const Card = ({
 }) => {
   return (
     <Container
+      container
       {...props}
       classes={{
         root: highlighted && "highlighted",
       }}
     >
-      <Grid container direction="column">
+      {title && (
         <Grid item xs={12}>
           <Grid
             container
@@ -61,9 +62,9 @@ const Card = ({
             )}
           </Grid>
         </Grid>
-        <Grid xs={12} item sx={childrenProps}>
-          {children}
-        </Grid>
+      )}
+      <Grid xs={12} item sx={childrenProps}>
+        {children}
       </Grid>
     </Container>
   );
