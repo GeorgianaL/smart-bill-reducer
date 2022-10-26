@@ -17,6 +17,7 @@ const Map = ({
   addNewZone,
   addNewSensor,
   addNewRelay,
+  onChangeImage,
   highlightEntity,
 }) => {
   const [activeControl, setActiveControl] = useState(null);
@@ -82,7 +83,11 @@ const Map = ({
 
   return (
     <Container>
-      <Tools activeControl={activeControl} onSelectControl={onSelectControl} />
+      <Tools
+        activeControl={activeControl}
+        onSelectControl={onSelectControl}
+        onChangeImage={onChangeImage}
+      />
       <Annotation
         src={img}
         alt="map"

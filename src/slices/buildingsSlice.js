@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getBuildings, saveBuilding, getFloors, addPicture } from "../actions";
+import {
+  getBuildings,
+  saveBuilding,
+  getFloors,
+  saveFloor,
+  addPicture,
+} from "../actions";
 
 const initialState = {
   activeBuilding: [],
@@ -158,10 +164,34 @@ export const buildingsSlice = createSlice({
         ...state,
         loading: false,
         floors: payload,
-        activeFloor: payload[0].id,
+        activeFloor: state.activeFloor || payload[0].id,
       };
     },
     [getFloors.rejected]: (state) => {
+      state.loading = false;
+    },
+    [getBuildings.rejected]: (state) => {
+      state.loading = false;
+    },
+    [saveFloor.pending]: (state) => {
+      state.loading = true;
+    },
+    [saveFloor.fulfilled]: (state, { meta: { arg } }) => {
+      return {
+        ...state,
+        loading: false,
+        floors: state.floors.map((floor) => {
+          if (floor.id === arg.id) {
+            return {
+              ...floor,
+              ...arg,
+            };
+          }
+          return floor;
+        }),
+      };
+    },
+    [saveFloor.rejected]: (state) => {
       state.loading = false;
     },
     [addPicture.pending]: (state) => {

@@ -4,6 +4,7 @@ import {
   Typography,
   IconButton,
   Button as ButtonBase,
+  Tooltip,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
@@ -58,25 +59,29 @@ const PhotoUploader = ({ url, name, onUpload, onRemove }) => {
       <Grid item>
         <Grid container direction="row">
           <Grid item>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-              onChange={(e) => onUpload(e.target.files[0])}
-            >
-              <input hidden accept="image/png" type="file" />
-              <img src={editIcon} alt="Update" />
-            </IconButton>
+            <Tooltip title="Change map" arrow>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="label"
+                onChange={(e) => onUpload(e.target.files[0])}
+              >
+                <input hidden accept="image/png" type="file" />
+                <img src={editIcon} alt="Update" />
+              </IconButton>
+            </Tooltip>
           </Grid>
           <Grid item>
-            <IconButton
-              color="primary"
-              aria-label="upload picture"
-              component="label"
-              onChange={onRemove}
-            >
-              <img src={deleteIcon} alt="Delete" />
-            </IconButton>
+            <Tooltip title="Remove map" arrow>
+              <IconButton
+                color="primary"
+                aria-label="upload picture"
+                component="label"
+                onClick={onRemove}
+              >
+                <img src={deleteIcon} alt="Delete" />
+              </IconButton>
+            </Tooltip>
           </Grid>
         </Grid>
       </Grid>

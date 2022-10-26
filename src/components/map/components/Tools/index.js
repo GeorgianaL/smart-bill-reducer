@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { Tooltip } from "@mui/material";
+import { Tooltip, IconButton } from "@mui/material";
 import TOOLS from "../../constants";
 import imageIcon from "../../../../assets/image-edit.svg";
 
@@ -37,10 +37,10 @@ const Icon = styled.img`
   height: 24px;
 `;
 
-const Tools = ({ activeControl, onSelectControl }) => (
+const Tools = ({ activeControl, onSelectControl, onChangeImage }) => (
   <StyledTools>
     {Object.values(TOOLS).map((control) => (
-      <Tooltip title={control.name} arrow>
+      <Tooltip key={control.id} title={control.name} arrow>
         <StyledTool
           key={control.id}
           onClick={() => onSelectControl(control.id)}
@@ -51,11 +51,16 @@ const Tools = ({ activeControl, onSelectControl }) => (
       </Tooltip>
     ))}
     <Tooltip title="Change image" arrow>
-      <StyledTool
-      // onClick={}
-      // active={}
-      >
-        <img src={imageIcon} alt="Change" />
+      <StyledTool>
+        <IconButton
+          color="primary"
+          aria-label="upload picture"
+          component="label"
+          onChange={(e) => onChangeImage(e.target.files[0])}
+        >
+          <input hidden accept="image/png" type="file" />
+          <img src={imageIcon} alt="Change" />
+        </IconButton>
       </StyledTool>
     </Tooltip>
   </StyledTools>

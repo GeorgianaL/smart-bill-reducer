@@ -7,7 +7,7 @@ export const getFloors = createAsyncThunk("floors/getFloors", async () => {
 });
 
 export const saveFloor = createAsyncThunk(
-  "floors/editBuilding",
+  "floors/editFoor",
   async (payload) => {
     const { id, buildingId, name, ...props } = payload;
 
