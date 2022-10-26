@@ -102,7 +102,7 @@ const Map = () => {
             zones={getLinkedZoneNames()}
           />
         )}
-        <Grid item sm={12} lg={3}>
+        <Grid item sm={12} lg={9}>
           <Card>
             <FloorSelector />
             <MapTool

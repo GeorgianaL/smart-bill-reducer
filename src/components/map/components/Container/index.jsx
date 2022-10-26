@@ -16,10 +16,10 @@ export const EmptyMapContainer = styled.button`
   justify-content: center;
   border: 2px dashed #97e11b;
   background-color: #eef9db;
-  margin: 16px;
   border-radius: 10px;
   cursor: pointer;
-  width: 100%;
+  margin: 16px;
+  width: calc(100% - 32px);
 
   img {
     margin: 8px;
