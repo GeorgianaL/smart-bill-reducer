@@ -23,15 +23,14 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const authenticate = () => {
-    dispatch(login({ email, pwd: password })).then(() => {
-      if (isLoggedIn && !error) {
-        navigate("/dashboard");
-      }
-    });
+  const authenticate = async () => {
+    const auth = await dispatch(login({ email, pwd: password }));
+    if (auth && auth.payload && auth.payload.success) {
+      navigate("/dashboard");
+    }
   };
 
-  const { loading, isLoggedIn, error } = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
 
   return (
     <Layout>

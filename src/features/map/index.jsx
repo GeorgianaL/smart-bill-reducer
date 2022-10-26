@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Grid, Typography } from "@mui/material";
+import { Grid, Backdrop, CircularProgress } from "@mui/material";
 import withNavigationBar from "../../hoc/withNavigationBar";
 import Page, { FloorSelector } from "../page";
 import Card from "../../components/card";
@@ -45,7 +45,12 @@ const Map = () => {
 
   const highlightEntity = (entityId) => dispatch(setActiveEntity(entityId));
 
-  if (loading) return <Typography variant="h6">Loading ...</Typography>;
+  if (loading)
+    return (
+      <Backdrop open>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
 
   const getLinkedZoneNames = () => {
     const relay = relays.find((relay) => relay.id === activeEntity);

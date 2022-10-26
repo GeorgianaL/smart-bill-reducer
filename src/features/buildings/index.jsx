@@ -23,7 +23,7 @@ import Card from "../../components/card";
 import Input from "../../components/input";
 import Button, { AddEntityButton } from "../../components/button";
 import PhotoUploader from "../../components/photo-uploader";
-import addIcon from "../../assets/add.svg";
+import addIcon from "../../assets/add-green.svg";
 
 const Buildings = () => {
   const [cardHighlighted, setCardHighlighted] = useState(0);
