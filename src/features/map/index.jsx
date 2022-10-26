@@ -7,15 +7,29 @@ import Card from "../../components/card";
 import MapTool from "../../components/map";
 import EntitiesList from "./EntitiesList";
 import SwithPowerDialog from "./SwithPowerDialog";
-import { getEntities, getFloors, addPicture, saveFloor } from "../../actions";
+import {
+  getEntities,
+  getFloors,
+  addPicture,
+  saveFloor,
+  addZone,
+  addSensor,
+  addRelay,
+} from "../../actions";
 import { setActiveEntity, addEntity } from "../../slices/entitiesSlice";
-import { addZone, addSensor, addRelay } from "../../actions";
 
 const Map = () => {
   const dispatch = useDispatch();
 
-  const { activeFloor, floors, loadingPowerChange } = useSelector(
-    (state) => state.buildings
+  const {
+    activeFloor,
+    floors,
+    loadingPowerChange,
+    loading: loadingFloorData,
+  } = useSelector((state) => state.buildings);
+
+  const floorData = floors.find(
+    (floor) => String(floor.id) === String(activeFloor)
   );
 
   useEffect(() => {
@@ -59,9 +73,7 @@ const Map = () => {
     }
   };
 
-  // console.log(floors.find((floor) => floor.id === activeFloor));
-
-  if (loading)
+  if (loading || loadingFloorData)
     return (
       <Backdrop open>
         <CircularProgress color="inherit" />
@@ -90,11 +102,12 @@ const Map = () => {
             zones={getLinkedZoneNames()}
           />
         )}
-        <Grid item sm={12}>
+        <Grid item sm={12} lg={3}>
           <Card>
             <FloorSelector />
             <MapTool
               {...entities}
+              img={floorData ? floorData.mapUrl : null}
               addEntity={addNewEntity}
               addNewZone={addNewZone}
               addNewSensor={addNewSensor}
@@ -104,9 +117,9 @@ const Map = () => {
             />
           </Card>
         </Grid>
-        {/* <Grid item sm={12} lg={3}>
+        <Grid item sm={12} lg={3}>
           <EntitiesList {...entities} />
-        </Grid> */}
+        </Grid>
       </Grid>
     </Page>
   );

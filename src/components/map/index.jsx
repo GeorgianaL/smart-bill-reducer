@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import Annotation from "react-image-annotation";
 import Container from "./components/Container";
+import EmptyMap from "./components/EmptyMap";
 import Tools from "./components/Tools";
 import { Editor, Highlighter, Tooltip } from "../annotation/components";
 import TOOLS from "./constants";
 import { ZONE, SENSOR, RELAY } from "../../utils/config";
 import { getNewEntity, transformNewEntity } from "./utils";
 
-import img from "./floor4.svg";
-
 const Map = ({
+  img,
   zones,
   sensors,
   relays,
@@ -80,6 +80,10 @@ const Map = ({
     ],
     []
   );
+
+  if (img === null || img === "") {
+    return <EmptyMap onUpload={onChangeImage} />;
+  }
 
   return (
     <Container>
