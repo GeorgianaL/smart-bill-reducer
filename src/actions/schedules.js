@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { default as axios } from "../api";
-// import { schedules } from "../mock/schedules";
+import { schedules } from "../mock/schedules";
 
 export const getSchedules = createAsyncThunk(
   "schedules/getSchedules",
@@ -8,8 +8,8 @@ export const getSchedules = createAsyncThunk(
     try {
       // will need to add selected zoneIds (filters)
       // to add /standard
-      const res = await axios.get(`/schedules`);
-      return res.data;
+      // const res = await axios.get(`/schedules`);
+      return schedules;
     } catch (error) {
       return error.response.data;
     }

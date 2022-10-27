@@ -17,6 +17,8 @@ import {
 } from "../../actions";
 import { updateFilters, updateSchedule } from "../../slices/schedulesSlice";
 
+import { schedules } from "../../mock/schedules";
+
 const tabs = [
   {
     title: "Set standard hours",
@@ -32,16 +34,14 @@ const Schedules = () => {
   const dispatch = useDispatch();
   const [activeTabIndex, setActiveTabIndex] = useState(0);
 
-  const { schedules, filters, loading, error } = useSelector(
-    (state) => state.schedules
-  );
+  const { filters, loading, error } = useSelector((state) => state.schedules);
   const { zones } = useSelector((state) => state.entities);
 
-  useEffect(() => {
-    dispatch(getFloors())
-      .then(() => dispatch(getEntities()))
-      .then(() => dispatch(getSchedules()));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getFloors())
+  //     .then(() => dispatch(getEntities()))
+  //     .then(() => dispatch(getSchedules()));
+  // }, []);
 
   const updateStandardSchedule = (args) =>
     dispatch(saveStandardSchedule(args)).then(() =>
@@ -51,8 +51,8 @@ const Schedules = () => {
   const onChangeFilters = (args) =>
     dispatch(updateFilters(args)).then(() => dispatch(getSchedules()));
 
-  if (loading || error)
-    return <Typography variant="h6">Loading ...</Typography>;
+  // if (loading || error)
+  //   return <Typography variant="h6">Loading ...</Typography>;
   return (
     <Page title="Schedules">
       <Card>
