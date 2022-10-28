@@ -6,10 +6,11 @@ import {
   saveFloor,
   addPicture,
 } from "../actions";
+import { hasCookie, getCookie, setCookie } from "../utils/cookies";
 
 const initialState = {
   activeBuilding: [],
-  activeFloor: null,
+  activeFloor: hasCookie("activeFloor") ? getCookie("activeFloor") : null,
   buildings: [],
   floors: [],
   loading: false,
@@ -126,6 +127,7 @@ export const buildingsSlice = createSlice({
       };
     },
     changeActiveFloor: (state, action) => {
+      setCookie("activeFloor", action.payload);
       return {
         ...state,
         activeFloor: action.payload,

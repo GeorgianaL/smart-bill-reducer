@@ -127,7 +127,10 @@ const Map = ({
             />
           );
         }}
-        renderContent={Tooltip}
+        renderContent={({ annotation: controlType }) => {
+          // if (controlType !== "ZONE")
+          return Tooltip;
+        }}
       />
     </Container>
   );

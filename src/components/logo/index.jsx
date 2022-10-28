@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../utils/theme";
@@ -15,17 +16,29 @@ const StyledText = styled.span`
   font-size: 24px;
 `;
 
-const Logo = ({ hideText }) => (
-  <Grid container direction="row" spacing={1} alignItems="center">
-    <Grid item>
-      <StyledImage src={logoSrc} alt="logo" />
-    </Grid>
-    {!hideText && (
+const Logo = ({ hideText }) => {
+  const navigate = useNavigate();
+  const goToIndex = () => navigate("/");
+
+  return (
+    <Grid
+      container
+      direction="row"
+      spacing={1}
+      alignItems="center"
+      onClick={goToIndex}
+      sx={{ cursor: "pointer" }}
+    >
       <Grid item>
-        <StyledText>SBR</StyledText>
+        <StyledImage src={logoSrc} alt="logo" />
       </Grid>
-    )}
-  </Grid>
-);
+      {!hideText && (
+        <Grid item>
+          <StyledText>SBR</StyledText>
+        </Grid>
+      )}
+    </Grid>
+  );
+};
 
 export default Logo;

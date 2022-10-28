@@ -10,6 +10,6 @@ export const hasCookie = (name) => {
   return match !== null;
 };
 
-export const setCookie = (token) => {
-  document.cookie = `token=${token}`;
+export const setCookie = (name, value) => {
+  document.cookie = `${name}=${value}`;
 };

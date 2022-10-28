@@ -88,6 +88,7 @@ const Map = () => {
 
   const getLinkedZoneNames = () => {
     const relay = relays.find((relay) => relay.id === activeEntity);
+
     const linkedZoneNames = relay.zoneIds.map((zoneId) => {
       const zoneData = zones.find((zone) => zone.id === zoneId);
       return zoneData.name;
