@@ -2,7 +2,7 @@ import { styled } from "@mui/material/styles";
 import { Drawer as DrawerBase, Toolbar } from "@mui/material";
 
 export const drawerWidth = 240;
-export const closedDrawerWidth = 65;
+export const closedDrawerWidth = 71;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,

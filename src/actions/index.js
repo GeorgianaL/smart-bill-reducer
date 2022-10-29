@@ -8,6 +8,6 @@ export {
   addRelay,
   switchPower,
 } from "./entities";
-export { getSchedules, saveStandardSchedule } from "./schedules";
+export { getSchedules } from "./schedules";
 export { getHealthcheck } from "./healthcheck";
 export { addPicture } from "./pictures";
