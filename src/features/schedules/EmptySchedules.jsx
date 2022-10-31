@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material";
 
 import scheduleImage from "../../assets/scheduler.svg";
 
-const EmptySchedules = () => (
+const EmptySchedules = ({ onCreateSchedule }) => (
   <Grid
     container
     direction="column"
@@ -35,7 +35,7 @@ const EmptySchedules = () => (
       </Typography>
     </Grid>
     <Grid item>
-      <Button color="primary" variant="contained">
+      <Button color="primary" variant="contained" onClick={onCreateSchedule}>
         Create schedule
       </Button>
     </Grid>

@@ -32,5 +32,7 @@ Page.defaultProps = {
 };
 
 export { default as FloorSelector } from "./FloorSelector";
+export { default as DaySelector } from "./DaySelector";
+export { default as ZoneSelector } from "./ZoneSelector";
 
 export default Page;

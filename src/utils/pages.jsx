@@ -3,6 +3,7 @@ import Dashboard from "../features/dashboard";
 import Buildings from "../features/buildings";
 import Map from "../features/map";
 import Schedules from "../features/schedules";
+import EditSchedules from "../features/schedules/EditSchedule";
 import Suggestions from "../features/suggestions";
 import Profile from "../features/profile";
 
@@ -34,14 +35,12 @@ export const menuLinks = [
     path: "/map",
     component: <Map />,
   },
-
   {
     label: "Schedules",
     icon: schedulesIcon,
     path: "/schedules",
     component: <Schedules />,
   },
-
   {
     label: "Suggestions",
     icon: suggestionsIcon,
@@ -75,6 +74,12 @@ const links = [
     icon: null,
     path: "/onboarding",
     component: <BuildingSetup />,
+  },
+  {
+    label: "EditSchedules",
+    icon: null,
+    path: "/schedules/edit",
+    component: <EditSchedules />,
   },
 ];
 

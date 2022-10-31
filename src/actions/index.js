@@ -7,6 +7,7 @@ export {
   addSensor,
   addRelay,
   switchPower,
+  getAllZones,
 } from "./entities";
 export { getSchedules } from "./schedules";
 export { getHealthcheck } from "./healthcheck";

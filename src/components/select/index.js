@@ -9,7 +9,7 @@ import arrowDown from "../../assets/arrow-down.svg";
 
 const ArrowDropDownComponent = () => <img src={arrowDown} alt="arrow-down" />;
 
-const Container = styled(FormControl)(() => ({
+const Container = styled(FormControl)(({ theme }) => ({
   margin: 0,
   "&.FormControlStandard": {
     ".MuiInputBase-root": {
@@ -21,14 +21,21 @@ const Container = styled(FormControl)(() => ({
     },
   },
   "&.FormControlOutlined": {
+    borderWidth: 1,
+    borderRadius: 12,
+    borderColor: theme.palette.grey[400],
+    borderStyle: "solid",
     ".MuiInputBase-root": {
       width: 233,
       height: 40,
       ".MuiSelect-outlined": {
-        paddingLeft: 0,
+        paddingLeft: 12,
       },
       fieldset: {
         borderBottom: 2,
+      },
+      img: {
+        marginRight: 12,
       },
     },
   },
