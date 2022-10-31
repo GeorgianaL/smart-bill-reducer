@@ -14,12 +14,12 @@ const Dashboard = () => {
         <Grid item xs={12} sm={12} md={6}>
           <NotificationsCard />
         </Grid>
-        {/* <Grid item xs={12} sm={12} md={6}>
-          <SensorHealthcheck />
-        </Grid> */}
         <Grid item xs={12} sm={12} md={6}>
-          <BarChartCard />
+          <SensorHealthcheck />
         </Grid>
+        {/* <Grid item xs={12} sm={12} md={6}>
+          <BarChartCard />
+        </Grid> */}
         <Grid item xs={12}>
           <SchedulesOverviewCard />
         </Grid>

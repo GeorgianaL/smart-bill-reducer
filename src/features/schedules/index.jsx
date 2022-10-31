@@ -7,9 +7,8 @@ import Card from "../../components/card";
 import withNavigationBar from "../../hoc/withNavigationBar";
 import EmptySchedules from "./EmptySchedules";
 import Schedule from "../../components/schedule";
+import { setActiveSchedule } from "../../slices";
 import { getSchedules, getFloors } from "../../actions";
-
-import { schedules } from "../../mock/schedules";
 
 const Schedules = () => {
   const dispatch = useDispatch();
@@ -22,6 +21,7 @@ const Schedules = () => {
   };
 
   const onEdit = (scheduleId) => {
+    dispatch(setActiveSchedule(scheduleId));
     navigate(`/schedules/edit?${scheduleId}`);
   };
 

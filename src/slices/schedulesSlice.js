@@ -60,7 +60,22 @@ const schedulesSlice = createSlice({
       },
     ],
   },
-  reducers: {},
+  reducers: {
+    setActiveSchedule: (state, action) => {
+      return {
+        ...state,
+        schedules: state.schedules.map((schedule) => {
+          if (schedule.id === action.payload) {
+            return {
+              ...schedule,
+              onEdit: true,
+            };
+          }
+          return schedule;
+        }),
+      };
+    },
+  },
   extraReducers: {
     [getSchedules.pending]: (state) => {
       state.loading = true;
@@ -79,5 +94,7 @@ const schedulesSlice = createSlice({
 });
 
 const { actions, reducer } = schedulesSlice;
+
+export const { setActiveSchedule } = actions;
 
 export default reducer;
