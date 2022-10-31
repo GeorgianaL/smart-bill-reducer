@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Grid, Typography, Button } from "@mui/material";
 import DeviceCreator from "./DeviceCreator";
 import Select from "../../../select";
-import { SENSOR, RELAY } from "../../../../utils/config";
+import { SENSOR, RELAY, ZONE } from "../../../../utils/config";
 
 const Container = styled.div`
   ${(props) => ({
@@ -36,7 +36,11 @@ const Editor = ({ title, type, zones, onChange, onSubmit, ...props }) => {
           <Typography variant="body1">{title}</Typography>
         </Grid>
         <Grid item>
-          <DeviceCreator onChange={onChange} {...props} />
+          <DeviceCreator
+            onChange={onChange}
+            withID={type !== ZONE}
+            {...props}
+          />
         </Grid>
         {type === SENSOR && (
           <>
@@ -49,7 +53,6 @@ const Editor = ({ title, type, zones, onChange, onSubmit, ...props }) => {
                 values={zones}
                 value={annotation.selection.zoneId}
                 onChange={(zoneId) => {
-                  console.log("zone id este", zoneId);
                   onChange({
                     ...annotation,
                     selection: {

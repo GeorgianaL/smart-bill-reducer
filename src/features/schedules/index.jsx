@@ -21,6 +21,14 @@ const Schedules = () => {
     navigate("/schedules/edit");
   };
 
+  const onEdit = (scheduleId) => {
+    navigate(`/schedules/edit?${scheduleId}`);
+  };
+
+  const onDelete = (scheduleId) => {
+    // delete scheduleId
+  };
+
   // if (loading || error)
   //   return <Typography variant="h6">Loading ...</Typography>;
   return (
@@ -37,8 +45,12 @@ const Schedules = () => {
               </Typography>
             </Grid>
             {schedules.map((schedule) => (
-              <Grid item key={schedule.name} sx={{ marginTop: 2 }}>
-                <Schedule {...schedule} />
+              <Grid item key={schedule.id} sx={{ marginTop: 2 }}>
+                <Schedule
+                  {...schedule}
+                  onEdit={() => onEdit(schedule.id)}
+                  onDelete={() => onDelete(schedule.id)}
+                />
               </Grid>
             ))}
           </Grid>

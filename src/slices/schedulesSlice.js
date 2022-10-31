@@ -50,7 +50,7 @@ const schedulesSlice = createSlice({
         id: "578331qasdr",
         name: "Fridays",
         floors: ["Floor 4", "Floor 5"],
-        zones: ["Zone 1", "Zone 2", "Zone 3"],
+        zones: ["Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5"],
         details: [
           {
             day: "Friday",

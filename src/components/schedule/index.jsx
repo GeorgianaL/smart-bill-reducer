@@ -1,11 +1,21 @@
-import React from "react";
-import { Grid, Typography, List as ListBase, IconButton } from "@mui/material";
+import React, { useState } from "react";
+import {
+  Grid,
+  Typography,
+  List as ListBase,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 import calendarIcon from "../../assets/calendar.svg";
 import smallCalendarIcon from "../../assets/small-calendar.svg";
 import smallClockIcon from "../../assets/small-clock.svg";
 import menuIcon from "../../assets/more.svg";
+import editIcon from "../../assets/edit.svg";
+import deleteIcon from "../../assets/delete-bin.svg";
 
 const Container = styled(Grid)(({ theme }) => ({
   border: `1px solid ${theme.palette.grey[500]}`,
@@ -22,7 +32,9 @@ const List = styled(ListBase)(({ theme }) => ({
   },
 }));
 
-const Schedule = ({ name, floors, zones, details }) => {
+const Schedule = ({ name, floors, zones, details, onEdit, onDelete }) => {
+  const [open, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const days = details.map((detail) => detail.day);
 
   let intervals = [];
@@ -34,6 +46,16 @@ const Schedule = ({ name, floors, zones, details }) => {
       }
     });
   });
+
+  const openMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+    setMenuOpen(true);
+  };
+
+  const closeMenu = () => {
+    setAnchorEl(null);
+    setMenuOpen(false);
+  };
 
   return (
     <Container
@@ -75,11 +97,33 @@ const Schedule = ({ name, floors, zones, details }) => {
       <Grid item xs={12} lg={1}>
         <IconButton
           aria-label="schedule-actions"
-          //   onClick={onRemove}
+          onClick={openMenu}
           className="actions"
         >
           <img src={menuIcon} alt="menu" />
         </IconButton>
+        <Menu
+          id="long-menu"
+          MenuListProps={{
+            "aria-labelledby": "long-button",
+          }}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={closeMenu}
+        >
+          <MenuItem onClick={onEdit}>
+            <ListItemIcon>
+              <img src={editIcon} alt="edit" />
+            </ListItemIcon>
+            Edit
+          </MenuItem>
+          <MenuItem onClick={onDelete}>
+            <ListItemIcon>
+              <img src={deleteIcon} alt="delete" />
+            </ListItemIcon>
+            Delete
+          </MenuItem>
+        </Menu>
       </Grid>
     </Container>
   );

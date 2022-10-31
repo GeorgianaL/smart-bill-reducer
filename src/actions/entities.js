@@ -64,11 +64,14 @@ export const addSensor = createAsyncThunk(
     const {
       buildings: { activeFloor },
     } = state;
-    const { zoneId } = payload;
+    const { id, zoneId } = payload;
 
     const res = await axios.post(
       `/entities/floors/${activeFloor}/zones/${zoneId}/sensors`,
-      payload
+      {
+        ...payload,
+        id: Number(id),
+      }
     );
     return res.data;
   }
@@ -84,6 +87,7 @@ export const addRelay = createAsyncThunk(
 
     const res = await axios.post(`/entities/floors/${activeFloor}/relays`, {
       ...payload,
+      id: Number(payload.id),
       zoneIds: payload.zoneId.map((zone) => zone.id),
     });
     return res.data;
