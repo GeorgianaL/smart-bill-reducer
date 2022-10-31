@@ -13,7 +13,7 @@ const Profile = () => {
     navigate("/login");
   };
   return (
-    <Page title="Profile">
+    <Page>
       <Card>
         <Button color="primary" variant="contained" onClick={logOut}>
           Log out

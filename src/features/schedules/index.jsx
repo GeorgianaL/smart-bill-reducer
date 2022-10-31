@@ -4,10 +4,8 @@ import { Button, Grid, Typography } from "@mui/material";
 import Page, { FloorSelector } from "../page";
 import Card from "../../components/card";
 import withNavigationBar from "../../hoc/withNavigationBar";
-
+import EmptySchedules from "./EmptySchedules";
 import { getSchedules, getFloors } from "../../actions";
-
-import scheduleImage from "../../assets/scheduler.svg";
 
 import { schedules } from "../../mock/schedules";
 
@@ -20,37 +18,7 @@ const Schedules = () => {
   //   return <Typography variant="h6">Loading ...</Typography>;
   return (
     <Page title="Schedules">
-      <Card>
-        {schedules.length === 0 && (
-          <Grid
-            container
-            direction="column"
-            alignItems="center"
-            spacing={2}
-            sx={{ p: 12 }}
-          >
-            <Grid item>
-              <img src={scheduleImage} alt="schedule" />
-            </Grid>
-            <Grid item>
-              <Typography variant="h5">
-                Start by creating your first schedule
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="subtitle1">
-                Create a schedule by choosing which floor and zone you wish to
-                apply it to. Schedule in detail the active hours.
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button color="primary" variant="contained">
-                Create schedule
-              </Button>
-            </Grid>
-          </Grid>
-        )}
-      </Card>
+      <Card>{schedules.length === 0 && <EmptySchedules />}</Card>
     </Page>
   );
 };
