@@ -1,4 +1,3 @@
-import { Login, NotAuthorizedPage } from "../features/login";
 import { StartingPoint, BuildingSetup } from "../features/onboarding";
 import Dashboard from "../features/dashboard";
 import Buildings from "../features/buildings";

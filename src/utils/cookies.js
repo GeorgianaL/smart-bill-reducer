@@ -10,6 +10,14 @@ export const hasCookie = (name) => {
   return match !== null;
 };
 
-export const setCookie = (name, value) => {
-  document.cookie = `${name}=${value}`;
+const d = new Date();
+d.setTime(d.getTime() + 12 * 60 * 60 * 1000);
+const expires = `expires=${d.toGMTString()}`;
+
+export const setCookie = (name, value, expiration = expires) => {
+  document.cookie = `${name}=${value}; ${expiration}`;
+};
+
+export const removeCookie = (name) => {
+  document.cookie = `${name}=; Max-Age=-99999999;`;
 };

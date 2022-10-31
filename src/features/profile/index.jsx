@@ -1,7 +1,26 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import Page from "../page";
+import Card from "../../components/card";
 import withNavigationBar from "../../hoc/withNavigationBar";
+import { removeCookie } from "../../utils/cookies";
 
-const Profile = () => <Typography variant="h3">Profile</Typography>;
+const Profile = () => {
+  const navigate = useNavigate();
+  const logOut = () => {
+    removeCookie("token");
+    navigate("/login");
+  };
+  return (
+    <Page title="Profile">
+      <Card>
+        <Button color="primary" variant="contained" onClick={logOut}>
+          Log out
+        </Button>
+      </Card>
+    </Page>
+  );
+};
 
 export default withNavigationBar(Profile);
