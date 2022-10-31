@@ -24,7 +24,7 @@ export const getHealthcheck = createAsyncThunk(
           ...data,
           active: data.active + res.data.active,
           unresponsive: data.unresponsive + res.data.unresponsive,
-          details: [...data.details, res.data.details],
+          details: [...data.details, ...res.data.details],
         };
       }
 
