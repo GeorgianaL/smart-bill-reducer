@@ -4,11 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button as ButtonBase, Grid, Typography } from "@mui/material";
 import Page, { DaySelector } from "../page";
 import Card from "../../components/card";
+import Button from "../../components/button";
 import withNavigationBar from "../../hoc/withNavigationBar";
 import Input from "../../components/input";
 import AreaSelector from "./AreaSelector";
 import TimeSlot from "../../components/timeslot";
 import { onChangeSchedule, onChangeScheduleDetails } from "../../slices";
+
+import plusIcon from "../../assets/add-green.svg";
 
 const EditSchedule = () => {
   const dispatch = useDispatch();
@@ -100,10 +103,10 @@ const EditSchedule = () => {
                   <Grid
                     container
                     spacing={2}
-                    alignItems="flex-end"
+                    alignItems="flex-start"
                     key={schedule.day}
                   >
-                    <Grid item>
+                    <Grid item sx={{ marginTop: 1 }}>
                       <DaySelector
                         value={[schedule.day]}
                         variant="outlined"
@@ -112,26 +115,49 @@ const EditSchedule = () => {
                         }
                       />
                     </Grid>
-                    {schedule.hours.map((interval, intervalIndex) => (
-                      <Grid item key={intervalIndex}>
-                        <TimeSlot
-                          from={interval.startHour}
-                          to={interval.endHour}
-                          onChange={(field, value) =>
-                            onChangeScheduleIntervals(
-                              field,
-                              value,
-                              scheduleIndex,
-                              intervalIndex
-                            )
-                          }
-                        />
+                    <Grid item>
+                      <Grid container direction="column" spacing={2}>
+                        {schedule.hours.map((interval, intervalIndex) => (
+                          <Grid item key={intervalIndex}>
+                            <TimeSlot
+                              from={interval.startHour}
+                              to={interval.endHour}
+                              onChange={(field, value) =>
+                                onChangeScheduleIntervals(
+                                  field,
+                                  value,
+                                  scheduleIndex,
+                                  intervalIndex
+                                )
+                              }
+                            />
+                          </Grid>
+                        ))}
+                        <Grid item>
+                          <Button
+                            variant="text"
+                            startIcon={<img src={plusIcon} alt="plus" />}
+                          >
+                            Add hours
+                          </Button>
+                        </Grid>
                       </Grid>
-                    ))}
+                    </Grid>
                   </Grid>
                 ))}
+                <Grid item>
+                  <Button
+                    variant="text"
+                    startIcon={<img src={plusIcon} alt="plus" />}
+                  >
+                    Add days
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
+          </Grid>
+          <Grid item>
+            <ButtonBase variant="contained">Save schedule</ButtonBase>
           </Grid>
         </Grid>
       </Card>
