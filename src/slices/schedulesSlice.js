@@ -27,8 +27,9 @@ const schedulesSlice = createSlice({
       {
         id: "12131qweqr",
         name: "Beginning of week",
-        floors: ["Floor 2"],
-        zones: ["Zone 1", "Zone 2", "Zone 3"],
+        building: "3494597428772864",
+        floors: ["3495137751597056", "3495331043999744"],
+        zones: ["3496410708180992", "3496410775289856", "3496410834010112"],
         details: [
           {
             day: "Monday",
@@ -49,8 +50,9 @@ const schedulesSlice = createSlice({
       {
         id: "578331qasdr",
         name: "Fridays",
-        floors: ["Floor 4", "Floor 5"],
-        zones: ["Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5"],
+        building: "3495461690277888",
+        floors: ["3495461704957952", "3495461721735168"],
+        zones: ["3495499139121152", "3495500189794304"],
         details: [
           {
             day: "Friday",
@@ -69,6 +71,44 @@ const schedulesSlice = createSlice({
             return {
               ...schedule,
               onEdit: true,
+            };
+          }
+          return schedule;
+        }),
+      };
+    },
+    onChangeSchedule: (state, { payload }) => {
+      const { id, field, value } = payload;
+      return {
+        ...state,
+        schedules: state.schedules.map((schedule) => {
+          if (schedule.onEdit || schedule.id === id) {
+            return {
+              ...schedule,
+              [field]: value,
+            };
+          }
+          return schedule;
+        }),
+      };
+    },
+    onChangeScheduleDetails: (state, { payload }) => {
+      const { id, field, value, scheduleIndex } = payload;
+      return {
+        ...state,
+        schedules: state.schedules.map((schedule) => {
+          if (schedule.onEdit || schedule.id === id) {
+            return {
+              ...schedule,
+              details: schedule.details.map((detail, index) => {
+                if (index === scheduleIndex) {
+                  return {
+                    ...detail,
+                    [field]: value,
+                  };
+                }
+                return detail;
+              }),
             };
           }
           return schedule;
@@ -95,6 +135,7 @@ const schedulesSlice = createSlice({
 
 const { actions, reducer } = schedulesSlice;
 
-export const { setActiveSchedule } = actions;
+export const { setActiveSchedule, onChangeSchedule, onChangeScheduleDetails } =
+  actions;
 
 export default reducer;

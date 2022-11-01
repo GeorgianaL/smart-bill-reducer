@@ -1,26 +1,36 @@
 import React from "react";
-import { Typography, FormControl } from "@mui/material";
+import { FormControl } from "@mui/material";
 import Select from "../../components/select";
 
 const options = [
-  { label: "Monday", value: "monday" },
-  { label: "Tuesday", value: "tuesday" },
-  { label: "Wednesday", value: "wednesday" },
-  { label: "Thursday", value: "thursday" },
-  { label: "Friday", value: "friday" },
-  { label: "Saturday", value: "saturday" },
-  { label: "Sunday", value: "sunday" },
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
 ];
 
 const DaySelector = ({ value, onChange, variant, multiple }) => {
+  const valOptions = options.map((option) => ({ name: option, id: option }));
+  let currentValue = value;
+
+  if (multiple) {
+    currentValue = value.reduce((acc, option) => {
+      const val = valOptions.find((opt) => opt.id === option);
+      return [...acc, val];
+    }, []);
+  }
+
   return (
     <FormControl variant="standard">
       <Select
         id="select-day"
-        value={value}
+        value={currentValue}
         onChange={onChange}
         label="Floor"
-        values={options}
+        values={valOptions}
         variant={variant}
         multiple={multiple}
       />

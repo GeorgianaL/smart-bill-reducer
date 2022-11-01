@@ -75,7 +75,15 @@ const SelectTypesClassnames = {
   underlined: "FormControlUnderlined",
 };
 
-const Select = ({ onChange, value, values, multiple, variant, ...props }) => {
+const Select = ({
+  onChange,
+  value,
+  values,
+  loading,
+  multiple,
+  variant,
+  ...props
+}) => {
   const handleChange = (event) => onChange(event.target.value);
 
   return (
@@ -86,25 +94,28 @@ const Select = ({ onChange, value, values, multiple, variant, ...props }) => {
       }}
       {...props}
     >
-      <SelectBase
-        id="select"
-        value={value}
-        onChange={handleChange}
-        input={<OutlinedInput />}
-        multiple={multiple}
-        IconComponent={ArrowDropDownComponent}
-      >
-        {values.map((val) => (
-          <MenuItem key={val.id} value={multiple ? val : val.id}>
-            {val.name}
-          </MenuItem>
-        ))}
-      </SelectBase>
+      {!loading && (
+        <SelectBase
+          id="select"
+          value={value}
+          onChange={handleChange}
+          input={<OutlinedInput />}
+          multiple={multiple}
+          IconComponent={ArrowDropDownComponent}
+        >
+          {values.map((val) => (
+            <MenuItem key={val.id} value={multiple ? val : val.id}>
+              {val.name}
+            </MenuItem>
+          ))}
+        </SelectBase>
+      )}
     </Container>
   );
 };
 
 Select.defaultProps = {
+  loading: false,
   variant: "standard",
   multiple: false,
 };

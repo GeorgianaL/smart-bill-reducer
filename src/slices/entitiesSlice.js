@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getEntities, switchPower } from "../actions";
+import { getEntities, switchPower, getZonesByBuildingId } from "../actions";
 
 const entitiesSlice = createSlice({
   name: "entities",
@@ -71,6 +71,19 @@ const entitiesSlice = createSlice({
         loadingPowerChange: false,
         // activeEntity: null,
       };
+    },
+    [getZonesByBuildingId.pending]: (state) => {
+      state.loading = true;
+    },
+    [getZonesByBuildingId.fulfilled]: (state, { payload }) => {
+      return {
+        ...state,
+        loading: false,
+        zones: payload,
+      };
+    },
+    [getZonesByBuildingId.rejected]: (state) => {
+      state.loading = false;
     },
   },
 });

@@ -113,11 +113,14 @@ export const switchPower = createAsyncThunk(
   }
 );
 
-export const getAllZones = createAsyncThunk("entities/zones", async () => {
-  try {
-    const res = await axios.get(`/entities/zones`);
-    return res.data;
-  } catch (err) {
-    return err.response.data;
+export const getZonesByBuildingId = createAsyncThunk(
+  "entities/zones",
+  async (buildingId) => {
+    try {
+      const res = await axios.get(`buildings/${buildingId}/zones`);
+      return res.data;
+    } catch (err) {
+      return err.response.data;
+    }
   }
-});
+);

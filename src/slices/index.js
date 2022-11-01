@@ -12,4 +12,8 @@ export { default as user } from "./loginSlice";
 
 export { default as healthcheck } from "./healthcheckSlice";
 
-export { setActiveSchedule } from "./schedulesSlice";
+export {
+  setActiveSchedule,
+  onChangeSchedule,
+  onChangeScheduleDetails,
+} from "./schedulesSlice";

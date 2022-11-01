@@ -22,7 +22,7 @@ const Schedules = () => {
 
   const onEdit = (scheduleId) => {
     dispatch(setActiveSchedule(scheduleId));
-    navigate(`/schedules/edit?${scheduleId}`);
+    navigate(`/schedules/edit?schedule=${scheduleId}`);
   };
 
   const onDelete = (scheduleId) => {

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Typography, FormControl } from "@mui/material";
-import { getAllZones } from "../../actions";
+// import { getAllZones } from "../../actions";
 import { changeActiveFloor } from "../../slices/buildingsSlice";
 import Select from "../../components/select";
 
@@ -19,7 +19,7 @@ const ZoneSelector = ({ variant, multiple }) => {
 
   useEffect(() => {
     if (zones.length === 0 && !loading) {
-      dispatch(getAllZones());
+      // dispatch(getAllZones());
     }
   }, []);
 
