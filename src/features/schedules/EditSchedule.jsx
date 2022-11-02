@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button as ButtonBase, Grid, Typography } from "@mui/material";
@@ -9,32 +10,50 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import Input from "../../components/input";
 import AreaSelector from "./AreaSelector";
 import TimeSlot from "../../components/timeslot";
-import { onChangeSchedule, onChangeScheduleDetails } from "../../slices";
+import { getSchedules, saveSchedule } from "../../actions";
+import { onChangeSchedule, defaultSchedule } from "../../slices";
+import { useSchedules } from "../../hooks";
 
 import plusIcon from "../../assets/add-green.svg";
 
 const EditSchedule = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
+  const { schedules, loading } = useSchedules();
 
   const scheduleId = searchParams.get("schedule");
+  let scheduleData;
 
-  const scheduleData = useSelector((state) =>
-    state.schedules.schedules.find((schedule) => schedule.id === scheduleId)
-  );
+  const schedule = useSelector((state) => state.schedules.defaultSchedule);
 
-  const { name, building, floors, zones, details } = scheduleData;
+  if (!scheduleId) {
+    scheduleData = schedule;
+  } else {
+    scheduleData = schedules.find((schedule) => schedule.id === scheduleId);
+  }
+
+  const { name, buildingId, floors, zones, details } = scheduleData;
 
   const onChange = (field, value) => {
     dispatch(onChangeSchedule({ id: scheduleId, field, value }));
   };
 
   const onChangeScheduleOccurence = (newOccurence, scheduleIndex) => {
+    const updatedDetails = details.map((schedule, index) => {
+      if (index === scheduleIndex) {
+        return {
+          ...schedule,
+          day: newOccurence,
+        };
+      }
+      return schedule;
+    });
     dispatch(
-      onChangeScheduleDetails({
+      onChangeSchedule({
         id: scheduleId,
-        field: "day",
-        value: newOccurence,
+        field: "details",
+        value: updatedDetails,
         scheduleIndex,
       })
     );
@@ -46,24 +65,74 @@ const EditSchedule = () => {
     scheduleIndex,
     intervalIndex
   ) => {
-    const updatedHours = details[scheduleIndex].hours.map((interval, indx) => {
-      if (intervalIndex === indx) {
+    let updatedDetails = details.map((schedule, index) => {
+      if (scheduleIndex === index) {
         return {
-          ...interval,
-          [field]: value,
+          ...schedule,
+          hours: schedule.hours.map((interval, indx) => {
+            if (intervalIndex === indx) {
+              return {
+                ...interval,
+                [field]: value,
+              };
+            }
+            return interval;
+          }),
         };
       }
-      return interval;
+      return schedule;
     });
 
     dispatch(
-      onChangeScheduleDetails({
+      onChangeSchedule({
         id: scheduleId,
-        field: "hours",
-        value: updatedHours,
+        field: "details",
+        value: updatedDetails,
         scheduleIndex,
       })
     );
+  };
+
+  const addNewInterval = (scheduleIndex) => {
+    let updatedDetails = details.map((schedule, index) => {
+      if (scheduleIndex === index) {
+        return {
+          ...schedule,
+          hours: [...schedule.hours, defaultSchedule.details[0].hours[0]],
+        };
+      }
+      return schedule;
+    });
+
+    dispatch(
+      onChangeSchedule({
+        id: scheduleId,
+        field: "details",
+        value: updatedDetails,
+      })
+    );
+  };
+
+  const addNewSchedule = () => {
+    const updatedDetails = [...details, ...defaultSchedule.details];
+    dispatch(
+      onChangeSchedule({
+        id: scheduleId,
+        field: "details",
+        value: updatedDetails,
+      })
+    );
+  };
+
+  const onSave = async () => {
+    await dispatch(
+      saveSchedule({
+        id: scheduleId,
+        ...scheduleData,
+      })
+    );
+    await dispatch(getSchedules());
+    navigate("/schedules");
   };
 
   return (
@@ -92,7 +161,7 @@ const EditSchedule = () => {
               </Grid>
               <Grid item>
                 <AreaSelector
-                  buildingId={building}
+                  buildingId={buildingId}
                   floorsIds={floors}
                   zonesIds={zones}
                   onChange={onChange}
@@ -137,6 +206,7 @@ const EditSchedule = () => {
                           <Button
                             variant="text"
                             startIcon={<img src={plusIcon} alt="plus" />}
+                            onClick={() => addNewInterval(scheduleIndex)}
                           >
                             Add hours
                           </Button>
@@ -149,6 +219,7 @@ const EditSchedule = () => {
                   <Button
                     variant="text"
                     startIcon={<img src={plusIcon} alt="plus" />}
+                    onClick={addNewSchedule}
                   >
                     Add days
                   </Button>
@@ -157,7 +228,9 @@ const EditSchedule = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <ButtonBase variant="contained">Save schedule</ButtonBase>
+            <ButtonBase variant="contained" onClick={onSave}>
+              Save schedule
+            </ButtonBase>
           </Grid>
         </Grid>
       </Card>

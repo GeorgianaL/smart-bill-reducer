@@ -124,3 +124,26 @@ export const getZonesByBuildingId = createAsyncThunk(
     }
   }
 );
+
+export const getAllZones = createAsyncThunk(
+  "entities/zones",
+  async (args, { getState }) => {
+    try {
+      const state = getState();
+      const {
+        buildings: { activeBuilding },
+      } = state;
+      const activeBuildingsIds = activeBuilding.map((building) => building.id);
+      let data = [];
+
+      for await (const buildingId of activeBuildingsIds) {
+        const res = await axios.get(`buildings/${buildingId}/zones`);
+        data = [...data, ...res.data];
+      }
+
+      return data;
+    } catch (err) {
+      return err.response.data;
+    }
+  }
+);

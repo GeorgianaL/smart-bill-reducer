@@ -32,7 +32,15 @@ const List = styled(ListBase)(({ theme }) => ({
   },
 }));
 
-const Schedule = ({ name, floors, zones, details, onEdit, onDelete }) => {
+const Schedule = ({
+  name,
+  building,
+  floors,
+  zones,
+  details,
+  onEdit,
+  onDelete,
+}) => {
   const [open, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const days = details.map((detail) => detail.day);
@@ -73,6 +81,7 @@ const Schedule = ({ name, floors, zones, details, onEdit, onDelete }) => {
             <Typography>{name}</Typography>
           </Grid>
           <Grid item>
+            <Typography variant="subtitle1">{building}</Typography>
             <List>
               <Typography variant="subtitle1">{floors.join(", ")}</Typography>
             </List>

@@ -1,34 +1,15 @@
+import React from "react";
 import { Grid } from "@mui/material";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Select from "../../components/select";
-import { getFloors, getZonesByBuildingId } from "../../actions";
+import { useLocationData } from "../../hooks";
 
 const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
-  const dispatch = useDispatch();
   const {
-    buildings,
-    floors,
-    loading: loadingFloors,
-  } = useSelector((state) => state.buildings);
-  const { zones, loading: loadingZones } = useSelector(
-    (state) => state.entities
-  );
-  const loading = loadingFloors || loadingZones;
-
-  useEffect(() => {
-    if (floors.length === 0) {
-      dispatch(getFloors());
-    }
-    if (zones.length === 0) {
-      dispatch(getZonesByBuildingId(buildingId));
-    }
-  }, []);
-
-  if (loading || floors.length === 0 || zones.length === 0) {
-    return null;
-  }
-
+    location: { buildings, floors, zones },
+    loading,
+    error,
+  } = useLocationData();
+  console.log(buildingId, floorsIds, zonesIds);
   const allFloorsValues = floorsIds.reduce((acc, floorId) => {
     const floor = floors.find((fl) => String(fl.id) === String(floorId));
     return [...acc, floor];
@@ -45,14 +26,14 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
         <Select
           value={buildingId}
           values={buildings}
-          onChange={(val) => onChange("building", val)}
+          onChange={(val) => onChange("buildingId", val)}
           label="Building"
           variant="outlined"
         />
       </Grid>
       <Grid item>
         <Select
-          loading={loadingFloors}
+          loading={loading}
           value={allFloorsValues}
           values={floors}
           onChange={(newFloors) => {
@@ -66,7 +47,7 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
       </Grid>
       <Grid item>
         <Select
-          loading={loadingZones}
+          loading={loading}
           value={allZonesValues}
           values={zones}
           onChange={(newZones) => {
@@ -80,6 +61,12 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
       </Grid>
     </Grid>
   );
+};
+
+AreaSelector.defaultProps = {
+  buildingId: null,
+  floorsIds: [],
+  zonesIds: [],
 };
 
 export default AreaSelector;

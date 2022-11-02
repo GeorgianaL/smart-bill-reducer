@@ -1,36 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Button, Grid, Typography } from "@mui/material";
-import Page, { FloorSelector } from "../page";
+import Page from "../page";
 import Card from "../../components/card";
 import withNavigationBar from "../../hoc/withNavigationBar";
 import EmptySchedules from "./EmptySchedules";
 import Schedule from "../../components/schedule";
-import { setActiveSchedule } from "../../slices";
-import { getSchedules, getFloors } from "../../actions";
+import { deleteSchedule, getSchedules } from "../../actions";
+import { useLocationData, useSchedules } from "../../hooks";
+import { getNamedSchedules } from "./utils";
 
 const Schedules = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { schedules, loading, error } = useSelector((state) => state.schedules);
+  const { location, loading, error } = useLocationData();
+  const { schedules } = useSchedules();
 
   const goToCreateSchedule = () => {
     navigate("/schedules/edit");
   };
 
   const onEdit = (scheduleId) => {
-    dispatch(setActiveSchedule(scheduleId));
     navigate(`/schedules/edit?schedule=${scheduleId}`);
   };
 
-  const onDelete = (scheduleId) => {
-    // delete scheduleId
+  const onDelete = async (scheduleId) => {
+    await dispatch(deleteSchedule(scheduleId));
+    dispatch(getSchedules());
   };
 
-  // if (loading || error)
-  //   return <Typography variant="h6">Loading ...</Typography>;
+  if (loading || error)
+    return <Typography variant="h6">Loading ...</Typography>;
+
+  const namedSchedules = getNamedSchedules(schedules, location);
+
   return (
     <Page title="Schedules">
       <Card>
@@ -44,7 +48,7 @@ const Schedules = () => {
                 Your personalized schedule for your buildings
               </Typography>
             </Grid>
-            {schedules.map((schedule) => (
+            {namedSchedules.map((schedule) => (
               <Grid item key={schedule.id} sx={{ marginTop: 2 }}>
                 <Schedule
                   {...schedule}
@@ -53,6 +57,15 @@ const Schedules = () => {
                 />
               </Grid>
             ))}
+            <Grid item>
+              <Button
+                color="primary"
+                variant="contained"
+                onClick={goToCreateSchedule}
+              >
+                Create schedule
+              </Button>
+            </Grid>
           </Grid>
         )}
       </Card>

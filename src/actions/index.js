@@ -8,7 +8,8 @@ export {
   addRelay,
   switchPower,
   getZonesByBuildingId,
+  getAllZones,
 } from "./entities";
-export { getSchedules } from "./schedules";
+export { getSchedules, deleteSchedule, saveSchedule } from "./schedules";
 export { getHealthcheck } from "./healthcheck";
 export { addPicture } from "./pictures";

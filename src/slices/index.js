@@ -13,7 +13,7 @@ export { default as user } from "./loginSlice";
 export { default as healthcheck } from "./healthcheckSlice";
 
 export {
-  setActiveSchedule,
+  defaultSchedule,
+  onCreateEmptySchedule,
   onChangeSchedule,
-  onChangeScheduleDetails,
 } from "./schedulesSlice";
