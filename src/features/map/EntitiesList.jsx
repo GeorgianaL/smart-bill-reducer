@@ -1,5 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
+import moment from "moment";
 import clockIcon from "../../assets/clock.svg";
 
 const EntitiesList = ({ zones, sensors }) => {
@@ -47,7 +48,9 @@ const EntitiesList = ({ zones, sensors }) => {
                     <Typography
                       variant="body2"
                       sx={{ marginLeft: 1 }}
-                    >{`Last activity: ${sensor.lastActive}`}</Typography>
+                    >{`Last activity: ${moment(
+                      sensor.lastActive
+                    ).fromNow()}`}</Typography>
                   </Grid>
                 )}
               </Grid>
