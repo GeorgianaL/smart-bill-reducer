@@ -1,15 +1,17 @@
 import axios from "axios";
 import { getCookie } from "./utils/cookies";
 
-// const baseURL = "http://localhost:3000/";
 const baseURL = "https://sbr-db.herokuapp.com";
 
 const instance = axios.create({
   baseURL,
 });
 
-const token = getCookie("token");
-instance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+instance.interceptors.request.use(function (config) {
+  const token = getCookie("token");
+  config.headers.Authorization = token ? `Bearer ${token}` : "";
+  return config;
+});
 
 export default instance;
 
