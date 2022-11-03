@@ -7,7 +7,7 @@ const Circle = styled.div((props) => ({
   boxSizing: "border-box",
   // boxShadow:
   //   "0 0 0 1px rgba(0, 0, 0, 0.3), 0 0 0 2px rgba(0, 0, 0, 0.2), 0 5px 4px rgba(0, 0, 0, 0.4)",
-  background: "#00D2DF",
+  background: props.color,
   position: "absolute",
   transform: "translate3d(-50%, -50%, 0)",
   cursor: "pointer",
@@ -28,8 +28,19 @@ const Relay = ({ annotation, onClick }) => {
   const { geometry } = annotation;
   if (!geometry) return null;
 
+  const active =
+    annotation.data && annotation.data.hasOwnProperty("powerOn")
+      ? annotation.data.powerOn
+      : false;
+  console.log(annotation.data.powerOn, active);
+
   return (
-    <Circle x={geometry.x} y={geometry.y} onClick={onClick}>
+    <Circle
+      x={geometry.x}
+      y={geometry.y}
+      onClick={onClick}
+      color={active ? "#00D2DF" : "#F6638C"}
+    >
       <Icon alt="sensor" src={relayIcon} />
     </Circle>
   );

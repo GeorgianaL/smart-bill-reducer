@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Select from "../../components/select";
 import { changeActiveBuilding } from "../../slices/buildingsSlice";
 import { useBuildings } from "../../hooks";
-
 const BuildingSelector = () => {
   const { buildings, loading } = useBuildings();
   const dispatch = useDispatch();

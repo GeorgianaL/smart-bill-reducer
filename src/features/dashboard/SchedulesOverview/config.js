@@ -1,10 +1,11 @@
 export const tableHeadConfig = [
-  "area",
+  "building",
+  "floors",
+  "zones",
+  "map",
+  "occurence",
   "power",
   "status",
-  "map",
-  "current schedule",
-  "occurence",
   "schedule type",
   "edit schedule",
 ];

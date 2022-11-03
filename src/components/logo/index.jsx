@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../utils/theme";
-import logoSrc from "../../assets/Logo.svg";
+import logoSrc from "../../assets/Logov2.svg";
 
 const StyledImage = styled.img`
   width: 40px;
@@ -24,19 +24,19 @@ const Logo = ({ hideText }) => {
     <Grid
       container
       direction="row"
-      spacing={1}
+      // spacing={1}
       alignItems="center"
       onClick={goToIndex}
       sx={{ cursor: "pointer" }}
     >
-      <Grid item>
+      <Grid item sx={{ margin: "auto" }}>
         <StyledImage src={logoSrc} alt="logo" />
       </Grid>
-      {!hideText && (
+      {/* {!hideText && (
         <Grid item>
           <StyledText>SBR</StyledText>
         </Grid>
-      )}
+      )} */}
     </Grid>
   );
 };

@@ -10,13 +10,15 @@ export const getSchedules = createAsyncThunk(
         buildings: { activeBuilding },
       } = state;
 
-      let buildingsList = activeBuilding;
+      let activeBuildingsIds = activeBuilding
+        .map((building) => building.id)
+        .join(",");
 
-      const activeBuildingsIds = buildingsList.map((building) => building.id);
-      const buildingsListIds = activeBuildingsIds.join(",");
-
-      const res = await axios.get(`/schedules/buildings/${buildingsListIds}`);
-
+      if (activeBuilding.length === 0) {
+        const buildings = await axios.get(`/buildings`);
+        activeBuildingsIds = buildings.map((building) => building.id);
+      }
+      const res = await axios.get(`/schedules/buildings/${activeBuildingsIds}`);
       return res.data;
     } catch (error) {
       return error.response.data;
