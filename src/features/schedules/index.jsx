@@ -61,7 +61,7 @@ const Schedules = () => {
   const namedSchedules = getNamedSchedules(schedules, location);
 
   return (
-    <Page title="Schedules">
+    <Page>
       <Card>
         {schedules.length === 0 ? (
           <EmptySchedules onCreateSchedule={goToCreateSchedule} />

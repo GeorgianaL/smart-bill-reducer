@@ -17,6 +17,7 @@ const withNavigationBar = (WrappedComponent) => (props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [open, handleDrawer] = React.useState(true);
+
   const [activeLink, setActiveLink] = useState(location.pathname);
 
   const navigateToPage = (path) => {

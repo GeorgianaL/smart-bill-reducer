@@ -21,6 +21,7 @@ import { onChangeSchedule, defaultSchedule } from "../../slices";
 // import { useSchedules  } from "../../hooks";
 
 import plusIcon from "../../assets/add-green.svg";
+import backIcon from "../../assets/green-arrow-left.svg";
 import { useEffect } from "react";
 
 const EditSchedule = () => {
@@ -142,6 +143,31 @@ const EditSchedule = () => {
     );
   };
 
+  const onRemoveInterval = (scheduleIndex, intervalIndex) => {
+    let updatedDetails = details.map((schedule, index) => {
+      if (scheduleIndex === index) {
+        return {
+          ...schedule,
+          hours: schedule.hours.filter((timeslot, indx) => {
+            if (indx !== intervalIndex) {
+              return timeslot;
+            }
+            return null;
+          }),
+        };
+      }
+      return schedule;
+    });
+
+    dispatch(
+      onChangeSchedule({
+        id: scheduleId,
+        field: "details",
+        value: updatedDetails,
+      })
+    );
+  };
+
   const addNewSchedule = () => {
     const updatedDetails = [...details, ...defaultSchedule.details];
     dispatch(
@@ -164,14 +190,28 @@ const EditSchedule = () => {
     navigate("/schedules");
   };
 
+  const goBack = () => navigate("/schedules");
+
   return (
     <Page>
       <Card>
         <Grid container direction="column" spacing={2}>
           <Grid item>
-            <Typography variant="h5">{`${
-              scheduleId ? "Edit" : "Create"
-            } schedule`}</Typography>
+            <Grid container direction="row" justifyContent="space-between">
+              <Grid item>
+                <Typography variant="h5">{`${
+                  scheduleId ? "Edit" : "Create"
+                } schedule`}</Typography>
+              </Grid>
+              <Grid item>
+                <Button
+                  startIcon={<img src={backIcon} alt="back" />}
+                  onClick={goBack}
+                >
+                  Back
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1">
@@ -229,6 +269,9 @@ const EditSchedule = () => {
                                   scheduleIndex,
                                   intervalIndex
                                 )
+                              }
+                              onRemove={() =>
+                                onRemoveInterval(scheduleIndex, intervalIndex)
                               }
                             />
                           </Grid>

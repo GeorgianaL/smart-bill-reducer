@@ -1,11 +1,12 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
+import { Typography, IconButton } from "@mui/material";
 import Input from "../input";
+import deleteIcon from "../../assets/delete-bin.svg";
 
-const TimeSlot = ({ from, to, onChange }) => (
+const TimeSlot = ({ from, to, onChange, onRemove }) => (
   <Grid container spacing={2} alignItems="end">
-    <Grid item>
+    <Grid item sx={{ width: 160 }}>
       <Input
         type="time"
         value={from}
@@ -18,7 +19,7 @@ const TimeSlot = ({ from, to, onChange }) => (
     <Grid item>
       <Typography variant="subtitle1">To</Typography>
     </Grid>
-    <Grid item>
+    <Grid item sx={{ width: 160 }}>
       <Input
         type="time"
         value={to}
@@ -28,6 +29,17 @@ const TimeSlot = ({ from, to, onChange }) => (
         }}
       ></Input>
     </Grid>
+    {onRemove && (
+      <Grid item xs={1}>
+        <IconButton
+          aria-label="delete-floor"
+          onClick={onRemove}
+          className="delete"
+        >
+          <img src={deleteIcon} alt="delete" />
+        </IconButton>
+      </Grid>
+    )}
   </Grid>
 );
 
