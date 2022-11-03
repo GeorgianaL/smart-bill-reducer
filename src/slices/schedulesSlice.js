@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getSchedules, saveSchedule, getBuildings } from "../actions";
+import {
+  getSchedules,
+  getSchedulById,
+  saveSchedule,
+  getBuildings,
+  deleteSchedule,
+} from "../actions";
 
 export const defaultSchedule = {
   name: "",
@@ -22,7 +28,7 @@ export const defaultSchedule = {
 const schedulesSlice = createSlice({
   name: "schedules",
   initialState: {
-    loading: true,
+    loading: false,
     error: null,
     schedules: [],
     defaultSchedule,
@@ -35,7 +41,7 @@ const schedulesSlice = createSlice({
         return {
           ...state,
           schedules: state.schedules.map((schedule) => {
-            if (schedule.id === id) {
+            if (String(schedule.id) === String(id)) {
               return {
                 ...schedule,
                 [field]: value,
@@ -82,6 +88,41 @@ const schedulesSlice = createSlice({
         ...state,
         defaultSchedule,
       };
+    },
+    [getSchedulById.pending]: (state) => {
+      state.loading = true;
+    },
+    [getSchedulById.fulfilled]: (state, { payload }) => {
+      const scheduleExists = state.schedules.find(
+        (schedule) => String(schedule.id) === String(payload.id)
+      );
+
+      return {
+        ...state,
+        loading: false,
+        schedules: scheduleExists
+          ? state.schedules
+          : [...state.schedules, payload],
+      };
+    },
+    [getSchedulById.rejected]: (state) => {
+      state.loading = false;
+    },
+    [deleteSchedule.pending]: (state) => {
+      state.loading = true;
+    },
+    [deleteSchedule.fulfilled]: (state, payload) => {
+      const id = payload.meta.arg;
+      return {
+        ...state,
+        loading: false,
+        schedules: state.schedules.filter(
+          (schedule) => String(schedule.id) !== String(id)
+        ),
+      };
+    },
+    [deleteSchedule.rejected]: (state) => {
+      state.loading = false;
     },
   },
 });

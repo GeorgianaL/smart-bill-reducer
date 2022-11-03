@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { default as axios } from "../api";
-import { getBuildings } from "./buildings";
 
 export const getSchedules = createAsyncThunk(
   "schedules/getSchedules",
@@ -18,6 +17,18 @@ export const getSchedules = createAsyncThunk(
 
       const res = await axios.get(`/schedules/buildings/${buildingsListIds}`);
 
+      return res.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+);
+
+export const getSchedulById = createAsyncThunk(
+  "schedules/getSchedule",
+  async (scheduleId) => {
+    try {
+      const res = await axios.get(`/schedules/${scheduleId}`);
       return res.data;
     } catch (error) {
       return error.response.data;

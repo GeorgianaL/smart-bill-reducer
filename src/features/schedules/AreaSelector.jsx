@@ -9,12 +9,21 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
     loading,
     error,
   } = useLocationData();
-  console.log(buildingId, floorsIds, zonesIds);
+
+  const availableFloors = floors.filter(
+    (floor) => floor.buildingId === buildingId
+  );
   const allFloorsValues = floorsIds.reduce((acc, floorId) => {
-    const floor = floors.find((fl) => String(fl.id) === String(floorId));
+    const floor = availableFloors.find(
+      (fl) => String(fl.id) === String(floorId)
+    );
     return [...acc, floor];
   }, []);
 
+  const availableZones = zones.filter((zone) => {
+    const availableFloorIds = availableFloors.map((floor) => floor.id);
+    return availableFloorIds.includes(zone.floorId);
+  });
   const allZonesValues = zonesIds.reduce((acc, zoneId) => {
     const zone = zones.find((fl) => String(fl.id) === String(zoneId));
     return [...acc, zone];
@@ -35,7 +44,7 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
         <Select
           loading={loading}
           value={allFloorsValues}
-          values={floors}
+          values={availableFloors}
           onChange={(newFloors) => {
             const ids = newFloors.map((floor) => floor.id);
             onChange("floors", ids);
@@ -49,7 +58,7 @@ const AreaSelector = ({ buildingId, floorsIds, zonesIds, onChange }) => {
         <Select
           loading={loading}
           value={allZonesValues}
-          values={zones}
+          values={availableZones}
           onChange={(newZones) => {
             const ids = newZones.map((zone) => zone.id);
             onChange("zones", ids);

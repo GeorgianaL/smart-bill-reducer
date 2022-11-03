@@ -34,10 +34,10 @@ const useLocationData = () => {
         newData.floors = fetchedFloors.payload;
       }
 
-      if (newData.zones.length === 0 && !loadingZones) {
-        const fetchedZones = await dispatch(getAllZones());
-        newData.zones = fetchedZones.payload;
-      }
+      // if (newData.zones.length === 0 && !loadingZones) {
+      const fetchedZones = await dispatch(getAllZones());
+      newData.zones = fetchedZones.payload;
+      // }
       setData(newData);
     };
 

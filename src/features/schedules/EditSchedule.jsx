@@ -2,7 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button as ButtonBase, Grid, Typography } from "@mui/material";
+import {
+  Button as ButtonBase,
+  Grid,
+  Typography,
+  Backdrop,
+  CircularProgress,
+} from "@mui/material";
 import Page, { DaySelector } from "../page";
 import Card from "../../components/card";
 import Button from "../../components/button";
@@ -10,28 +16,51 @@ import withNavigationBar from "../../hoc/withNavigationBar";
 import Input from "../../components/input";
 import AreaSelector from "./AreaSelector";
 import TimeSlot from "../../components/timeslot";
-import { getSchedules, saveSchedule } from "../../actions";
+import { getSchedules, getSchedulById, saveSchedule } from "../../actions";
 import { onChangeSchedule, defaultSchedule } from "../../slices";
-import { useSchedules } from "../../hooks";
+// import { useSchedules  } from "../../hooks";
 
 import plusIcon from "../../assets/add-green.svg";
+import { useEffect } from "react";
 
 const EditSchedule = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   let [searchParams, setSearchParams] = useSearchParams();
-  const { schedules, loading } = useSchedules();
 
   const scheduleId = searchParams.get("schedule");
+
+  const {
+    schedules,
+    defaultSchedule: defaultScheduleObj,
+    loading,
+    error,
+  } = useSelector((state) => state.schedules);
+
+  useEffect(() => {
+    if (scheduleId) {
+      dispatch(getSchedulById(scheduleId));
+    }
+  }, [scheduleId, dispatch]);
+
   let scheduleData;
-
-  const schedule = useSelector((state) => state.schedules.defaultSchedule);
-
   if (!scheduleId) {
-    scheduleData = schedule;
+    scheduleData = defaultScheduleObj;
   } else {
-    scheduleData = schedules.find((schedule) => schedule.id === scheduleId);
+    scheduleData =
+      schedules.length > 0
+        ? schedules.find(
+            (schedule) => String(schedule.id) === String(scheduleId)
+          )
+        : defaultScheduleObj;
   }
+
+  if (loading || error)
+    return (
+      <Backdrop open>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
 
   const { name, buildingId, floors, zones, details } = scheduleData;
 
@@ -140,7 +169,9 @@ const EditSchedule = () => {
       <Card>
         <Grid container direction="column" spacing={2}>
           <Grid item>
-            <Typography variant="h5">Create Schedules</Typography>
+            <Typography variant="h5">{`${
+              scheduleId ? "Edit" : "Create"
+            } schedule`}</Typography>
           </Grid>
           <Grid item>
             <Typography variant="subtitle1">

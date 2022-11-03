@@ -12,7 +12,7 @@ const useSchedules = () => {
     loading: loadingSchedules,
     error,
   } = useSelector((state) => state.schedules);
-
+  console.log("schedules din hook", schedules);
   const [data, setData] = useState(schedules);
 
   const fetchData = useCallback(async () => {
@@ -27,7 +27,7 @@ const useSchedules = () => {
     if (buildings.length !== 0 && schedules.length === 0) {
       fetchData();
     }
-  }, [buildings]);
+  }, [loading, buildings, schedules.length]);
 
   return { schedules: data, error, loading };
 };

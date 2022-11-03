@@ -85,6 +85,7 @@ export const addRelay = createAsyncThunk(
       buildings: { activeFloor },
     } = state;
 
+    // test here - zones
     const res = await axios.post(`/entities/floors/${activeFloor}/relays`, {
       ...payload,
       id: Number(payload.id),

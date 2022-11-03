@@ -10,6 +10,11 @@ export {
   getZonesByBuildingId,
   getAllZones,
 } from "./entities";
-export { getSchedules, deleteSchedule, saveSchedule } from "./schedules";
+export {
+  getSchedules,
+  getSchedulById,
+  deleteSchedule,
+  saveSchedule,
+} from "./schedules";
 export { getHealthcheck } from "./healthcheck";
 export { addPicture } from "./pictures";
