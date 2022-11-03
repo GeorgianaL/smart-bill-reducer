@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Button,
-  Grid,
-  Typography,
-  Backdrop,
-  CircularProgress,
-} from "@mui/material";
+import { Button, Grid, Typography, CircularProgress } from "@mui/material";
 import Page from "../page";
 import Card from "../../components/card";
 import withNavigationBar from "../../hoc/withNavigationBar";
@@ -31,11 +25,11 @@ const Schedules = () => {
     loading: loadingSchedules,
     error: errorSchedules,
   } = useSelector((state) => state.schedules);
+  const { activeBuilding } = useSelector((state) => state.buildings);
 
   useEffect(() => {
-    if (location.buildings.length > 0 && schedules.length === 0)
-      dispatch(getSchedules());
-  }, [location.buildings.length]);
+    dispatch(getSchedules());
+  }, [activeBuilding]);
 
   const goToCreateSchedule = () => {
     navigate("/schedules/edit");
@@ -53,9 +47,18 @@ const Schedules = () => {
   const error = errorLocation || errorSchedules;
   if (loading || error)
     return (
-      <Backdrop open>
-        <CircularProgress color="inherit" />
-      </Backdrop>
+      <Page>
+        <Card>
+          <CircularProgress
+            sx={{
+              display: "flex",
+              margin: "auto",
+              minHeight: 400,
+              color: "#f8f8f8",
+            }}
+          />
+        </Card>
+      </Page>
     );
 
   const namedSchedules = getNamedSchedules(schedules, location);
