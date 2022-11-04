@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Grid } from "@mui/material";
 import styled from "styled-components";
 import theme from "../../utils/theme";
-import logoSrc from "../../assets/Logov2.svg";
+import logoSrc from "../../assets/Logov3.svg";
 
 const StyledImage = styled.img`
   width: 40px;

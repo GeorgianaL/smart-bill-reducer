@@ -91,7 +91,6 @@ const theme = createTheme({
           borderWidth: 2,
         },
         outlinedSecondary: {
-          borderColor: "#000",
           fontWeight: 600,
         },
         sizeSmall: {

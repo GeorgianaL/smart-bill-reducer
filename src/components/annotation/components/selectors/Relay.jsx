@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "@mui/material";
 import styled from "styled-components";
 import relayIcon from "../../../../assets/relay-white.svg";
 
@@ -34,14 +35,16 @@ const Relay = ({ annotation, onClick }) => {
       : false;
 
   return (
-    <Circle
-      x={geometry.x}
-      y={geometry.y}
-      onClick={onClick}
-      color={active ? "#00D2DF" : "#F6638C"}
-    >
-      <Icon alt="sensor" src={relayIcon} />
-    </Circle>
+    <Tooltip title={annotation.data.name} arrow>
+      <Circle
+        x={geometry.x}
+        y={geometry.y}
+        onClick={onClick}
+        color={active ? "#00D2DF" : "#F6638C"}
+      >
+        <Icon alt="sensor" src={relayIcon} />
+      </Circle>
+    </Tooltip>
   );
 };
 

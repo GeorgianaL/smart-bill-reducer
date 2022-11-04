@@ -88,23 +88,6 @@ const Map = ({
     return <EmptyMap onUpload={onChangeImage} />;
   }
 
-  const onFocus = (id) => (e) => {
-    setAnnotation({
-      activeAnnotations: [...entities, id],
-    });
-  };
-
-  const onBlur = (id) => (e) => {
-    const index = entities.indexOf(id);
-
-    setAnnotation({
-      activeAnnotations: [
-        ...entities.slice(0, index),
-        ...entities.slice(index + 1),
-      ],
-    });
-  };
-
   const onDelete = (id, controlType) => {
     if (controlType === SENSOR) {
       deleteSensor(id);
@@ -116,21 +99,6 @@ const Map = ({
       deleteZone(id);
     }
   };
-
-  const renderContent = ({ key, annotation }) => {
-    return (
-      <Tooltip
-        key={key}
-        annotation={annotation}
-        // annotations={entities}
-        // setAnnotations={(annotations) => setAnnotation({ annotations })}
-        onFocus={onFocus(key)}
-        onBlur={onBlur(key)}
-        onDelete={onDelete}
-      />
-    );
-  };
-  console.log(annotation);
 
   return (
     <Container>
@@ -151,7 +119,7 @@ const Map = ({
         disableAnnotation={disabled}
         disableEditor={disabled}
         disableSelector={disabled}
-        allowTouch
+        allowTouch={false}
         renderEditor={({ annotation }) => {
           const customAnnotation = getNewEntity(annotation, zones);
 
@@ -174,7 +142,7 @@ const Map = ({
             />
           );
         }}
-        renderContent={renderContent}
+        renderContent={Tooltip}
       />
     </Container>
   );

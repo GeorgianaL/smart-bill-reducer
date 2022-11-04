@@ -1,60 +1,42 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
-import Button from "../../button";
+import styled from "styled-components";
 
-import deleteIcon from "../../../assets/delete-bin.svg";
-
-const getMarginTop = ({ y, height }) => {
-  if (height) return y + height / 2 + 10;
-  return y + 10;
-};
-
-const getMarginLeft = ({ x, width }) => {
-  if (width) return x + width / 2;
-  return x;
-};
+const Container = styled.div`
+  background: rgba(97, 97, 97, 0.92);
+  color: rgb(255, 255, 255);
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 4px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+  padding: 8px 16px;
+  margin-top: 8px;
+  margin-left: 8px;
+`;
 
 function Tooltip(props) {
-  const { data, geometry } = props.annotation;
+  const { geometry } = props.annotation;
   if (!geometry) return null;
 
-  const { name, id, controlType } = data;
-  console.log(name, geometry);
   return (
-    <Grid
+    <Container
       style={{
-        top: getMarginTop({ ...geometry }),
-        left: getMarginLeft({ ...geometry }),
-        borderRadius: 6,
         position: "absolute",
-        transform: "translate3d(-50%, -50%, 0)",
-        minWidth: 160,
-        backgroundColor: "white",
-        padding: "10px 20px",
-        zIndex: 6,
+        left: `${geometry.x}%`,
+        top: `${geometry.y + geometry.height}%`,
+        ...props.style,
       }}
+      className={props.className}
+      geometry={geometry}
     >
-      <Grid item sx={{ paddingBottom: 1 }}>
-        <Typography variant="subtitle2" style={{ fontWeight: 700 }}>
-          {name}
-        </Typography>
-        <Typography variant="body2" style={{ fontSize: 12 }}>
-          {id}
-        </Typography>
-      </Grid>
-      <Grid item>
-        <Button
-          startIcon={
-            <img src={deleteIcon} alt="delete" style={{ width: 16 }} />
-          }
-          sx={{ color: "black" }}
-          onClick={() => props.onDelete(id, controlType)}
-        >
-          Delete
-        </Button>
-      </Grid>
-    </Grid>
+      {props.annotation.data && props.annotation.data.name}
+    </Container>
   );
 }
+
+Tooltip.defaultProps = {
+  style: {},
+  className: "",
+};
 
 export default Tooltip;

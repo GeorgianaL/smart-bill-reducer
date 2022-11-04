@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "@mui/material";
 import styled from "styled-components";
 import sensorIcon from "../../../../assets/sensor-white.svg";
 import theme from "../../../../utils/theme";
@@ -16,6 +17,7 @@ const Circle = styled.div((props) => ({
   height: 28,
   top: `${props.y}%`,
   left: `${props.x}%`,
+  zIndex: 2,
 }));
 
 const Icon = styled.img`
@@ -34,13 +36,17 @@ const Sensor = ({ annotation }) => {
       : true;
 
   return (
-    <Circle
-      x={geometry.x}
-      y={geometry.y}
-      color={active ? theme.palette.primary.main : theme.palette.secondary.main}
-    >
-      <Icon alt="sensor" src={sensorIcon} />
-    </Circle>
+    <Tooltip title={annotation.data.name} arrow>
+      <Circle
+        x={geometry.x}
+        y={geometry.y}
+        color={
+          active ? theme.palette.primary.main : theme.palette.secondary.main
+        }
+      >
+        <Icon alt="sensor" src={sensorIcon} />
+      </Circle>
+    </Tooltip>
   );
 };
 
