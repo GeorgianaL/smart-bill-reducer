@@ -62,12 +62,12 @@ const SwithPowerDialog = ({ open, handleClose, loading, relayData, zones }) => {
               </Grid>
               <Grid item>
                 <Typography color="primary" variant="h5" align="center">
-                  Switched off!
+                  {`Switched ${power ? "on" : "off"}!`}
                 </Typography>
               </Grid>
               <Grid item sx={{ m: 4 }}>
                 <Typography>{`You successfully switched ${
-                  power ? "off" : "on"
+                  power ? "on" : "off"
                 } the power on ${zones.join(", ")}.`}</Typography>
               </Grid>
             </Grid>

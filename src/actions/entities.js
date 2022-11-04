@@ -104,7 +104,7 @@ export const switchPower = createAsyncThunk(
     } = state;
 
     try {
-      const res = await axios.patch(`/entities/${activeEntity}`, {
+      const res = await axios.patch(`/entities/relays/${activeEntity}`, {
         powerOn: payload,
       });
       return res.data;
