@@ -36,9 +36,6 @@ const Login = () => {
     <Layout>
       <Grid container direction="column" spacing={4}>
         <Grid item>
-          <Logo />
-        </Grid>
-        <Grid item>
           <CentralInfo>
             <Grid
               spacing={8}

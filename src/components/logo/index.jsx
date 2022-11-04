@@ -16,7 +16,7 @@ const StyledText = styled.span`
   font-size: 24px;
 `;
 
-const Logo = ({ hideText }) => {
+const Logo = ({ centered, hideText }) => {
   const navigate = useNavigate();
   const goToIndex = () => navigate("/");
 
@@ -25,11 +25,10 @@ const Logo = ({ hideText }) => {
       container
       direction="row"
       // spacing={1}
-      alignItems="center"
       onClick={goToIndex}
       sx={{ cursor: "pointer" }}
     >
-      <Grid item sx={{ margin: "auto" }}>
+      <Grid item sx={{ margin: centered ? "auto" : "inherit" }}>
         <StyledImage src={logoSrc} alt="logo" />
       </Grid>
       {/* {!hideText && (
@@ -39,6 +38,10 @@ const Logo = ({ hideText }) => {
       )} */}
     </Grid>
   );
+};
+
+Logo.defaultProps = {
+  centered: false,
 };
 
 export default Logo;

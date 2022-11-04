@@ -113,7 +113,7 @@ const Drawer = ({
       >
         <List>
           <ListItem alignItems="center">
-            <Logo hideText={!open} />
+            <Logo hideText={!open} centered />
           </ListItem>
           <Divider light variant="middle" />
           {links}
