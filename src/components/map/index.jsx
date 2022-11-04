@@ -17,6 +17,9 @@ const Map = ({
   addNewZone,
   addNewSensor,
   addNewRelay,
+  deleteZone,
+  deleteSensor,
+  deleteRelay,
   onChangeImage,
   highlightEntity,
 }) => {
@@ -85,6 +88,50 @@ const Map = ({
     return <EmptyMap onUpload={onChangeImage} />;
   }
 
+  const onFocus = (id) => (e) => {
+    setAnnotation({
+      activeAnnotations: [...entities, id],
+    });
+  };
+
+  const onBlur = (id) => (e) => {
+    const index = entities.indexOf(id);
+
+    setAnnotation({
+      activeAnnotations: [
+        ...entities.slice(0, index),
+        ...entities.slice(index + 1),
+      ],
+    });
+  };
+
+  const onDelete = (id, controlType) => {
+    if (controlType === SENSOR) {
+      deleteSensor(id);
+    }
+    if (controlType === RELAY) {
+      deleteRelay(id);
+    }
+    if (controlType === ZONE) {
+      deleteZone(id);
+    }
+  };
+
+  const renderContent = ({ key, annotation }) => {
+    return (
+      <Tooltip
+        key={key}
+        annotation={annotation}
+        // annotations={entities}
+        // setAnnotations={(annotations) => setAnnotation({ annotations })}
+        onFocus={onFocus(key)}
+        onBlur={onBlur(key)}
+        onDelete={onDelete}
+      />
+    );
+  };
+  console.log(annotation);
+
   return (
     <Container>
       <Tools
@@ -127,10 +174,7 @@ const Map = ({
             />
           );
         }}
-        renderContent={({ annotation: controlType }) => {
-          // if (controlType !== "ZONE")
-          return Tooltip;
-        }}
+        renderContent={renderContent}
       />
     </Container>
   );

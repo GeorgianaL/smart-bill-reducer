@@ -148,3 +148,31 @@ export const getAllZones = createAsyncThunk(
     }
   }
 );
+
+export const deleteZone = createAsyncThunk(
+  "entities/deleteZone",
+  async (id) => {
+    try {
+      const res = await axios.delete(`/entities/zones/${id}`);
+      return res.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+);
+
+export const deleteSensor = createAsyncThunk(
+  "entities/deleteSensor",
+  async (id) => {
+    const res = await axios.delete(`/entities/sensors/${id}`);
+    return res.data;
+  }
+);
+
+export const deleteRelay = createAsyncThunk(
+  "entities/deleteRelay",
+  async (id) => {
+    const res = await axios.delete(`/entities/relays/${id}`);
+    return res.data;
+  }
+);

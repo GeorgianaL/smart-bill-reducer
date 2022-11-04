@@ -32,7 +32,6 @@ const Relay = ({ annotation, onClick }) => {
     annotation.data && annotation.data.hasOwnProperty("powerOn")
       ? annotation.data.powerOn
       : false;
-  console.log(annotation.data.powerOn, active);
 
   return (
     <Circle

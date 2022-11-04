@@ -9,6 +9,9 @@ export {
   switchPower,
   getZonesByBuildingId,
   getAllZones,
+  deleteZone,
+  deleteSensor,
+  deleteRelay,
 } from "./entities";
 export {
   getSchedules,

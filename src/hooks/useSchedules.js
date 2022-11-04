@@ -12,7 +12,6 @@ const useSchedules = () => {
     loading: loadingSchedules,
     error,
   } = useSelector((state) => state.schedules);
-  console.log("schedules din hook", schedules);
   const [data, setData] = useState(schedules);
 
   const fetchData = useCallback(async () => {

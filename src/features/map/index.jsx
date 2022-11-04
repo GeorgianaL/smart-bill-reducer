@@ -15,6 +15,9 @@ import {
   addZone,
   addSensor,
   addRelay,
+  deleteZone,
+  deleteSensor,
+  deleteRelay,
 } from "../../actions";
 import { setActiveEntity, addEntity } from "../../slices/entitiesSlice";
 
@@ -60,6 +63,23 @@ const Map = () => {
 
   const addNewRelay = async (payload) => {
     await dispatch(addRelay(payload));
+    dispatch(getEntities(activeFloor));
+  };
+
+  const deleteZone = async (payload) => {
+    debugger;
+    /// se apeleaza de n ori
+    await dispatch(deleteZone(payload));
+    dispatch(getEntities(activeFloor));
+  };
+
+  const deleteSensor = async (payload) => {
+    await dispatch(deleteSensor(payload));
+    dispatch(getEntities(activeFloor));
+  };
+
+  const deleteRelay = async (payload) => {
+    await dispatch(deleteRelay(payload));
     dispatch(getEntities(activeFloor));
   };
 
@@ -119,6 +139,9 @@ const Map = () => {
               addNewZone={addNewZone}
               addNewSensor={addNewSensor}
               addNewRelay={addNewRelay}
+              deleteZone={deleteZone}
+              deleteSensor={deleteSensor}
+              deleteRelay={deleteRelay}
               onChangeImage={onChangeImage}
               highlightEntity={highlightEntity}
             />
