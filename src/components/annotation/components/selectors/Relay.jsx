@@ -33,9 +33,13 @@ const Relay = ({ annotation, onClick }) => {
     annotation.data && annotation.data.hasOwnProperty("powerOn")
       ? annotation.data.powerOn
       : false;
+  const name =
+    annotation.data && annotation.data.hasOwnProperty("name")
+      ? annotation.data.name
+      : "";
 
   return (
-    <Tooltip title={annotation.data.name} arrow>
+    <Tooltip title={name} arrow>
       <Circle
         x={geometry.x}
         y={geometry.y}

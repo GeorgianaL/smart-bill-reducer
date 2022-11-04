@@ -34,9 +34,13 @@ const Sensor = ({ annotation }) => {
     annotation.data && annotation.data.hasOwnProperty("active")
       ? annotation.data.active
       : true;
+  const name =
+    annotation.data && annotation.data.hasOwnProperty("name")
+      ? annotation.data.name
+      : "";
 
   return (
-    <Tooltip title={annotation.data.name} arrow>
+    <Tooltip title={name} arrow>
       <Circle
         x={geometry.x}
         y={geometry.y}
