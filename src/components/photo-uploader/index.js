@@ -11,6 +11,7 @@ import { styled } from "@mui/material/styles";
 import pictureIcon from "../../assets/picture.svg";
 import editIcon from "../../assets/edit.svg";
 import deleteIcon from "../../assets/close-circle-line.svg";
+import eyeIcon from "../../assets/Eye.svg";
 
 const Container = styled(Grid)(({ theme }) => ({
   backgroundColor: theme.palette.grey[500],
@@ -18,7 +19,7 @@ const Container = styled(Grid)(({ theme }) => ({
   padding: "8px 16px",
 }));
 
-const PhotoUploader = ({ url, name, onUpload, onRemove }) => {
+const PhotoUploader = ({ url, name, onUpload, onRemove, onGoToMap }) => {
   if (url === "" || url === null) {
     return (
       <ButtonBase
@@ -80,6 +81,18 @@ const PhotoUploader = ({ url, name, onUpload, onRemove }) => {
                 onClick={onRemove}
               >
                 <img src={deleteIcon} alt="Delete" />
+              </IconButton>
+            </Tooltip>
+          </Grid>
+          <Grid item>
+            <Tooltip title="Go to map" arrow>
+              <IconButton
+                color="primary"
+                aria-label="go to map"
+                component="label"
+                onClick={onGoToMap}
+              >
+                <img src={eyeIcon} alt="Map" />
               </IconButton>
             </Tooltip>
           </Grid>

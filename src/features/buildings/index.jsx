@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Grid, Typography, Backdrop, CircularProgress } from "@mui/material";
 import {
@@ -17,6 +18,7 @@ import {
   addNewBuilding,
   discardEmptyFloor,
   discardEmptyBuilding,
+  changeActiveFloor,
 } from "../../slices/buildingsSlice";
 import withNavigationBar from "../../hoc/withNavigationBar";
 import Card from "../../components/card";
@@ -29,6 +31,7 @@ const Buildings = () => {
   const [cardHighlighted, setCardHighlighted] = useState(0);
   const [buildingEditingMode, setBuildingEditingMode] = useState(-1);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { buildings, floors, loading } = useSelector(
     (state) => state.buildings
@@ -92,6 +95,11 @@ const Buildings = () => {
       })
     );
     dispatch(getFloors());
+  };
+
+  const onGoToMap = (floorId) => {
+    dispatch(changeActiveFloor(floorId));
+    navigate("/map");
   };
 
   return (
@@ -221,6 +229,7 @@ const Buildings = () => {
                                       onUploadPicture(file, floor.id)
                                     }
                                     onRemove={() => onRemovePicture(floor.id)}
+                                    onGoToMap={() => onGoToMap(floor.id)}
                                   />
                                 </Grid>
                               )}
