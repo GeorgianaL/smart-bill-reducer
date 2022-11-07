@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { login } from "../actions";
+import { login, signup } from "../actions";
 import { hasCookie } from "../utils/cookies";
 
 const isLoggedIn = hasCookie("token");
@@ -36,6 +36,19 @@ export const loginSlice = createSlice({
       };
     },
     [login.rejected]: (state) => {
+      state.loading = false;
+      state.isLoggedIn = false;
+    },
+    [signup.pending]: (state) => {
+      state.loading = true;
+    },
+    [signup.fulfilled]: (state) => {
+      return {
+        ...state,
+        loading: false,
+      };
+    },
+    [signup.rejected]: (state) => {
       state.loading = false;
       state.isLoggedIn = false;
     },

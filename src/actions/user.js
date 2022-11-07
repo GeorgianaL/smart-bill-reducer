@@ -11,3 +11,12 @@ export const login = createAsyncThunk("user", async (payload) => {
     console.error(`Could not login: ${error}`);
   }
 });
+
+export const signup = createAsyncThunk("signup", async (payload) => {
+  try {
+    const res = await axios.post("users/auth/signup", payload);
+    return res.data;
+  } catch (error) {
+    console.error(`Could not signup: ${error}`);
+  }
+});

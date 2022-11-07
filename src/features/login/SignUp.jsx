@@ -9,24 +9,57 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import Logo from "../../components/logo";
 import Input from "../../components/input";
-import { login } from "../../actions";
+import { signup } from "../../actions";
 import { Layout, StyledImage, CentralInfo } from "./styles";
 import buildingIlustration from "../../assets/SignUpIlustration.png";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [emailValidationErr, setEmailValidationErr] = useState("");
+  const [validationErr, setValidationErr] = useState("");
 
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
+  const validateEmail = () => {
+    const isValid = email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+
+    if (!isValid) {
+      setEmailValidationErr("Email is invalid");
+    } else {
+      setEmailValidationErr("");
+    }
+  };
+
+  const validate = () => {
+    if (password !== "" && confirmedPassword !== "") {
+      if (password !== confirmedPassword) {
+        setValidationErr("Passwords don't match");
+      } else {
+        setValidationErr("");
+      }
+      if (password.length < 6) {
+        setValidationErr("Passwords should have at least 6 characters");
+      } else {
+        setValidationErr("");
+      }
+    }
+  };
+
   const authenticate = async () => {
-    const auth = await dispatch(login({ email, pwd: password }));
-    if (auth && auth.payload && auth.payload.success) {
-      navigate("/dashboard");
+    const auth = await dispatch(
+      signup({ email, name: username, pwd: password })
+    );
+
+    if (auth && auth.payload) {
+      navigate("/login");
     }
   };
 
@@ -78,7 +111,7 @@ const Login = () => {
                       },
                     }}
                   >
-                    Login to reduce your energy bill smartly
+                    Sign up to reduce your energy bill smartly
                   </Typography>
                   <Grid container direction="column" spacing={2}>
                     {error && (
@@ -88,14 +121,35 @@ const Login = () => {
                         </Alert>
                       </Grid>
                     )}
+                    {(validationErr || emailValidationErr) && (
+                      <Grid item>
+                        <Alert severity="error">
+                          {validationErr || emailValidationErr}
+                        </Alert>
+                      </Grid>
+                    )}
                     <Grid item>
                       <Input
                         fullWidth
                         type="email"
                         label="Email address"
                         placeholder="youremail@gmail.com"
+                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        onBlur={validate}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Input
+                        fullWidth
+                        type="text"
+                        label="Username"
+                        placeholder="Username"
+                        pattern=".{6,}"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        onBlur={validate}
                       />
                     </Grid>
                     <Grid item>
@@ -105,7 +159,21 @@ const Login = () => {
                         label="Password"
                         placeholder="password (at least 6 characters)"
                         value={password}
+                        pattern=".{6,}"
                         onChange={(e) => setPassword(e.target.value)}
+                        onBlur={validateEmail}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Input
+                        fullWidth
+                        type="password"
+                        label="Confirm password"
+                        placeholder="password"
+                        value={confirmedPassword}
+                        pattern=".{6,}"
+                        onChange={(e) => setConfirmedPassword(e.target.value)}
+                        onBlur={validate}
                       />
                     </Grid>
                     <Grid item sx={{ marginTop: 4 }}>
@@ -114,14 +182,20 @@ const Login = () => {
                         color="primary"
                         variant="contained"
                         onClick={authenticate}
-                        disabled={email === "" || password === ""}
+                        disabled={
+                          email === "" ||
+                          username === "" ||
+                          password === "" ||
+                          confirmedPassword === "" ||
+                          validationErr !== ""
+                        }
                       >
-                        Login
+                        Sign up
                       </Button>
                     </Grid>
                     <Grid item sc={{ alignItems: "center" }}>
                       <Typography variant="body2">
-                        Don't you have an account? <a href="/signup">Sign up</a>
+                        Already have an account? <a href="/login">Log in</a>
                       </Typography>
                     </Grid>
                   </Grid>
@@ -135,4 +209,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

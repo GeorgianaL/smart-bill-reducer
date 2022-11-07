@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import PrivateRoute from "./hoc/PrivateRoute";
 import { theme, links } from "./utils";
 import "./App.css";
-import { Login, NotAuthorizedPage } from "./features/login";
+import { Login, SignUp, NotAuthorizedPage } from "./features/login";
 import Dashboard from "./features/dashboard";
 
 const App = () => {
@@ -36,6 +36,7 @@ const App = () => {
           />
         ))}
         <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/unauthorized" element={<NotAuthorizedPage />} />
       </Routes>
     </ThemeProvider>

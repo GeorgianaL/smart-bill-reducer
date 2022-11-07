@@ -1,4 +1,4 @@
-export { login } from "./user";
+export { login, signup } from "./user";
 export { getBuildings, saveBuilding, deleteBuilding } from "./buildings";
 export { getFloors, saveFloor, deleteFloor } from "./floors";
 export {
