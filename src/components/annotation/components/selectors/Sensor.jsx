@@ -33,7 +33,8 @@ const Sensor = ({ annotation }) => {
   const active =
     annotation.data && annotation.data.hasOwnProperty("active")
       ? annotation.data.active
-      : true;
+      : false;
+
   const name =
     annotation.data && annotation.data.hasOwnProperty("name")
       ? annotation.data.name

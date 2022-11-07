@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import moment from "moment";
 import Annotation from "react-image-annotation";
 import Container from "./components/Container";
 import EmptyMap from "./components/EmptyMap";
@@ -68,7 +69,10 @@ const Map = ({
           id: entity.id,
           name: entity.name,
           controlType: entity.controlType,
-          active: entity.active,
+          active:
+            moment(entity.lastTimeAlive)
+              .startOf("hour")
+              .diff(moment().startOf("hour"), "hours") === 0,
           powerOn: entity.powerOn,
         },
         geometry: {

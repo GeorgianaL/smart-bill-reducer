@@ -67,7 +67,6 @@ const Map = () => {
   };
 
   const deleteZone = async (payload) => {
-    debugger;
     /// se apeleaza de n ori
     await dispatch(deleteZone(payload));
     dispatch(getEntities(activeFloor));
