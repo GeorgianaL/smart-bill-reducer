@@ -33,7 +33,7 @@ const HistoryBarChart = ({ data }) => {
                 fill: "#767E76",
               }}
             >
-              active sensors
+              active devices
             </text>
           </g>
 

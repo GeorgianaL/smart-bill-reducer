@@ -26,7 +26,7 @@ const Login = () => {
   const authenticate = async () => {
     const auth = await dispatch(login({ email, pwd: password }));
     if (auth && auth.payload && auth.payload.success) {
-      navigate("/dashboard");
+      navigate("/buildings");
     }
   };
 
