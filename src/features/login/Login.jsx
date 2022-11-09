@@ -30,6 +30,12 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      authenticate();
+    }
+  };
+
   const { loading, error } = useSelector((state) => state.user);
 
   return (
@@ -106,6 +112,7 @@ const Login = () => {
                         placeholder="password (at least 6 characters)"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        onKeyDown={handleKeyDown}
                       />
                     </Grid>
                     <Grid item sx={{ marginTop: 4 }}>

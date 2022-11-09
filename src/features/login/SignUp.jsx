@@ -63,6 +63,12 @@ const SignUp = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      authenticate();
+    }
+  };
+
   const { loading, error } = useSelector((state) => state.user);
 
   return (
@@ -174,6 +180,7 @@ const SignUp = () => {
                         pattern=".{6,}"
                         onChange={(e) => setConfirmedPassword(e.target.value)}
                         onBlur={validate}
+                        onKeyDown={handleKeyDown}
                       />
                     </Grid>
                     <Grid item sx={{ marginTop: 4 }}>
